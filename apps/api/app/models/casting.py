@@ -57,6 +57,10 @@ class CastingCall(Base):
         order_by="Role.id",
     )
 
+    @property
+    def source_key(self) -> str:
+        return self.source.key
+
 
 class Role(Base):
     __tablename__ = "roles"

@@ -39,3 +39,52 @@ def db(engine):
         finally:
             session.close()
             transaction.rollback()
+
+
+TEST_PASSWORD = "correct horse battery staple"
+
+
+@pytest.fixture
+def login_password() -> str:
+    return TEST_PASSWORD
+
+
+@pytest.fixture(scope="session")
+def settings():
+    from pydantic import SecretStr
+
+    from app.config import Settings
+    from app.services.auth import hash_password
+
+    return Settings(
+        database_url=TEST_DATABASE_URL,
+        auth_password_hash=SecretStr(hash_password(TEST_PASSWORD)),
+        jwt_secret=SecretStr("test-secret-" + "x" * 32),
+        cookie_secure=False,  # TestClient talks plain http
+    )
+
+
+@pytest.fixture
+def app(db, settings):
+    from app.config import get_settings
+    from app.deps import get_db
+    from app.main import create_app
+
+    app = create_app(settings)
+    app.dependency_overrides[get_db] = lambda: db
+    app.dependency_overrides[get_settings] = lambda: settings
+    return app
+
+
+@pytest.fixture
+def anon_client(app):
+    from fastapi.testclient import TestClient
+
+    return TestClient(app)
+
+
+@pytest.fixture
+def client(anon_client):
+    response = anon_client.post("/auth/login", json={"password": TEST_PASSWORD})
+    assert response.status_code == 204
+    return anon_client

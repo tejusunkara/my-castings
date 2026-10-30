@@ -18,7 +18,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.db.base import Base, in_check
 
 if TYPE_CHECKING:
-    from app.models.casting import Role
+    from app.models.casting import CastingCall, Role
 
 MATCH_STATUSES = ("new", "saved", "applied", "dismissed")
 
@@ -41,3 +41,7 @@ class SavedMatch(Base):
     updated_at: Mapped[datetime] = mapped_column(server_default=func.now(), onupdate=func.now())
 
     role: Mapped["Role"] = relationship(back_populates="saved_match")
+
+    @property
+    def casting_call(self) -> "CastingCall":
+        return self.role.casting_call

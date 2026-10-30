@@ -66,3 +66,7 @@ class RawEmail(Base):
         passive_deletes=True,
         order_by="CastingCall.id",  # digest order; reprocessing matches by position
     )
+
+    @property
+    def source_key(self) -> str | None:
+        return self.source.key if self.source else None

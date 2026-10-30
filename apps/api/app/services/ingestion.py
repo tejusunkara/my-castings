@@ -1,8 +1,13 @@
-"""Writes an adapter's ParsedDigest into the database for one raw email.
+"""Turns one raw email into database rows: verify sender, pick adapter, parse, store.
 
-The single write path for first-time ingestion (Lambda, seed script) and admin
-reprocessing. Reprocessing reconciles in place instead of delete-and-replace, so role
-ids, and the saved/applied/dismissed state hanging off them, survive a re-parse:
+ingest() is the single entry point for first-time ingestion (Lambda, seed script) and
+admin reprocessing. An email whose sender fails verification is quarantined: recorded
+as failed with the reason and never linked to a source, so a spoofed digest can't put
+postings into the feed. It still shows in the admin view (sender_verified=false).
+
+store_digest() writes the parse result. Reprocessing reconciles in place instead of
+delete-and-replace, so role ids, and the saved/applied/dismissed state hanging off them,
+survive a re-parse:
 
 - A failed parse never touches previously stored rows; it only records the status.
   A parser regression must not wipe out jobs an earlier parse found.
@@ -22,10 +27,18 @@ from collections.abc import Callable, Iterable
 from dataclasses import dataclass, field, fields
 from datetime import UTC, datetime
 
+from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.models import CastingCall, CastingSource, RawEmail, Role
+from ingestion_core.adapters.registry import (
+    AdapterRegistry,
+    AmbiguousAdapterMatchError,
+    default_registry,
+)
+from ingestion_core.parsing.mime import from_address, load_message
 from ingestion_core.types import ParsedDigest, ParsedPosting, ParsedRole
+from ingestion_core.verification import verify_sender
 
 POSTING_FIELDS = [f.name for f in fields(ParsedPosting) if f.name != "roles"]
 ROLE_FIELDS = [f.name for f in fields(ParsedRole)]
@@ -41,6 +54,59 @@ class StoreResult:
     # Gone from the new parse but kept because the user saved/applied/dismissed them.
     kept_role_ids: list[int] = field(default_factory=list)
     rematch_role_ids: list[int] = field(default_factory=list)  # 'new' match dropped
+
+
+def ingest(
+    db: Session,
+    raw_email: RawEmail,
+    raw_mime: bytes,
+    *,
+    registry: AdapterRegistry = default_registry,
+    now: datetime | None = None,
+) -> StoreResult:
+    """Parses raw_mime into raw_email's rows. Never raises for a bad email: every
+    outcome is recorded on raw_email.parse_status / parse_error."""
+    now = now or datetime.now(UTC)
+    try:
+        msg = load_message(raw_mime)
+        sender = from_address(msg)
+    except Exception as exc:
+        return _fail(raw_email, f"could not decode email: {exc}", now)
+    raw_email.from_address = sender
+    raw_email.subject = str(msg.get("Subject", "")) or None
+
+    verdict = verify_sender(msg)
+    raw_email.sender_verified = verdict.verified
+    raw_email.verdict_details = verdict.details
+    if not verdict.verified:
+        raw_email.source = None
+        reason = verdict.details.get("reason", "no aligned DKIM or SPF pass")
+        return _fail(raw_email, f"quarantined: sender not verified ({reason})", now)
+
+    try:
+        adapter = registry.get_adapter_for(sender, dict(msg.items()))
+    except AmbiguousAdapterMatchError as exc:
+        return _fail(raw_email, str(exc), now)
+    if adapter is None:
+        raw_email.source = None
+        return _fail(raw_email, f"no adapter for sender {sender!r}", now)
+
+    source = db.scalars(
+        select(CastingSource).where(CastingSource.key == adapter.source_key)
+    ).one_or_none()
+    if source is None or not source.is_active:
+        return _fail(raw_email, f"no active casting source {adapter.source_key!r}", now)
+    raw_email.source = source
+
+    digest = adapter.parse(raw_mime, raw_email.received_at)
+    return store_digest(db, raw_email, source, digest, now=now)
+
+
+def _fail(raw_email: RawEmail, error: str, now: datetime) -> StoreResult:
+    raw_email.parse_status = "failed"
+    raw_email.parse_error = error
+    raw_email.parsed_at = now
+    return StoreResult()
 
 
 def store_digest(
