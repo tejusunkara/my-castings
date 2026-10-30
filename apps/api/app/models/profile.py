@@ -16,6 +16,7 @@ never delete on an ambiguous error, or a transient blip loses a real upload.
 from datetime import date, datetime
 
 from sqlalchemy import BigInteger, CheckConstraint, ForeignKey, Text, false, func
+from sqlalchemy.dialects.postgresql import ARRAY
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.base import Base, created_at_column, in_check
@@ -30,11 +31,25 @@ class ArtistProfile(Base):
 
     __tablename__ = "artist_profile"
 
+    __table_args__ = (
+        # Both bounds or neither; a half-set range would match ambiguously.
+        CheckConstraint(
+            "(playing_age_min IS NULL) = (playing_age_max IS NULL)"
+            " AND playing_age_min <= playing_age_max",
+            name="playing_age_range",
+        ),
+    )
+
     id: Mapped[int] = mapped_column(primary_key=True)
     display_name: Mapped[str | None] = mapped_column(Text)
-    # DOB rather than age, so matching stays correct as time passes.
+    # Reference only. Matching uses the playing range: casting age ranges describe the
+    # ages a character reads as, not the actor's real age.
     date_of_birth: Mapped[date | None]
-    gender: Mapped[str | None] = mapped_column(Text)
+    playing_age_min: Mapped[int | None]
+    playing_age_max: Mapped[int | None]
+    # Role gender labels this artist wants matched, e.g. ["female", "femme presenting"].
+    # Compared via ingestion_core's gender_key, so "Femme-Presenting" matches too.
+    genders: Mapped[list[str]] = mapped_column(ARRAY(Text), server_default="{}")
     location_city: Mapped[str | None] = mapped_column(Text)
     location_state: Mapped[str | None] = mapped_column(Text)
     union_status: Mapped[str | None] = mapped_column(Text)

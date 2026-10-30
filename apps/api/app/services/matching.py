@@ -15,10 +15,10 @@ evaluate_role() for a threshold. The MatchCriterion interface doesn't change.
 
 from collections.abc import Sequence
 from dataclasses import dataclass
-from datetime import date
 from typing import Protocol
 
 from app.models import ArtistProfile, Role
+from ingestion_core.parsing.text_normalize import gender_key
 
 # Seeking-location values that mean "anywhere".
 OPEN_LOCATIONS = {"worldwide", "nationwide", "anywhere", "remote", "united states", "usa"}
@@ -49,36 +49,40 @@ class MatchResult:
 class MatchCriterion(Protocol):
     key: str
 
-    def evaluate(self, role: Role, profile: ArtistProfile, today: date) -> bool: ...
+    def evaluate(self, role: Role, profile: ArtistProfile) -> bool: ...
 
 
 class AgeCriterion:
-    """Profile age (from date of birth, as of today) within the role's inclusive range."""
+    """The role's age range overlaps the artist's playing range (both inclusive).
+
+    Casting ranges describe the ages a character reads as, so overlap is the test, not
+    "real age inside the range": playing 16-30 fits an 18-24 role and an 18+ role.
+    """
 
     key = "age"
 
-    def evaluate(self, role: Role, profile: ArtistProfile, today: date) -> bool:
+    def evaluate(self, role: Role, profile: ArtistProfile) -> bool:
         if role.age_min is None and role.age_max is None:
             return True
-        age = profile.age_on(today)
-        if age is None:
+        if profile.playing_age_min is None or profile.playing_age_max is None:
             return False
-        if role.age_min is not None and age < role.age_min:
+        if role.age_min is not None and role.age_min > profile.playing_age_max:
             return False
-        return role.age_max is None or age <= role.age_max
+        return role.age_max is None or role.age_max >= profile.playing_age_min
 
 
 class GenderCriterion:
-    """Profile gender is one of the role's listed genders; an empty list is open to all."""
+    """Any of the profile's gender labels is among the role's; a role listing none (or
+    "All Genders") is open to all. A profile label like "any gender" therefore matches
+    exactly the open roles, which pass anyway."""
 
     key = "gender"
 
-    def evaluate(self, role: Role, profile: ArtistProfile, today: date) -> bool:
+    def evaluate(self, role: Role, profile: ArtistProfile) -> bool:
         if not role.genders:
             return True
-        if not profile.gender:
-            return False
-        return profile.gender.strip().lower() in role.genders
+        wanted = {gender_key(g) for g in profile.genders}
+        return not wanted.isdisjoint(gender_key(g) for g in role.genders)
 
 
 class LocationCriterion:
@@ -86,7 +90,7 @@ class LocationCriterion:
 
     key = "location"
 
-    def evaluate(self, role: Role, profile: ArtistProfile, today: date) -> bool:
+    def evaluate(self, role: Role, profile: ArtistProfile) -> bool:
         locations = role.casting_call.seeking_locations
         if not locations or profile.willing_to_travel:
             return True
@@ -123,8 +127,7 @@ DEFAULT_CRITERIA: Sequence[MatchCriterion] = (
 def evaluate_role(
     role: Role,
     profile: ArtistProfile,
-    today: date,
     criteria: Sequence[MatchCriterion] = DEFAULT_CRITERIA,
 ) -> MatchResult:
-    reasons = {c.key: c.evaluate(role, profile, today) for c in criteria}
+    reasons = {c.key: c.evaluate(role, profile) for c in criteria}
     return MatchResult(is_match=all(reasons.values()), reasons=reasons)

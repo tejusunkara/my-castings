@@ -1,7 +1,5 @@
 """Pure unit tests: models are built in memory, no database needed."""
 
-from datetime import date
-
 import pytest
 
 from app.models import ArtistProfile, CastingCall, Role
@@ -13,9 +11,6 @@ from app.services.matching import (
     evaluate_role,
 )
 
-TODAY = date(2026, 10, 30)
-DOB_AGE_30 = date(1996, 5, 1)
-
 
 def make_role(*, locations=(), **kwargs) -> Role:
     role = Role(role_name="Lead", **{"genders": [], **kwargs})
@@ -25,8 +20,9 @@ def make_role(*, locations=(), **kwargs) -> Role:
 
 def make_profile(**kwargs) -> ArtistProfile:
     defaults = {
-        "date_of_birth": DOB_AGE_30,
-        "gender": "female",
+        "playing_age_min": 16,
+        "playing_age_max": 30,
+        "genders": ["female", "any gender", "femme presenting"],
         "location_city": "New York",
         "location_state": "NY",
         "willing_to_travel": False,
@@ -38,47 +34,49 @@ def make_profile(**kwargs) -> ArtistProfile:
     "age_min, age_max, expected",
     [
         (None, None, True),  # unrestricted
-        (30, 40, True),  # lower boundary inclusive
-        (20, 30, True),  # upper boundary inclusive
+        (18, 24, True),  # inside
+        (10, 16, True),  # touches lower bound
+        (30, 45, True),  # touches upper bound
+        (25, 40, True),  # partial overlap
+        (10, 50, True),  # role range contains playing range
         (31, 40, False),
-        (18, 29, False),
+        (10, 15, False),
         (18, None, True),  # "18+"
         (31, None, False),
     ],
 )
-def test_age(age_min, age_max, expected):
+def test_age_overlaps_playing_range(age_min, age_max, expected):
     role = make_role(age_min=age_min, age_max=age_max)
-    assert AgeCriterion().evaluate(role, make_profile(), TODAY) is expected
+    assert AgeCriterion().evaluate(role, make_profile()) is expected
 
 
-def test_age_uses_today_not_a_stored_age():
-    role = make_role(age_min=18, age_max=29)
-    profile = make_profile()
-    assert AgeCriterion().evaluate(role, profile, date(2026, 4, 30)) is True  # still 29
-    assert AgeCriterion().evaluate(role, profile, date(2026, 5, 1)) is False  # birthday
-
-
-def test_age_without_dob_fails_only_restricted_roles():
-    profile = make_profile(date_of_birth=None)
-    assert AgeCriterion().evaluate(make_role(age_min=18), profile, TODAY) is False
-    assert AgeCriterion().evaluate(make_role(), profile, TODAY) is True
+def test_age_without_playing_range_fails_only_restricted_roles():
+    profile = make_profile(playing_age_min=None, playing_age_max=None)
+    assert AgeCriterion().evaluate(make_role(age_min=18), profile) is False
+    assert AgeCriterion().evaluate(make_role(), profile) is True
 
 
 @pytest.mark.parametrize(
-    "role_genders, profile_gender, expected",
+    "role_genders, expected",
     [
-        ([], "female", True),  # omitted = open to any
-        ([], None, True),
-        (["female", "trans female"], "female", True),
-        (["female", "trans female"], "Trans Female", True),
-        (["male"], "female", False),
-        (["female"], None, False),
+        ([], True),  # omitted / "All Genders" = open to any
+        (["female"], True),
+        (["female", "trans female"], True),
+        (["femme presenting"], True),
+        (["Femme-Presenting"], True),  # spelling variants still match
+        (["male"], False),
+        (["trans female"], False),
     ],
 )
-def test_gender(role_genders, profile_gender, expected):
+def test_gender(role_genders, expected):
     role = make_role(genders=role_genders)
-    profile = make_profile(gender=profile_gender)
-    assert GenderCriterion().evaluate(role, profile, TODAY) is expected
+    assert GenderCriterion().evaluate(role, make_profile()) is expected
+
+
+def test_gender_without_profile_genders_fails_only_restricted_roles():
+    profile = make_profile(genders=[])
+    assert GenderCriterion().evaluate(make_role(genders=["female"]), profile) is False
+    assert GenderCriterion().evaluate(make_role(), profile) is True
 
 
 @pytest.mark.parametrize(
@@ -100,20 +98,18 @@ def test_gender(role_genders, profile_gender, expected):
 )
 def test_location(locations, expected):
     role = make_role(locations=locations)
-    assert LocationCriterion().evaluate(role, make_profile(), TODAY) is expected
+    assert LocationCriterion().evaluate(role, make_profile()) is expected
 
 
 def test_location_miss_passes_when_willing_to_travel():
     role = make_role(locations=["Boston, MA"])
-    assert LocationCriterion().evaluate(role, make_profile(willing_to_travel=True), TODAY)
+    assert LocationCriterion().evaluate(role, make_profile(willing_to_travel=True))
 
 
 def test_location_without_home_fails_only_restricted_roles():
     profile = make_profile(location_city=None)
-    assert (
-        LocationCriterion().evaluate(make_role(locations=["New York, NY"]), profile, TODAY) is False
-    )
-    assert LocationCriterion().evaluate(make_role(), profile, TODAY) is True
+    assert LocationCriterion().evaluate(make_role(locations=["New York, NY"]), profile) is False
+    assert LocationCriterion().evaluate(make_role(), profile) is True
 
 
 @pytest.mark.parametrize(
@@ -123,8 +119,8 @@ def test_location_without_home_fails_only_restricted_roles():
         ("Manhattan", "new york"),
         ("Hollywood", "los angeles"),
         ("Kansas City", "kansas city"),
+        ("Union City", "union city"),  # not "union": a different NJ town
         ("Boston", "boston"),
-        ("Union City", "union city"),  # not "union": a different NJ town,
     ],
 )
 def test_canonical_city(city, expected):
@@ -132,15 +128,15 @@ def test_canonical_city(city, expected):
 
 
 def test_evaluate_role_reports_every_reason():
-    role = make_role(age_min=18, age_max=25, genders=["female"], locations=["Boston, MA"])
-    result = evaluate_role(role, make_profile(), TODAY)
+    role = make_role(age_min=35, age_max=45, genders=["female"], locations=["Boston, MA"])
+    result = evaluate_role(role, make_profile())
     assert not result.is_match
     assert result.reasons == {"age": False, "gender": True, "location": False}
 
 
 def test_evaluate_role_match():
-    role = make_role(age_min=25, age_max=35, genders=["female"], locations=["New York City, NY"])
-    result = evaluate_role(role, make_profile(), TODAY)
+    role = make_role(age_min=18, age_max=24, genders=["female"], locations=["New York City, NY"])
+    result = evaluate_role(role, make_profile())
     assert result.is_match
     assert result.reasons == {"age": True, "gender": True, "location": True}
 
@@ -149,10 +145,10 @@ def test_custom_criteria():
     class UnionCriterion:
         key = "union"
 
-        def evaluate(self, role, profile, today):
+        def evaluate(self, role, profile):
             return role.casting_call.union_status == profile.union_status
 
     role = make_role()
     role.casting_call.union_status = "union"
-    result = evaluate_role(role, make_profile(union_status="nonunion"), TODAY, [UnionCriterion()])
+    result = evaluate_role(role, make_profile(union_status="nonunion"), [UnionCriterion()])
     assert result == type(result)(is_match=False, reasons={"union": False})

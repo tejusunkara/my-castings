@@ -134,3 +134,20 @@ def test_check_constraints(db, model, kwargs):
 )
 def test_profile_age_on(dob, on, expected):
     assert ArtistProfile(date_of_birth=dob).age_on(on) == expected
+
+
+@pytest.mark.parametrize("bounds", [(16, None), (None, 30), (30, 16)])
+def test_playing_age_range_must_be_complete_and_ordered(db, bounds):
+    db.add(ArtistProfile(playing_age_min=bounds[0], playing_age_max=bounds[1]))
+    with pytest.raises(IntegrityError):
+        db.flush()
+
+
+def test_profile_genders_round_trip(db):
+    profile = ArtistProfile(
+        playing_age_min=16, playing_age_max=30, genders=["female", "femme presenting"]
+    )
+    db.add(profile)
+    db.flush()
+    db.expire_all()
+    assert db.get(ArtistProfile, profile.id).genders == ["female", "femme presenting"]

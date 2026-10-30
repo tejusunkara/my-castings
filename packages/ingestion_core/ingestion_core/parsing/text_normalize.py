@@ -26,12 +26,25 @@ def normalize_union_status(tag: str | None) -> str | None:
     }.get(value)
 
 
-def normalize_gender(token: str) -> str | None:
-    """Lower-cased gender label, or None for "open to any" labels like "All Genders"."""
-    value = clean_text(token).lower()
-    if not value or value in OPEN_GENDER_LABELS:
-        return None
-    return value
+def gender_key(label: str) -> str:
+    """Comparable form of a gender label: 'Femme-Presenting' -> 'femme presenting'.
+
+    Applied to both role labels and the profile's labels, so spelling variants match.
+    """
+    return clean_text(re.sub(r"[-_]", " ", label)).lower()
+
+
+def is_open_gender(label: str) -> bool:
+    return gender_key(label) in OPEN_GENDER_LABELS
+
+
+def normalize_genders(tokens: list[str]) -> list[str]:
+    """A role's gender tokens as gender keys; [] (open to any) if any token is an open
+    label, so "Female, All Genders" doesn't turn an open role into a female-only one."""
+    keys = [gender_key(t) for t in tokens]
+    if any(k in OPEN_GENDER_LABELS for k in keys):
+        return []
+    return [k for k in keys if k]
 
 
 def parse_age_range(token: str) -> tuple[int, int | None]:

@@ -4,7 +4,8 @@ import pytest
 
 from ingestion_core.parsing.relative_time import parse_relative_age
 from ingestion_core.parsing.text_normalize import (
-    normalize_gender,
+    gender_key,
+    normalize_genders,
     normalize_union_status,
     parse_age_range,
     split_locations,
@@ -57,11 +58,33 @@ def test_normalize_union_status(tag, expected):
 
 
 @pytest.mark.parametrize(
-    "token, expected",
-    [("Female", "female"), ("Trans Female", "trans female"), ("All Genders", None), ("", None)],
+    "label, expected",
+    [
+        ("Female", "female"),
+        ("Trans Female", "trans female"),
+        ("Femme-Presenting", "femme presenting"),
+        ("femme_presenting", "femme presenting"),
+        (" Femme\xa0 Presenting ", "femme presenting"),
+    ],
 )
-def test_normalize_gender(token, expected):
-    assert normalize_gender(token) == expected
+def test_gender_key(label, expected):
+    assert gender_key(label) == expected
+
+
+@pytest.mark.parametrize(
+    "tokens, expected",
+    [
+        (["Female", "Trans Female"], ["female", "trans female"]),
+        (["Female", ""], ["female"]),
+        (["All Genders"], []),
+        (["Any Gender"], []),
+        # An open label anywhere keeps the whole role open, not narrowed to "female".
+        (["Female", "All Genders"], []),
+        ([], []),
+    ],
+)
+def test_normalize_genders(tokens, expected):
+    assert normalize_genders(tokens) == expected
 
 
 @pytest.mark.parametrize(

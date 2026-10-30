@@ -28,7 +28,7 @@ from ingestion_core.parsing.mime import html_body, load_message
 from ingestion_core.parsing.relative_time import parse_relative_age
 from ingestion_core.parsing.text_normalize import (
     clean_text,
-    normalize_gender,
+    normalize_genders,
     normalize_union_status,
     parse_age_range,
     split_locations,
@@ -140,7 +140,7 @@ class BackstageAdapter(CastingSourceAdapter):
                     role.age_min, role.age_max = parse_age_range(age_token)
                 except ValueError:
                     errors.append(f"{where}: age: unparseable {age_token!r}")
-            role.genders = [g for g in (normalize_gender(t) for t in tokens) if g]
+            role.genders = normalize_genders(tokens)
 
         if box is not None:
             role.is_featured = any(
