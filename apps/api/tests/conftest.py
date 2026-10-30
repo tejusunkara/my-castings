@@ -1,0 +1,41 @@
+import os
+from argparse import Namespace
+from pathlib import Path
+
+import pytest
+from alembic import command
+from alembic.config import Config
+from sqlalchemy import create_engine
+from sqlalchemy.orm import Session
+
+API_DIR = Path(__file__).resolve().parents[1]
+TEST_DATABASE_URL = os.environ.get(
+    "MY_CASTINGS_TEST_DATABASE_URL",
+    "postgresql+psycopg://my_castings:my_castings@localhost:5432/my_castings_test",
+)
+
+
+@pytest.fixture(scope="session")
+def engine():
+    """Migrates the test database from scratch once per run, through the real migration."""
+    config = Config(API_DIR / "alembic.ini")
+    config.set_main_option("script_location", str(API_DIR / "alembic"))
+    config.cmd_opts = Namespace(x=[f"url={TEST_DATABASE_URL}"])
+    command.downgrade(config, "base")
+    command.upgrade(config, "head")
+    engine = create_engine(TEST_DATABASE_URL)
+    yield engine
+    engine.dispose()
+
+
+@pytest.fixture
+def db(engine):
+    """A session whose work is rolled back after each test, commits included."""
+    with engine.connect() as connection:
+        transaction = connection.begin()
+        session = Session(bind=connection, join_transaction_mode="create_savepoint")
+        try:
+            yield session
+        finally:
+            session.close()
+            transaction.rollback()
