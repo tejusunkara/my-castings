@@ -29,7 +29,8 @@ class CastingCall(Base):
     __table_args__ = (Index("ix_casting_calls_posted_at", "posted_at"),)
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    # Cascade: reprocessing an email replaces everything it previously produced.
+    # Cascade: deleting a raw email removes everything it produced. (Reprocessing does
+    # not delete; it updates rows in place, see app/services/ingestion.py.)
     raw_email_id: Mapped[int] = mapped_column(
         ForeignKey("raw_emails.id", ondelete="CASCADE"), index=True
     )
@@ -81,4 +82,6 @@ class Role(Base):
     created_at: Mapped[datetime] = created_at_column()
 
     casting_call: Mapped[CastingCall] = relationship(back_populates="roles")
-    saved_match: Mapped["SavedMatch | None"] = relationship(back_populates="role")
+    saved_match: Mapped["SavedMatch | None"] = relationship(
+        back_populates="role", cascade="all, delete-orphan", passive_deletes=True
+    )

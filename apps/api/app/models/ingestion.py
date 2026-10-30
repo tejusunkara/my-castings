@@ -61,5 +61,8 @@ class RawEmail(Base):
 
     source: Mapped["CastingSource | None"] = relationship()
     casting_calls: Mapped[list["CastingCall"]] = relationship(
-        back_populates="raw_email", cascade="all, delete-orphan", passive_deletes=True
+        back_populates="raw_email",
+        cascade="all, delete-orphan",
+        passive_deletes=True,
+        order_by="CastingCall.id",  # digest order; reprocessing matches by position
     )
