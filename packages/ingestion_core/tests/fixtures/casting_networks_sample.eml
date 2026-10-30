@@ -1,0 +1,2545 @@
+Return-Path: <redacted+caf_=jobs=mail.allcastings.fyi@gmail.com>
+Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com
+ [209.85.216.42]) by inbound-smtp.us-east-1.amazonaws.com with SMTP id
+ 9e6j824ipv3pa8o7lm6ug0p3m58crjlkhggr7381 for jobs@mail.allcastings.fyi; Fri,
+ 30 Oct 2026 12:03:03 +0000 (UTC)
+X-SES-Spam-Verdict: PASS
+X-SES-Virus-Verdict: PASS
+Received-SPF: pass (spfCheck: domain of _spf.google.com designates
+ 209.85.216.42 as permitted sender) client-ip=209.85.216.42;
+ envelope-from=redacted+caf_=jobs=mail.allcastings.fyi@gmail.com;
+ helo=mail-pj1-f42.google.com;
+Authentication-Results: amazonses.com; spf=pass (spfCheck: domain of
+ _spf.google.com designates 209.85.216.42 as permitted sender)
+ client-ip=209.85.216.42;
+ envelope-from=redacted+caf_=jobs=mail.allcastings.fyi@gmail.com;
+ helo=mail-pj1-f42.google.com; dkim=pass header.i=@castingnetworks.com;
+ dkim=pass header.i=@sendgrid.info; dmarc=pass
+ header.from=castingnetworks.com;
+X-SES-RECEIPT: =?utf-8?q?AEFBQUFBQUFBQUFGdU1YalJoRy8wVFJpWVAwRDA0KzhqRnpUem1?=
+ =?utf-8?q?IY1FHem9HdmV0ZmpyZ2VpTzV3NkQzeVFHUHdNNVhVN2Noc2lVdVIzK0lLeVZRTjFB?=
+ =?utf-8?q?Q3orQ3drQmRJWXVWN3o2S25MNmRISHZDMTNQWGhGMTBYQWhYdWJ6dzJmaml6aERoc?=
+ =?utf-8?q?lJLOGZqUzB3ZDI1Z3ZRK24zNjFMOU9xZ2grM0pHckJCbDBVUVRCWG15NmxLZVR6d2?=
+ =?utf-8?q?ppVnBBcThxVVRiZU9sd3pBMlZ6eFh6WGZPd3pwc25pQ0o1aVN5cDkxenZ4MlNVdmN?=
+ =?utf-8?q?FVXBSTEk4OEV0ckovRU9NQWFWQVlsN0QvcFZLYlVVUGtFSWFoZlpMNlpyeTFndjNo?=
+ =?utf-8?q?SjVuR0ZCQXNlM1hVMnJRQTQ5VERjM2hRWGZveC9ETlFmUWdCSHdIWWNTbDA4VktRN?=
+ =?utf-8?q?EFIM2YyOTBoaGdXNkdZNUx2K1FQTVc=3D?=
+X-SES-DKIM-SIGNATURE: a=rsa-sha256; q=dns/txt; =?utf-8?q?b=3DhXbCFg4whxpyp+N?=
+ =?utf-8?q?HRqIGqbUGgRRpmrHeRAB2w49wi0K7I6K60T5BURjIdGbdp/rzQE7IDCloQMwR/CaT?=
+ =?utf-8?q?2aC+wn3zwpLRsJt4+Kz9I2krLWbL9okeMpJBo+7+/fL2jmtQpCCGC0Y5YkFom+weO?=
+ =?utf-8?q?QQ6+gRN1wZvRB5cnhpSPAdVvIQ=3D=3B?= c=relaxed/simple;
+ s=224i4yxa5dv7c2xz3womw6peuasteono; d=amazonses.com; t=1793361783; v=1;
+ bh=/cQd5pyeACcVg8cRURXQoDK5KSqOac4/FjFiWVY4EGs=; =?utf-8?q?h=3DFrom=3ATo=3A?=
+ =?utf-8?q?Cc=3ABcc=3ASubject=3ADate=3AMessage-ID=3AMIME-Version=3AContent-T?=
+ =?utf-8?q?ype=3AX-SES-RECEIPT=3B?=
+Received: by mail-pj1-f42.google.com with SMTP id
+ 98e67ed59e1d1-3acb11973c3so513145a91.3        for
+ <jobs@mail.allcastings.fyi>; Fri, 30 Oct 2026 05:03:02 -0700 (PDT)
+ARC-Seal: i=2; a=rsa-sha256; t=1793361782; cv=pass;
+        d=google.com; s=arc-20260327;
+        b=SBnHJlzjji9YzjlTkGEcv5GjvM6REzwJjmH8twtiDrQSL/RoySqU165Mr3DXQfT1Z6
+         W4XOVA3TBPGhhvuzejsnOMII5Cv119r6oWpcjSl1PJY0037tIiKvbATbbIsBzsgr/b/9
+         wVCYwtsIIKQF5ywoT2jOZGFTFJtgpcu1UAuMwZrqOYcaH44CeveDWVBTRY5ukA+9rTn9
+         y0UlGKrN7B3tbqPWnXUQrdtM2vLjzgvSlszd8u7FBPMMlorzxcN2AIKKe4pufwWS65g1
+         mfTnLEzGgGSLZxU8po1PV6a5p9r2LhPGdnP3DkqECeQ6y0HXNMzLIfbBJzRNODDYxDsE
+         Q/Xg==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327;       
+ h=to:reply-to:mime-version:date:content-transfer-encoding:subject        
+ :from:list-unsubscribe-post:list-unsubscribe:dkim-signature        
+ :dkim-signature:message-id:delivered-to;       
+ bh=S71YTiapI0z+G7pCZc6gskU8vlxcQj77ekEc2djmVcY=;       
+ fh=2W43MrZbE/xHD1PYQutTRj8dpY+2+jO1cTtk2qooQXc=;       
+ b=flzWToPhETtTV8i4p7MOe6s8qRIPfEHNzX7FDlU/UzNbHZ17C0V/KswSS6CPHH5HHc        
+ XWfefVM0a0oxnxOeVVEjdyNG3wXB+4unhU9prGhL6qYxJpIDHdRvXY+7M4x+IpNWzXmU        
+ moasdlP9aJDCSkTpZTc6dyfz4cK2Y3MjPKM1+M9GPtS3QQDgfI2Tpok/MIxC57bfHEFx        
+ ewtLnvpE8+8lSvoXYgQCPPSpgFAZCRSb4QTe0c9PW2SVZT5918EBKS6ezWsJGTo4CfRt        
+ BZDVBQ3LhBrDbQYZoeVOHrru2wHGOx3JRRMS+SiJWA9x4VtH+pYNEEdHWdGKk6NfzX7u        
+ 2YtQ==;        darn=mail.allcastings.fyi
+ARC-Authentication-Results: i=2; mx.google.com; dkim=pass
+ header.i=@castingnetworks.com header.s=prd header.b=aH25eUdY; dkim=pass
+ header.i=@sendgrid.info header.s=smtpapi header.b=EjTazOH6; spf=pass
+ (google.com: domain of
+ bounces+25908042-c72a-redacted=gmail.com@em5607.castingnetworks.com
+ designates 159.183.147.49 as permitted sender) =?utf-8?q?smtp=2Emailfrom=3D?=
+ =?utf-8?q?=22bounces+25908042-c72a-redacted=3Dgmail=2Ecom=40em5607=2Ecastin?=
+ =?utf-8?q?gnetworks=2Ecom=22=3B?= dmarc=pass (p=QUARANTINE sp=QUARANTINE
+ dis=NONE) header.from=castingnetworks.com
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793361782; x=1793966582;
+        h=to:reply-to:mime-version:date:content-transfer-encoding:subject
+         :from:list-unsubscribe-post:list-unsubscribe:content-type
+         :dkim-signature:dkim-signature:message-id:delivered-to
+         :x-forwarded-for:x-forwarded-to:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=S71YTiapI0z+G7pCZc6gskU8vlxcQj77ekEc2djmVcY=;
+        b=qn34zCdB1lnPfvHJtzbqc1PHFpi+BO8hj/1jKaY5yCE31w1k53/WjOR9sVKxTWo0uJ
+         vod7833UX3XDmtRPTyG1dgYaeWBjn1a3NSSGvT2o15YSMhQx7nqRXJCmaJuGTwumeePC
+         6/o3A2a6HVVx7RcBw0/hezlGsTJ7uYGlTvAuzgpSXCBkYIK5vWYSANRgAyKWi06NgQbS
+         9Jj1Qi+K+TbSPqt/fArjSWfSnWJDp4TkPrkUtO848oAvC4iT3XNLpnoDMuc2UU/anOS3
+         XB/9b5qTy4diAOb7LvyxATCTfQDUUsjqB44O5cHYnELv90nEC/DXJOC0tRI8/ZYJK/vb
+         RoLg==
+X-Forwarded-Encrypted: i=2; =?utf-8?q?AKwUvBzfkULum/PvuDO0mplz68UV1L1+WisHbr?=
+ =?utf-8?q?+DEwtM5DiQu11Ez+QvtH/tkB7stD7rdv+D/G6T=40mail=2Eallcastings=2Efyi?=
+X-Gm-Message-State: AFq9FYL64Wou2N5NfIKuU1UvnAMPSyVbr4zoyhJhDm00yxdBMnDy0EYL
+	HBiVbRx6A6yKVRm04CpuNn3Pn8AobemiADEKykmnNlicLcSBZKNA/RAiCFli6gSIxdyVCVAI4up
+	95IlkEDerwfTQTGlJ5zhMPy/pUdVwfOC0T6VKw3oHThGR1drEG+xEeCeC1bx3VQ==
+X-Received: by 2002:a17:90b:528d:b0:3ac:7f4c:a68c with SMTP id
+ 98e67ed59e1d1-3ae897c144dmr1801229a91.49.1793361781657;        Fri, 30 Oct
+ 2026 05:03:01 -0700 (PDT)
+X-Forwarded-To: jobs@mail.allcastings.fyi
+X-Forwarded-For: redacted@gmail.com jobs@mail.allcastings.fyi
+Delivered-To: redacted@gmail.com
+Received: by 2002:a05:6a21:1f81:b0:3e9:10e:737e with SMTP id rz1csp2091053pzb;
+        Fri, 30 Oct 2026 05:02:57 -0700 (PDT)
+X-Received: by 2002:a17:902:ce8f:b0:2ea:33eb:7375 with SMTP id
+ d9443c01a7336-2eb364e9411mr20859595ad.45.1793361776547;        Fri, 30 Oct
+ 2026 05:02:56 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1793361776; cv=none;
+        d=google.com; s=arc-20260327;
+        b=PfHo+crD049nNXVhto/0TNEt+1MXfNNmMH2c+cdJ5ToeqPfJRxBU7/yz0hcIBakrOl
+         tIkI/78u5/tgplLwAfVnwBZlCq+srzWgma6JQDmwk9tlV7P08rAjEYLg97HEOxt4WtYA
+         cd2HsX5fc9KZs0ijOLJsNpAkwXpAZhc2uIiD5srlHys0WckZXeWcf0xVsG+UvY3OJ8vL
+         N6kwFAssPSLUW7vtdamUnzwZKfNVu30CzmyyN1uqR1HEoFWmblSVz/iW+so1WAo3okM/
+         NvvxGeI9R0v/wrUEQL6zjlraNz6AO9nWg3t2dehICJUL1CH19VFyaule7a6IP+2zgvyJ
+         pkEg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327;       
+ h=to:reply-to:mime-version:date:content-transfer-encoding:subject        
+ :from:list-unsubscribe-post:list-unsubscribe:dkim-signature        
+ :dkim-signature:message-id;       
+ bh=S71YTiapI0z+G7pCZc6gskU8vlxcQj77ekEc2djmVcY=;       
+ fh=22U4dm3YuqGXwhDNN9XRpG8FwIHkAUyITrN9Xf8D7BQ=;       
+ b=Bq04z43MDx1iiuTceFrOkQhNBxZVUbrpOpWwdCgKqn5wZksZ5u3fTKeu4+BXZ73zqL        
+ /oG8LXgfAxR5mOukK/14tSzRSdW236QkgkxMjpdcdBkjw/YH9dudVgrr8h4aZt+S+NGJ        
+ ovC75X04aoB5C4xQz7h/HnkHz5JO74fLKC2bf3aUQzsjLv6QbDVdZ9iMqZ3rNrMbi++k        
+ JDcIPDhfVQ9gI8y0rfvPvkjGih6sIEZgSxTVtWjxzeAA92TTiQpgRs5/qdC65+cWu67P        
+ 4Uc3aiSwfLAhoVl1LJLp+29GKqRlLbImn3dLtJ+1riQxS6jfIFlzBYxEge9+TFGGQ68n        
+ uibg==;        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com; dkim=pass
+ header.i=@castingnetworks.com header.s=prd header.b=aH25eUdY; dkim=pass
+ header.i=@sendgrid.info header.s=smtpapi header.b=EjTazOH6; spf=pass
+ (google.com: domain of
+ bounces+25908042-c72a-redacted=gmail.com@em5607.castingnetworks.com
+ designates 159.183.147.49 as permitted sender) =?utf-8?q?smtp=2Emailfrom=3D?=
+ =?utf-8?q?=22bounces+25908042-c72a-redacted=3Dgmail=2Ecom=40em5607=2Ecastin?=
+ =?utf-8?q?gnetworks=2Ecom=22=3B?= dmarc=pass (p=QUARANTINE sp=QUARANTINE
+ dis=NONE) header.from=castingnetworks.com
+Return-Path:
+ <bounces+25908042-c72a-redacted=gmail.com@em5607.castingnetworks.com>
+Received: from o1.ptr6876.castingnetworks.com (o1.ptr6876.castingnetworks.com.
+ [159.183.147.49]) by mx.google.com with ESMTPS id
+ d9443c01a7336-2eb3922daedsi34773565ad.64.2026.10.30.05.02.55 for
+ <redacted@gmail.com> (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256
+ bits=128/128); Fri, 30 Oct 2026 05:02:56 -0700 (PDT)
+Received-SPF: pass (google.com: domain of
+ bounces+25908042-c72a-redacted=gmail.com@em5607.castingnetworks.com
+ designates 159.183.147.49 as permitted sender) client-ip=159.183.147.49;
+Authentication-Results: mx.google.com; dkim=pass header.i=@castingnetworks.com
+ header.s=prd header.b=aH25eUdY; dkim=pass header.i=@sendgrid.info
+ header.s=smtpapi header.b=EjTazOH6; spf=pass (google.com: domain of
+ bounces+25908042-c72a-redacted=gmail.com@em5607.castingnetworks.com
+ designates 159.183.147.49 as permitted sender) =?utf-8?q?smtp=2Emailfrom=3D?=
+ =?utf-8?q?=22bounces+25908042-c72a-redacted=3Dgmail=2Ecom=40em5607=2Ecastin?=
+ =?utf-8?q?gnetworks=2Ecom=22=3B?= dmarc=pass (p=QUARANTINE sp=QUARANTINE
+ dis=NONE) header.from=castingnetworks.com
+Message-ID: <6ae48770.b95b0c62.3c612.97bdSMTPIN_ADDED_BROKEN@mx.google.com>
+X-Google-Original-Message-ID:
+ <00000000-0000-0000-0000-000000000000-1793275200-1793361600>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=castingnetworks.com;
+	h=content-type:list-unsubscribe:list-unsubscribe-post:from:subject:	
+ =?utf-8?q?content-transfer-encoding=3Adate=3Amime-version=3Areply-to=3Ato?=
+ =?utf-8?q?=3Acc=3Acontent-type=3Adate=3Afeedback-id=3Afrom=3A?=	subject:to;
+	s=prd; t=1793361775;	bh=S71YTiapI0z+G7pCZc6gskU8vlxcQj77ekEc2djmVcY=;
+	b=aH25eUdYOy48sZ7dCiGwL17rBnWwrwu4nIj9uSI73GMNKBxTpVXloa2lgLJwAb9RYbhV
+	PcPV2GW/80rLms2Mu2fM4WAEbgbWWZLL7MsQlQtcdAiFv/kndLHFvQ1mOFVE1CY2PMSIt/
+	30htMzP0r5jCfdCH2p0t6Q2tAo+bYglKMbgLTJ6UxYCQL5HMjcvlFdijGNP02aE3TQs/wo
+	fP1ul/TOiwGdNYYfMcz1GMbC5p+C2iFF6seMjnt+xHH6YcHCc368lvsarNAGnwgXFqUIIG
+	9twPDTQbwZWh6PYqGNij0G8Xv5K0ETbbk0v15/rzTO4wQTYlqGksqA1CGD6WoCcQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sendgrid.info;
+	h=content-type:list-unsubscribe:list-unsubscribe-post:from:subject:	
+ =?utf-8?q?content-transfer-encoding=3Adate=3Amime-version=3Areply-to=3Ato?=
+ =?utf-8?q?=3Acc=3Acontent-type=3Adate=3Afeedback-id=3Afrom=3A?=	subject:to;
+	s=smtpapi; t=1793361775;	bh=S71YTiapI0z+G7pCZc6gskU8vlxcQj77ekEc2djmVcY=;
+	b=EjTazOH67aBBgyxkitE45Eq3DI6vhWO/7Ug3+VP8cz0vRzQTkF1r/1tVvO87oPDQC4K0
+	cAIGEbJZQPIZNa2b2++C5OHE6ishdDW9YBCpo7oznySSCsPV/Sv3DdpDZqmAJEPMUURdiO
+	rOlcM+7j7Pp2NbyV7eiDtzbMLnpotjwKU=
+Received: by recvd-78f69d66c6-db5z9 with SMTP id
+ recvd-78f69d66c6-db5z9-1-6AE4876F-69	2026-10-30 12:02:55.400236732 +0000 UTC
+ m=+2660548.998001988
+Received: from [127.0.0.1] (unknown) by geopod-ismtpd-10 (SG) with ESMTP id
+ EgjqEzIZRS25QxV64Tbcag for <redacted@gmail.com>; Fri, 30 Oct 2026
+ 12:02:55.097 +0000 (UTC)
+List-Unsubscribe: <https://example.invalid/unsubscribe>
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
+From: Casting Networks <notifications@castingnetworks.com>
+Subject: 48 new roles today - Your Saved Search
+Date: Fri, 30 Oct 2026 12:02:55 +0000 (UTC)
+MIME-Version: 1.0
+Reply-To: notifications@castingnetworks.com
+X-SG-EID:  u001.ufTEFlYqiN7aVNI4luE4247vQIb83zxJ6+E5PA51t6p0jWHM+2hBeIhjV
+ =?utf-8?q?BAeZAIXqPc2PFOupKNNoOeUkGS7lAgASrTsTWkO?==?utf-8?q?Nn04/ef6p/Sklg?=
+ =?utf-8?q?ZZ/w1EZMwvZOa61XE0y+KJDM707od6YVv5k4iXcz7toMVJRSeBYuN8OtxC6ni4ch5?=
+ =?utf-8?q?7snW8WIiWIFcF047rgldUKGNjlbPIBQnkUbzWeQ9nzNfzJGtc8/Ko+jA7cqbEGdAQ?=
+ =?utf-8?q?ULSoQMJSfrrj?=bvbGULALTEhK//izkoJeY2g/QQ==
+X-SG-ID:  u001.SdBcvi+Evd/bQef8eZF3BifrnqRUVzjXr7vTvoqQIkTvHZwKnKJinzojZ
+ =?utf-8?q?aHVr/VZlkX09q4MRHBAEA88gv4j1YJhYzRFKYJd?=ZsB7fziEJ50=
+To: redacted@gmail.com
+X-Entity-ID: u001.80QMTBb3uKPLGWnuDw6VyA==
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+<!doctype html><html xmlns=3D"http://www.w3.org/1999/xhtml" xmlns:v=3D"urn:sc=
+hemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-microsoft-com:office:office">=
+<head><title></title><!--[if !mso]><!--><meta http-equiv=3D"X-UA-Compatible" =
+content=3D"IE=3Dedge"><!--<![endif]--><meta http-equiv=3D"Content-Type" conte=
+nt=3D"text/html; charset=3DUTF-8"><meta name=3D"viewport" content=3D"width=3D=
+device-width,initial-scale=3D1"><style type=3D"text/css">#outlook a { padding=
+:0; }
+      body { margin:0;padding:0;-webkit-text-size-adjust:100%;-ms-text-size-a=
+djust:100%; }
+      table, td { border-collapse:collapse;mso-table-lspace:0pt;mso-table-rsp=
+ace:0pt; }
+      img { border:0;height:auto;line-height:100%; outline:none;text-decorati=
+on:none;-ms-interpolation-mode:bicubic; }
+      p { display:block;margin:13px 0; }</style><!--[if mso]>
+    <noscript>
+    <xml>
+    <o:OfficeDocumentSettings>
+      <o:AllowPNG/>
+      <o:PixelsPerInch>96</o:PixelsPerInch>
+    </o:OfficeDocumentSettings>
+    </xml>
+    </noscript>
+    <![endif]--><!--[if lte mso 11]>
+    <style type=3D"text/css">
+      .mj-outlook-group-fix { width:100% !important; }
+    </style>
+    <![endif]--><!--[if !mso]><!--><link href=3D"https://fonts.googleapis.com=
+/css2?family=3DIBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,=
+600;1,700&display=3Dswap" rel=3D"stylesheet" type=3D"text/css"><style type=3D=
+"text/css">@import url(https://fonts.googleapis.com/css2?family=3DIBM+Plex+Sa=
+ns:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=3Dswap);=
+</style><!--<![endif]--><style type=3D"text/css">@media only screen and (min-=
+width:480px) {
+        .mj-column-per-100 { width:100% !important; max-width: 100%; }
+      }</style><style media=3D"screen and (min-width:480px)">.moz-text-html .=
+mj-column-per-100 { width:100% !important; max-width: 100%; }</style><style t=
+ype=3D"text/css">@media only screen and (max-width:480px) {
+      table.mj-full-width-mobile { width: 100% !important; }
+      td.mj-full-width-mobile { width: auto !important; }
+    }</style><style type=3D"text/css">@media only screen and (max-width:480px=
+) { .wrapper { flex-direction:
+    column; } .btn-responsive { width: 100%; } .div-btn-responsive { margin-t=
+op:
+    12px; margin-bottom: 4px; } } @media only screen and (max-width: 480px) {
+    .desktop-only { display: none !important; } .mobile-only { display: block
+    !important; } } @media only screen and (min-width: 480px) { .desktop-only=
+ {
+    display: block !important; } .mobile-only { display: none !important; } }=
+</style></head><body style=3D"word-spacing:normal;"><div style=3D"line-height=
+: normal;"><!--[if mso | IE]><table align=3D"center" border=3D"0" cellpadding=
+=3D"0" cellspacing=3D"0" class=3D"layoutWrapper-outlook" role=3D"presentation=
+" style=3D"width:786px;" width=3D"786" bgcolor=3D"#f9f9f9" ><tr><td style=3D"=
+line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]--><div=
+ class=3D"layoutWrapper" style=3D"background: #f9f9f9; background-color: #f9f=
+9f9; margin: 0px auto; max-width: 786px; line-height: normal;"><table align=
+=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presenta=
+tion" style=3D"background:#f9f9f9;background-color:#f9f9f9;width:100%;"><tbod=
+y><tr><td style=3D"direction: ltr; font-size: 0px; text-align: center; paddin=
+g: 0 32px;" align=3D"center"><!--[if mso | IE]><table role=3D"presentation" b=
+order=3D"0" cellpadding=3D"0" cellspacing=3D"0"><tr><td class=3D"" width=3D"7=
+86px" ><table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"=
+0" class=3D"" role=3D"presentation" style=3D"width:786px;" width=3D"786" ><tr=
+><td style=3D"line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><!=
+[endif]--><div style=3D"margin: 0px auto; max-width: 786px; line-height: norm=
+al;"><table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0"=
+ role=3D"presentation" style=3D"width:100%;"><tbody><tr><td style=3D"directio=
+n:ltr;font-size:0px;padding:18px 0;text-align:center;"><!--[if mso | IE]><tab=
+le role=3D"presentation" border=3D"0" cellpadding=3D"0" cellspacing=3D"0"><tr=
+><td class=3D"" style=3D"vertical-align:top;width:786px;" ><![endif]--><div c=
+lass=3D"mj-column-per-100 mj-outlook-group-fix" style=3D"font-size: 0px; text=
+-align: left; direction: ltr; display: inline-block; vertical-align: top; wid=
+th: 100%; line-height: normal;"><table border=3D"0" cellpadding=3D"0" cellspa=
+cing=3D"0" role=3D"presentation" width=3D"100%"><tbody><tr><td style=3D"verti=
+cal-align:top;padding:0px;"><table border=3D"0" cellpadding=3D"0" cellspacing=
+=3D"0" role=3D"presentation" width=3D"100%"><tbody><tr><td align=3D"center" s=
+tyle=3D"font-size:0px;padding:0px;word-break:break-word;"><table border=3D"0"=
+ cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"border-co=
+llapse:collapse;border-spacing:0px;"><tbody><tr><td style=3D"width:160px;"><i=
+mg height=3D"auto" src=3D"https://cdn.castingnetworks.com/images/logos/logo29=
+4x68.png" style=3D"border:0;display:block;outline:none;text-decoration:none;h=
+eight:auto;width:100%;font-size:13px;" width=3D"160"></td></tr></tbody></tabl=
+e></td></tr></tbody></table></td></tr></tbody></table></div><!--[if mso | IE]=
+></td></tr></table><![endif]--></td></tr></tbody></table></div><!--[if mso | =
+IE]></td></tr></table></td></tr><tr><td class=3D"innerBody-outlook" width=3D"=
+786px" ><table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D=
+"0" class=3D"innerBody-outlook" role=3D"presentation" style=3D"width:786px;" =
+width=3D"786" ><tr><td style=3D"line-height:0px;font-size:0px;mso-line-height=
+-rule:exactly;"><![endif]--><div class=3D"innerBody" style=3D"border: solid 1=
+px #d8d8d8; background-color: #ffffff; margin: 0px auto; max-width: 786px; li=
+ne-height: normal; padding: 24px;"><table align=3D"center" border=3D"0" cellp=
+adding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"width:100%;"><t=
+body><tr><td style=3D"direction:ltr;font-size:0px;padding:0;text-align:center=
+;"><!--[if mso | IE]><table role=3D"presentation" border=3D"0" cellpadding=3D=
+"0" cellspacing=3D"0"><tr><td class=3D"" style=3D"vertical-align:top;width:78=
+6px;" ><![endif]--><div class=3D"mj-column-per-100 mj-outlook-group-fix" styl=
+e=3D"font-size: 0px; text-align: left; direction: ltr; display: inline-block;=
+ vertical-align: top; width: 100%; line-height: normal;"><table border=3D"0" =
+cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"vertical-a=
+lign:top;" width=3D"100%"><tbody><tr><td align=3D"left" style=3D"font-size:0p=
+x;padding:0 0 14px;word-break:break-word;"><div style=3D"font-family: IBM Ple=
+x Sans, Arial; font-size: 24px; font-weight: 500; text-align: left; color: #3=
+a3a3a; line-height: normal;">  <span>48 new roles today - "Your Saved Search"=
+</span>  </div></td></tr><tr><td align=3D"left" style=3D"font-size:0px;paddin=
+g:0 0 10px;word-break:break-word;"><div style=3D"font-family: IBM Plex Sans, =
+Arial; font-size: 14px; text-align: left; color: #3a3a3a; line-height: normal=
+;">  <span>48 new roles matching your "Your Saved Search" filter were publish=
+ed.</span>  </div></td></tr><tr><td style=3D"font-size:0px;padding:0px;word-b=
+reak:break-word;"><!--[if mso | IE]><table align=3D"center" border=3D"0" cell=
+padding=3D"0" cellspacing=3D"0" class=3D"" role=3D"presentation" style=3D"wid=
+th:786px;" width=3D"786" ><tr><td style=3D"line-height:0px;font-size:0px;mso-=
+line-height-rule:exactly;"><![endif]--><div style=3D"margin: 0px auto; max-wi=
+dth: 786px; line-height: normal;"><table align=3D"center" border=3D"0" cellpa=
+dding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"width:100%;"><tb=
+ody><tr><td style=3D"direction:ltr;font-size:0px;padding:0px;text-align:left;=
+"><!--[if mso | IE]><table role=3D"presentation" border=3D"0" cellpadding=3D"=
+0" cellspacing=3D"0"><tr><![endif]--> <!--[if mso | IE]><td class=3D"" style=
+=3D"vertical-align:top;width:786px;" ><![endif]--><div class=3D"mj-column-per=
+-100 mj-outlook-group-fix" style=3D"font-size: 0px; text-align: left; directi=
+on: ltr; display: inline-block; vertical-align: top; width: 100%; line-height=
+: normal;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"pr=
+esentation" width=3D"100%"><tbody><tr><td style=3D"vertical-align:top;padding=
+:10px;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"prese=
+ntation" style=3D"background-color:#F8F8F8;border:1px solid #d8d8d8;border-ra=
+dius:5px;" width=3D"100%"><tbody><tr><td align=3D"left" class=3D"roleColumn" =
+style=3D"font-size: 0px; word-break: break-word; padding: 6px 12px 8px;"><div=
+ style=3D"font-family: IBM Plex Sans, Arial; font-size: 13px; text-align: lef=
+t; color: #3a3a3a; line-height: normal;"><table style=3D"width: 100%;
+                  table-layout: fixed;
+                  font-size: 14px;
+                  padding-bottom: 7px;"><tr><td style=3D"text-align: left;
+                      padding-bottom: 10px;
+                      word-wrap: break-word;"><div style=3D"line-height: norm=
+al;"><b style=3D"font-size: 16px">CTIA 2026: 5G Home</b> <span style=3D"font-=
+size: 14px">Internet Commercial | Non Union</span></div></td></tr></table><mj=
+-raw></mj-raw><div style=3D"font-size: 12px; padding-bottom: 7px; line-height=
+: normal;"><div style=3D"line-height: normal;"><b>Southern States: REAL 5G Ho=
+me Customer who switched from Satellite Internet (NO ACTORS)</b></div><div st=
+yle=3D"padding-top: 4px; line-height: normal;"> <b>Submissions Due</b> Septem=
+ber 29, 2026, 8:00pm </div></div><div style=3D"font-size: 12px; padding-botto=
+m: 6px; line-height: normal;"><div style=3D"line-height: normal;"><b>Principa=
+l</b> / 18 - 90 / Any Gender</div><div style=3D"padding-top: 4px; line-height=
+: normal;">$1000  (+20% agency fee if agent involved) / Compensation: $1,000 =
+for main person interviewed (+20% agency fee if an agent is involved)
+
+*** potential additional compensation to be discussed for other household mem=
+bers or people involved in the testimonials
+=20
+</div> <div style=3D"padding-top: 4px; font-style: italic; line-height: norma=
+l;">*WE DON&#x27;T WANT ACTORS FOR THIS. REAL AUTHENTIC CUSTOMERS ONLY* =20
+
+Looking for real customers to share their testimonials for switching from the=
+ir home internet (satellite) TO 5G Home.=20
+
+Could be for any reason including affordability reasons.
+
+Link to past documentary type videos we&#x27;ve done for CTIA...</div></div><=
+div style=3D"text-align: center; padding: 12px 0 5px; line-height: normal;"><=
+div style=3D"max-width: 100%; overflow: hidden; line-height: normal;"><a clas=
+s=3D"btn btn-responsive" style=3D"background-color: #1A79AF; padding: 6px 16p=
+x; text-align: center; border-radius: 4px; word-break: keep-all; display: inl=
+ine-block; max-width: 100%; box-sizing: border-box; white-space: normal; colo=
+r: #FFF; text-decoration: none;" href=3D"https://app.castingnetworks.com/tale=
+nt/project/16060767/role/67475310?source&#x3D;savedsearch_email&amp;default_a=
+pp_context&#x3D;REDACTED">View Role</a></div></div></div></td></tr></tbody></=
+table></td></tr></tbody></table></div><!--[if mso | IE]></td><![endif]--> <!-=
+-[if mso | IE]><td class=3D"" style=3D"vertical-align:top;width:786px;" ><![e=
+ndif]--><div class=3D"mj-column-per-100 mj-outlook-group-fix" style=3D"font-s=
+ize: 0px; text-align: left; direction: ltr; display: inline-block; vertical-a=
+lign: top; width: 100%; line-height: normal;"><table border=3D"0" cellpadding=
+=3D"0" cellspacing=3D"0" role=3D"presentation" width=3D"100%"><tbody><tr><td =
+style=3D"vertical-align:top;padding:10px;"><table border=3D"0" cellpadding=3D=
+"0" cellspacing=3D"0" role=3D"presentation" style=3D"background-color:#F8F8F8=
+;border:1px solid #d8d8d8;border-radius:5px;" width=3D"100%"><tbody><tr><td a=
+lign=3D"left" class=3D"roleColumn" style=3D"font-size: 0px; word-break: break=
+-word; padding: 6px 12px 8px;"><div style=3D"font-family: IBM Plex Sans, Aria=
+l; font-size: 13px; text-align: left; color: #3a3a3a; line-height: normal;"><=
+table style=3D"width: 100%;
+                  table-layout: fixed;
+                  font-size: 14px;
+                  padding-bottom: 7px;"><tr><td style=3D"text-align: left;
+                      padding-bottom: 10px;
+                      word-wrap: break-word;"><div style=3D"line-height: norm=
+al;"><b style=3D"font-size: 16px">CTIA 2026: 5G Home</b> <span style=3D"font-=
+size: 14px">Internet Commercial | Non Union</span></div></td></tr></table><mj=
+-raw></mj-raw><div style=3D"font-size: 12px; padding-bottom: 7px; line-height=
+: normal;"><div style=3D"line-height: normal;"><b>West Coast: REAL 5G Home Cu=
+stomer who switched from Satellite Internet (NO ACTORS)</b></div><div style=
+=3D"padding-top: 4px; line-height: normal;"> <b>Submissions Due</b> September=
+ 29, 2026, 8:00pm </div></div><div style=3D"font-size: 12px; padding-bottom: =
+6px; line-height: normal;"><div style=3D"line-height: normal;"><b>Principal</=
+b> / 18 - 90 / Any Gender</div><div style=3D"padding-top: 4px; line-height: n=
+ormal;">$1000  (+20% agency fee if agent involved) / Compensation: $1,000 for=
+ main person interviewed (+20% agency fee if an agent is involved)
+
+*** potential additional compensation to be discussed for other household mem=
+bers or people involved in the testimonials
+=20
+</div> <div style=3D"padding-top: 4px; font-style: italic; line-height: norma=
+l;">*WE DON&#x27;T WANT ACTORS FOR THIS. REAL AUTHENTIC CUSTOMERS ONLY* =20
+
+Looking for real customers to share their testimonials for switching from the=
+ir home internet (satellite) TO 5G Home.=20
+
+Could be for any reason including affordability reasons.
+
+Link to past documentary type videos we&#x27;ve done for CTIA...</div></div><=
+div style=3D"text-align: center; padding: 12px 0 5px; line-height: normal;"><=
+div style=3D"max-width: 100%; overflow: hidden; line-height: normal;"><a clas=
+s=3D"btn btn-responsive" style=3D"background-color: #1A79AF; padding: 6px 16p=
+x; text-align: center; border-radius: 4px; word-break: keep-all; display: inl=
+ine-block; max-width: 100%; box-sizing: border-box; white-space: normal; colo=
+r: #FFF; text-decoration: none;" href=3D"https://app.castingnetworks.com/tale=
+nt/project/16060767/role/67475305?source&#x3D;savedsearch_email&amp;default_a=
+pp_context&#x3D;REDACTED">View Role</a></div></div></div></td></tr></tbody></=
+table></td></tr></tbody></table></div><!--[if mso | IE]></td><![endif]--> <!-=
+-[if mso | IE]><td class=3D"" style=3D"vertical-align:top;width:786px;" ><![e=
+ndif]--><div class=3D"mj-column-per-100 mj-outlook-group-fix" style=3D"font-s=
+ize: 0px; text-align: left; direction: ltr; display: inline-block; vertical-a=
+lign: top; width: 100%; line-height: normal;"><table border=3D"0" cellpadding=
+=3D"0" cellspacing=3D"0" role=3D"presentation" width=3D"100%"><tbody><tr><td =
+style=3D"vertical-align:top;padding:10px;"><table border=3D"0" cellpadding=3D=
+"0" cellspacing=3D"0" role=3D"presentation" style=3D"background-color:#F8F8F8=
+;border:1px solid #d8d8d8;border-radius:5px;" width=3D"100%"><tbody><tr><td a=
+lign=3D"left" class=3D"roleColumn" style=3D"font-size: 0px; word-break: break=
+-word; padding: 6px 12px 8px;"><div style=3D"font-family: IBM Plex Sans, Aria=
+l; font-size: 13px; text-align: left; color: #3a3a3a; line-height: normal;"><=
+table style=3D"width: 100%;
+                  table-layout: fixed;
+                  font-size: 14px;
+                  padding-bottom: 7px;"><tr><td style=3D"text-align: left;
+                      padding-bottom: 10px;
+                      word-wrap: break-word;"><div style=3D"line-height: norm=
+al;"><b style=3D"font-size: 16px">CTIA 2026: 5G Home</b> <span style=3D"font-=
+size: 14px">Internet Commercial | Non Union</span></div></td></tr></table><mj=
+-raw></mj-raw><div style=3D"font-size: 12px; padding-bottom: 7px; line-height=
+: normal;"><div style=3D"line-height: normal;"><b>East Coast: REAL 5G Home Cu=
+stomer who switched from Satellite Internet (NO ACTORS)</b></div><div style=
+=3D"padding-top: 4px; line-height: normal;"> <b>Submissions Due</b> September=
+ 29, 2026, 8:00pm </div></div><div style=3D"font-size: 12px; padding-bottom: =
+6px; line-height: normal;"><div style=3D"line-height: normal;"><b>Principal</=
+b> / 18 - 90 / Any Gender</div><div style=3D"padding-top: 4px; line-height: n=
+ormal;">$1000  (+20% agency fee if agent involved) / Compensation: $1,000 for=
+ main person interviewed (+20% agency fee if an agent is involved)
+
+*** potential additional compensation to be discussed for other household mem=
+bers or people involved in the testimonials
+=20
+</div> <div style=3D"padding-top: 4px; font-style: italic; line-height: norma=
+l;">*WE DON&#x27;T WANT ACTORS FOR THIS. REAL AUTHENTIC CUSTOMERS ONLY* =20
+
+Looking for real customers to share their testimonials for switching from the=
+ir home internet (satellite) TO 5G Home.=20
+
+Could be for any reason including affordability reasons.
+
+Link to past documentary type videos we&#x27;ve done for CTIA...</div></div><=
+div style=3D"text-align: center; padding: 12px 0 5px; line-height: normal;"><=
+div style=3D"max-width: 100%; overflow: hidden; line-height: normal;"><a clas=
+s=3D"btn btn-responsive" style=3D"background-color: #1A79AF; padding: 6px 16p=
+x; text-align: center; border-radius: 4px; word-break: keep-all; display: inl=
+ine-block; max-width: 100%; box-sizing: border-box; white-space: normal; colo=
+r: #FFF; text-decoration: none;" href=3D"https://app.castingnetworks.com/tale=
+nt/project/16060767/role/67475304?source&#x3D;savedsearch_email&amp;default_a=
+pp_context&#x3D;REDACTED">View Role</a></div></div></div></td></tr></tbody></=
+table></td></tr></tbody></table></div><!--[if mso | IE]></td><![endif]--> <!-=
+-[if mso | IE]><td class=3D"" style=3D"vertical-align:top;width:786px;" ><![e=
+ndif]--><div class=3D"mj-column-per-100 mj-outlook-group-fix" style=3D"font-s=
+ize: 0px; text-align: left; direction: ltr; display: inline-block; vertical-a=
+lign: top; width: 100%; line-height: normal;"><table border=3D"0" cellpadding=
+=3D"0" cellspacing=3D"0" role=3D"presentation" width=3D"100%"><tbody><tr><td =
+style=3D"vertical-align:top;padding:10px;"><table border=3D"0" cellpadding=3D=
+"0" cellspacing=3D"0" role=3D"presentation" style=3D"background-color:#F8F8F8=
+;border:1px solid #d8d8d8;border-radius:5px;" width=3D"100%"><tbody><tr><td a=
+lign=3D"left" class=3D"roleColumn" style=3D"font-size: 0px; word-break: break=
+-word; padding: 6px 12px 8px;"><div style=3D"font-family: IBM Plex Sans, Aria=
+l; font-size: 13px; text-align: left; color: #3a3a3a; line-height: normal;"><=
+table style=3D"width: 100%;
+                  table-layout: fixed;
+                  font-size: 14px;
+                  padding-bottom: 7px;"><tr><td style=3D"text-align: left;
+                      padding-bottom: 10px;
+                      word-wrap: break-word;"><div style=3D"line-height: norm=
+al;"><b style=3D"font-size: 16px">CTIA 2026: 5G Home</b> <span style=3D"font-=
+size: 14px">Internet Commercial | Non Union</span></div></td></tr></table><mj=
+-raw></mj-raw><div style=3D"font-size: 12px; padding-bottom: 7px; line-height=
+: normal;"><div style=3D"line-height: normal;"><b>Midwest: REAL 5G Home Custo=
+mer who switched from Satellite Internet (NO ACTORS)</b></div><div style=3D"p=
+adding-top: 4px; line-height: normal;"> <b>Submissions Due</b> September 29, =
+2026, 8:00pm </div></div><div style=3D"font-size: 12px; padding-bottom: 6px; =
+line-height: normal;"><div style=3D"line-height: normal;"><b>Principal</b> / =
+18 - 90 / Any Gender</div><div style=3D"padding-top: 4px; line-height: normal=
+;">$1000  (+20% agency fee if agent involved) / Compensation: $1,000 for main=
+ person interviewed (+20% agency fee if an agent is involved)
+
+*** potential additional compensation to be discussed for other household mem=
+bers or people involved in the testimonials
+=20
+</div> <div style=3D"padding-top: 4px; font-style: italic; line-height: norma=
+l;">*WE DON&#x27;T WANT ACTORS FOR THIS. REAL AUTHENTIC CUSTOMERS ONLY* =20
+
+Looking for real customers to share their testimonials for switching from the=
+ir home internet (satellite) TO 5G Home.=20
+
+Could be for any reason including affordability reasons.
+
+Link to past documentary type videos we&#x27;ve done for CTIA...</div></div><=
+div style=3D"text-align: center; padding: 12px 0 5px; line-height: normal;"><=
+div style=3D"max-width: 100%; overflow: hidden; line-height: normal;"><a clas=
+s=3D"btn btn-responsive" style=3D"background-color: #1A79AF; padding: 6px 16p=
+x; text-align: center; border-radius: 4px; word-break: keep-all; display: inl=
+ine-block; max-width: 100%; box-sizing: border-box; white-space: normal; colo=
+r: #FFF; text-decoration: none;" href=3D"https://app.castingnetworks.com/tale=
+nt/project/16060767/role/67475317?source&#x3D;savedsearch_email&amp;default_a=
+pp_context&#x3D;REDACTED">View Role</a></div></div></div></td></tr></tbody></=
+table></td></tr></tbody></table></div><!--[if mso | IE]></td><![endif]--> <!-=
+-[if mso | IE]><td class=3D"" style=3D"vertical-align:top;width:786px;" ><![e=
+ndif]--><div class=3D"mj-column-per-100 mj-outlook-group-fix" style=3D"font-s=
+ize: 0px; text-align: left; direction: ltr; display: inline-block; vertical-a=
+lign: top; width: 100%; line-height: normal;"><table border=3D"0" cellpadding=
+=3D"0" cellspacing=3D"0" role=3D"presentation" width=3D"100%"><tbody><tr><td =
+style=3D"vertical-align:top;padding:10px;"><table border=3D"0" cellpadding=3D=
+"0" cellspacing=3D"0" role=3D"presentation" style=3D"background-color:#F8F8F8=
+;border:1px solid #d8d8d8;border-radius:5px;" width=3D"100%"><tbody><tr><td a=
+lign=3D"left" class=3D"roleColumn" style=3D"font-size: 0px; word-break: break=
+-word; padding: 6px 12px 8px;"><div style=3D"font-family: IBM Plex Sans, Aria=
+l; font-size: 13px; text-align: left; color: #3a3a3a; line-height: normal;"><=
+table style=3D"width: 100%;
+                  table-layout: fixed;
+                  font-size: 14px;
+                  padding-bottom: 7px;"><tr><td style=3D"text-align: left;
+                      padding-bottom: 10px;
+                      word-wrap: break-word;"><div style=3D"line-height: norm=
+al;"><b style=3D"font-size: 16px">CTIA 2026: 5G Home</b> <span style=3D"font-=
+size: 14px">Internet Commercial | Non Union</span></div></td></tr></table><mj=
+-raw></mj-raw><div style=3D"font-size: 12px; padding-bottom: 7px; line-height=
+: normal;"><div style=3D"line-height: normal;"><b>Southwest: REAL 5G Home Cus=
+tomer who switched from Satellite Internet (NO ACTORS)</b></div><div style=3D=
+"padding-top: 4px; line-height: normal;"> <b>Submissions Due</b> September 29=
+, 2026, 8:00pm </div></div><div style=3D"font-size: 12px; padding-bottom: 6px=
+; line-height: normal;"><div style=3D"line-height: normal;"><b>Principal</b> =
+/ 18 - 90 / Any Gender</div><div style=3D"padding-top: 4px; line-height: norm=
+al;">$1000  (+20% agency fee if agent involved) / Compensation: $1,000 for ma=
+in person interviewed (+20% agency fee if an agent is involved)
+
+*** potential additional compensation to be discussed for other household mem=
+bers or people involved in the testimonials
+=20
+</div> <div style=3D"padding-top: 4px; font-style: italic; line-height: norma=
+l;">*WE DON&#x27;T WANT ACTORS FOR THIS. REAL AUTHENTIC CUSTOMERS ONLY* =20
+
+Looking for real customers to share their testimonials for switching from the=
+ir home internet (satellite) TO 5G Home.=20
+
+Could be for any reason including affordability reasons.
+
+Link to past documentary type videos we&#x27;ve done for CTIA...</div></div><=
+div style=3D"text-align: center; padding: 12px 0 5px; line-height: normal;"><=
+div style=3D"max-width: 100%; overflow: hidden; line-height: normal;"><a clas=
+s=3D"btn btn-responsive" style=3D"background-color: #1A79AF; padding: 6px 16p=
+x; text-align: center; border-radius: 4px; word-break: keep-all; display: inl=
+ine-block; max-width: 100%; box-sizing: border-box; white-space: normal; colo=
+r: #FFF; text-decoration: none;" href=3D"https://app.castingnetworks.com/tale=
+nt/project/16060767/role/67475318?source&#x3D;savedsearch_email&amp;default_a=
+pp_context&#x3D;REDACTED">View Role</a></div></div></div></td></tr></tbody></=
+table></td></tr></tbody></table></div><!--[if mso | IE]></td><![endif]--> <!-=
+-[if mso | IE]><td class=3D"" style=3D"vertical-align:top;width:786px;" ><![e=
+ndif]--><div class=3D"mj-column-per-100 mj-outlook-group-fix" style=3D"font-s=
+ize: 0px; text-align: left; direction: ltr; display: inline-block; vertical-a=
+lign: top; width: 100%; line-height: normal;"><table border=3D"0" cellpadding=
+=3D"0" cellspacing=3D"0" role=3D"presentation" width=3D"100%"><tbody><tr><td =
+style=3D"vertical-align:top;padding:10px;"><table border=3D"0" cellpadding=3D=
+"0" cellspacing=3D"0" role=3D"presentation" style=3D"background-color:#F8F8F8=
+;border:1px solid #d8d8d8;border-radius:5px;" width=3D"100%"><tbody><tr><td a=
+lign=3D"left" class=3D"roleColumn" style=3D"font-size: 0px; word-break: break=
+-word; padding: 6px 12px 8px;"><div style=3D"font-family: IBM Plex Sans, Aria=
+l; font-size: 13px; text-align: left; color: #3a3a3a; line-height: normal;"><=
+table style=3D"width: 100%;
+                  table-layout: fixed;
+                  font-size: 14px;
+                  padding-bottom: 7px;"><tr><td style=3D"text-align: left;
+                      padding-bottom: 10px;
+                      word-wrap: break-word;"><div style=3D"line-height: norm=
+al;"><b style=3D"font-size: 16px">CTIA 2026: 5G Home</b> <span style=3D"font-=
+size: 14px">Internet Commercial | Non Union</span></div></td></tr></table><mj=
+-raw></mj-raw><div style=3D"font-size: 12px; padding-bottom: 7px; line-height=
+: normal;"><div style=3D"line-height: normal;"><b>Texas: REAL 5G Home Custome=
+r who switched from satellite</b></div><div style=3D"padding-top: 4px; line-h=
+eight: normal;"> <b>Submissions Due</b> September 29, 2026, 8:00pm </div></di=
+v><div style=3D"font-size: 12px; padding-bottom: 6px; line-height: normal;"><=
+div style=3D"line-height: normal;"><b>Principal</b> / 18 - 80 / Any Gender</d=
+iv><div style=3D"padding-top: 4px; line-height: normal;">$1000  (+20% agency =
+fee if agent involved) / Compensation: $1,000 for main person interviewed (+2=
+0% agency fee if an agent is involved)
+
+*** potential additional compensation to be discussed for other household mem=
+bers or people involved in the testimonials
+=20
+</div> <div style=3D"padding-top: 4px; font-style: italic; line-height: norma=
+l;">*REAL AUTHENTIC CUSTOMERS ONLY, NOT ACTORS* =20
+
+Looking for real customers to share their testimonials for switching from the=
+ir satellite internet TO 5G Home.=20
+
+Looking for affordability reasons + other reasons
+
+Link to past documentary type videos we&#x27;ve done for CTIA:
+https://zancasting.com/projects...</div></div><div style=3D"text-align: cente=
+r; padding: 12px 0 5px; line-height: normal;"><div style=3D"max-width: 100%; =
+overflow: hidden; line-height: normal;"><a class=3D"btn btn-responsive" style=
+=3D"background-color: #1A79AF; padding: 6px 16px; text-align: center; border-=
+radius: 4px; word-break: keep-all; display: inline-block; max-width: 100%; bo=
+x-sizing: border-box; white-space: normal; color: #FFF; text-decoration: none=
+;" href=3D"https://app.castingnetworks.com/talent/project/16060767/role/67476=
+365?source&#x3D;savedsearch_email&amp;default_app_context&#x3D;REDACTED">View=
+ Role</a></div></div></div></td></tr></tbody></table></td></tr></tbody></tabl=
+e></div><!--[if mso | IE]></td><![endif]--> <!--[if mso | IE]><td class=3D"" =
+style=3D"vertical-align:top;width:786px;" ><![endif]--><div class=3D"mj-colum=
+n-per-100 mj-outlook-group-fix" style=3D"font-size: 0px; text-align: left; di=
+rection: ltr; display: inline-block; vertical-align: top; width: 100%; line-h=
+eight: normal;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=
+=3D"presentation" width=3D"100%"><tbody><tr><td style=3D"vertical-align:top;p=
+adding:10px;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D=
+"presentation" style=3D"background-color:#F8F8F8;border:1px solid #d8d8d8;bor=
+der-radius:5px;" width=3D"100%"><tbody><tr><td align=3D"left" class=3D"roleCo=
+lumn" style=3D"font-size: 0px; word-break: break-word; padding: 6px 12px 8px;=
+"><div style=3D"font-family: IBM Plex Sans, Arial; font-size: 13px; text-alig=
+n: left; color: #3a3a3a; line-height: normal;"><table style=3D"width: 100%;
+                  table-layout: fixed;
+                  font-size: 14px;
+                  padding-bottom: 7px;"><tr><td style=3D"text-align: left;
+                      padding-bottom: 10px;
+                      word-wrap: break-word;"><div style=3D"line-height: norm=
+al;"><b style=3D"font-size: 16px">CTIA 2026: 5G Home</b> <span style=3D"font-=
+size: 14px">Internet Commercial | Non Union</span></div></td></tr></table><mj=
+-raw></mj-raw><div style=3D"font-size: 12px; padding-bottom: 7px; line-height=
+: normal;"><div style=3D"line-height: normal;"><b>Oregon / Washington: REAL 5=
+G Home Customer who switched from satellite</b></div><div style=3D"padding-to=
+p: 4px; line-height: normal;"> <b>Submissions Due</b> September 29, 2026, 8:0=
+0pm </div></div><div style=3D"font-size: 12px; padding-bottom: 6px; line-heig=
+ht: normal;"><div style=3D"line-height: normal;"><b>Principal</b> / 18 - 80 /=
+ Any Gender</div><div style=3D"padding-top: 4px; line-height: normal;">$1000 =
+ (+20% agency fee if agent involved) / Compensation: $1,000 for main person i=
+nterviewed (+20% agency fee if an agent is involved)
+
+*** potential additional compensation to be discussed for other household mem=
+bers or people involved in the testimonials
+=20
+</div> <div style=3D"padding-top: 4px; font-style: italic; line-height: norma=
+l;">*REAL AUTHENTIC CUSTOMERS ONLY, NOT ACTORS* =20
+
+Looking for real customers to share their testimonials for switching from the=
+ir satellite internet TO 5G Home.=20
+
+Looking for affordability reasons + other reasons
+
+Link to past documentary type videos we&#x27;ve done for CTIA:
+https://zancasting.com/projects...</div></div><div style=3D"text-align: cente=
+r; padding: 12px 0 5px; line-height: normal;"><div style=3D"max-width: 100%; =
+overflow: hidden; line-height: normal;"><a class=3D"btn btn-responsive" style=
+=3D"background-color: #1A79AF; padding: 6px 16px; text-align: center; border-=
+radius: 4px; word-break: keep-all; display: inline-block; max-width: 100%; bo=
+x-sizing: border-box; white-space: normal; color: #FFF; text-decoration: none=
+;" href=3D"https://app.castingnetworks.com/talent/project/16060767/role/67476=
+363?source&#x3D;savedsearch_email&amp;default_app_context&#x3D;REDACTED">View=
+ Role</a></div></div></div></td></tr></tbody></table></td></tr></tbody></tabl=
+e></div><!--[if mso | IE]></td><![endif]--> <!--[if mso | IE]><td class=3D"" =
+style=3D"vertical-align:top;width:786px;" ><![endif]--><div class=3D"mj-colum=
+n-per-100 mj-outlook-group-fix" style=3D"font-size: 0px; text-align: left; di=
+rection: ltr; display: inline-block; vertical-align: top; width: 100%; line-h=
+eight: normal;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=
+=3D"presentation" width=3D"100%"><tbody><tr><td style=3D"vertical-align:top;p=
+adding:10px;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D=
+"presentation" style=3D"background-color:#F8F8F8;border:1px solid #d8d8d8;bor=
+der-radius:5px;" width=3D"100%"><tbody><tr><td align=3D"left" class=3D"roleCo=
+lumn" style=3D"font-size: 0px; word-break: break-word; padding: 6px 12px 8px;=
+"><div style=3D"font-family: IBM Plex Sans, Arial; font-size: 13px; text-alig=
+n: left; color: #3a3a3a; line-height: normal;"><table style=3D"width: 100%;
+                  table-layout: fixed;
+                  font-size: 14px;
+                  padding-bottom: 7px;"><tr><td style=3D"text-align: left;
+                      padding-bottom: 10px;
+                      word-wrap: break-word;"><div style=3D"line-height: norm=
+al;"><b style=3D"font-size: 16px">CTIA 2026: 5G Home</b> <span style=3D"font-=
+size: 14px">Internet Commercial | Non Union</span></div></td></tr></table><mj=
+-raw></mj-raw><div style=3D"font-size: 12px; padding-bottom: 7px; line-height=
+: normal;"><div style=3D"line-height: normal;"><b>Virginia: REAL 5G Home Cust=
+omer who switched from satellite</b></div><div style=3D"padding-top: 4px; lin=
+e-height: normal;"> <b>Submissions Due</b> September 29, 2026, 8:00pm </div><=
+/div><div style=3D"font-size: 12px; padding-bottom: 6px; line-height: normal;=
+"><div style=3D"line-height: normal;"><b>Principal</b> / 18 - 80 / Any Gender=
+</div><div style=3D"padding-top: 4px; line-height: normal;">$1000  (+20% agen=
+cy fee if agent involved) / Compensation: $1,000 for main person interviewed =
+(+20% agency fee if an agent is involved)
+
+*** potential additional compensation to be discussed for other household mem=
+bers or people involved in the testimonials
+=20
+</div> <div style=3D"padding-top: 4px; font-style: italic; line-height: norma=
+l;">*REAL AUTHENTIC CUSTOMERS ONLY, NOT ACTORS* =20
+
+Looking for real customers to share their testimonials for switching from the=
+ir satellite internet TO 5G Home.=20
+
+Looking for affordability reasons + other reasons
+
+Link to past documentary type videos we&#x27;ve done for CTIA:
+https://zancasting.com/projects...</div></div><div style=3D"text-align: cente=
+r; padding: 12px 0 5px; line-height: normal;"><div style=3D"max-width: 100%; =
+overflow: hidden; line-height: normal;"><a class=3D"btn btn-responsive" style=
+=3D"background-color: #1A79AF; padding: 6px 16px; text-align: center; border-=
+radius: 4px; word-break: keep-all; display: inline-block; max-width: 100%; bo=
+x-sizing: border-box; white-space: normal; color: #FFF; text-decoration: none=
+;" href=3D"https://app.castingnetworks.com/talent/project/16060767/role/67476=
+362?source&#x3D;savedsearch_email&amp;default_app_context&#x3D;REDACTED">View=
+ Role</a></div></div></div></td></tr></tbody></table></td></tr></tbody></tabl=
+e></div><!--[if mso | IE]></td><![endif]--> <!--[if mso | IE]><td class=3D"" =
+style=3D"vertical-align:top;width:786px;" ><![endif]--><div class=3D"mj-colum=
+n-per-100 mj-outlook-group-fix" style=3D"font-size: 0px; text-align: left; di=
+rection: ltr; display: inline-block; vertical-align: top; width: 100%; line-h=
+eight: normal;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=
+=3D"presentation" width=3D"100%"><tbody><tr><td style=3D"vertical-align:top;p=
+adding:10px;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D=
+"presentation" style=3D"background-color:#F8F8F8;border:1px solid #d8d8d8;bor=
+der-radius:5px;" width=3D"100%"><tbody><tr><td align=3D"left" class=3D"roleCo=
+lumn" style=3D"font-size: 0px; word-break: break-word; padding: 6px 12px 8px;=
+"><div style=3D"font-family: IBM Plex Sans, Arial; font-size: 13px; text-alig=
+n: left; color: #3a3a3a; line-height: normal;"><table style=3D"width: 100%;
+                  table-layout: fixed;
+                  font-size: 14px;
+                  padding-bottom: 7px;"><tr><td style=3D"text-align: left;
+                      padding-bottom: 10px;
+                      word-wrap: break-word;"><div style=3D"line-height: norm=
+al;"><b style=3D"font-size: 16px">CTIA 2026: 5G Home</b> <span style=3D"font-=
+size: 14px">Internet Commercial | Non Union</span></div></td></tr></table><mj=
+-raw></mj-raw><div style=3D"font-size: 12px; padding-bottom: 7px; line-height=
+: normal;"><div style=3D"line-height: normal;"><b>Hawaii: REAL 5G Home Custom=
+er who switched from satellite</b></div><div style=3D"padding-top: 4px; line-=
+height: normal;"> <b>Submissions Due</b> September 29, 2026, 8:00pm </div></d=
+iv><div style=3D"font-size: 12px; padding-bottom: 6px; line-height: normal;">=
+<div style=3D"line-height: normal;"><b>Principal</b> / 18 - 80 / Any Gender</=
+div><div style=3D"padding-top: 4px; line-height: normal;">$1000  (+20% agency=
+ fee if agent involved) / Compensation: $1,000 for main person interviewed (+=
+20% agency fee if an agent is involved)
+
+*** potential additional compensation to be discussed for other household mem=
+bers or people involved in the testimonials
+=20
+</div> <div style=3D"padding-top: 4px; font-style: italic; line-height: norma=
+l;">*REAL AUTHENTIC CUSTOMERS ONLY, NOT ACTORS* =20
+
+Looking for real customers to share their testimonials for switching from the=
+ir satellite internet TO 5G Home.=20
+
+Looking for affordability reasons + other reasons
+
+Link to past documentary type videos we&#x27;ve done for CTIA:
+https://zancasting.com/projects...</div></div><div style=3D"text-align: cente=
+r; padding: 12px 0 5px; line-height: normal;"><div style=3D"max-width: 100%; =
+overflow: hidden; line-height: normal;"><a class=3D"btn btn-responsive" style=
+=3D"background-color: #1A79AF; padding: 6px 16px; text-align: center; border-=
+radius: 4px; word-break: keep-all; display: inline-block; max-width: 100%; bo=
+x-sizing: border-box; white-space: normal; color: #FFF; text-decoration: none=
+;" href=3D"https://app.castingnetworks.com/talent/project/16060767/role/67476=
+373?source&#x3D;savedsearch_email&amp;default_app_context&#x3D;REDACTED">View=
+ Role</a></div></div></div></td></tr></tbody></table></td></tr></tbody></tabl=
+e></div><!--[if mso | IE]></td><![endif]--> <!--[if mso | IE]><td class=3D"" =
+style=3D"vertical-align:top;width:786px;" ><![endif]--><div class=3D"mj-colum=
+n-per-100 mj-outlook-group-fix" style=3D"font-size: 0px; text-align: left; di=
+rection: ltr; display: inline-block; vertical-align: top; width: 100%; line-h=
+eight: normal;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=
+=3D"presentation" width=3D"100%"><tbody><tr><td style=3D"vertical-align:top;p=
+adding:10px;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D=
+"presentation" style=3D"background-color:#F8F8F8;border:1px solid #d8d8d8;bor=
+der-radius:5px;" width=3D"100%"><tbody><tr><td align=3D"left" class=3D"roleCo=
+lumn" style=3D"font-size: 0px; word-break: break-word; padding: 6px 12px 8px;=
+"><div style=3D"font-family: IBM Plex Sans, Arial; font-size: 13px; text-alig=
+n: left; color: #3a3a3a; line-height: normal;"><table style=3D"width: 100%;
+                  table-layout: fixed;
+                  font-size: 14px;
+                  padding-bottom: 7px;"><tr><td style=3D"text-align: left;
+                      padding-bottom: 10px;
+                      word-wrap: break-word;"><div style=3D"line-height: norm=
+al;"><b style=3D"font-size: 16px">CTIA 2026: 5G Home</b> <span style=3D"font-=
+size: 14px">Internet Commercial | Non Union</span></div></td></tr></table><mj=
+-raw></mj-raw><div style=3D"font-size: 12px; padding-bottom: 7px; line-height=
+: normal;"><div style=3D"line-height: normal;"><b>Kansas: REAL 5G Home Custom=
+er who switched from satellite</b></div><div style=3D"padding-top: 4px; line-=
+height: normal;"> <b>Submissions Due</b> September 29, 2026, 8:00pm </div></d=
+iv><div style=3D"font-size: 12px; padding-bottom: 6px; line-height: normal;">=
+<div style=3D"line-height: normal;"><b>Principal</b> / 18 - 80 / Any Gender</=
+div><div style=3D"padding-top: 4px; line-height: normal;">$1000  (+20% agency=
+ fee if agent involved) / Compensation: $1,000 for main person interviewed (+=
+20% agency fee if an agent is involved)
+
+*** potential additional compensation to be discussed for other household mem=
+bers or people involved in the testimonials
+=20
+</div> <div style=3D"padding-top: 4px; font-style: italic; line-height: norma=
+l;">*REAL AUTHENTIC CUSTOMERS ONLY, NOT ACTORS* =20
+
+Looking for real customers to share their testimonials for switching from the=
+ir satellite internet TO 5G Home.=20
+
+Looking for affordability reasons + other reasons
+
+Link to past documentary type videos we&#x27;ve done for CTIA:
+https://zancasting.com/projects...</div></div><div style=3D"text-align: cente=
+r; padding: 12px 0 5px; line-height: normal;"><div style=3D"max-width: 100%; =
+overflow: hidden; line-height: normal;"><a class=3D"btn btn-responsive" style=
+=3D"background-color: #1A79AF; padding: 6px 16px; text-align: center; border-=
+radius: 4px; word-break: keep-all; display: inline-block; max-width: 100%; bo=
+x-sizing: border-box; white-space: normal; color: #FFF; text-decoration: none=
+;" href=3D"https://app.castingnetworks.com/talent/project/16060767/role/67476=
+375?source&#x3D;savedsearch_email&amp;default_app_context&#x3D;REDACTED">View=
+ Role</a></div></div></div></td></tr></tbody></table></td></tr></tbody></tabl=
+e></div><!--[if mso | IE]></td><![endif]--> <!--[if mso | IE]><td class=3D"" =
+style=3D"vertical-align:top;width:786px;" ><![endif]--><div class=3D"mj-colum=
+n-per-100 mj-outlook-group-fix" style=3D"font-size: 0px; text-align: left; di=
+rection: ltr; display: inline-block; vertical-align: top; width: 100%; line-h=
+eight: normal;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=
+=3D"presentation" width=3D"100%"><tbody><tr><td style=3D"vertical-align:top;p=
+adding:10px;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D=
+"presentation" style=3D"background-color:#F8F8F8;border:1px solid #d8d8d8;bor=
+der-radius:5px;" width=3D"100%"><tbody><tr><td align=3D"left" class=3D"roleCo=
+lumn" style=3D"font-size: 0px; word-break: break-word; padding: 6px 12px 8px;=
+"><div style=3D"font-family: IBM Plex Sans, Arial; font-size: 13px; text-alig=
+n: left; color: #3a3a3a; line-height: normal;"><table style=3D"width: 100%;
+                  table-layout: fixed;
+                  font-size: 14px;
+                  padding-bottom: 7px;"><tr><td style=3D"text-align: left;
+                      padding-bottom: 10px;
+                      word-wrap: break-word;"><div style=3D"line-height: norm=
+al;"><b style=3D"font-size: 16px">CTIA 2026: 5G Home</b> <span style=3D"font-=
+size: 14px">Internet Commercial | Non Union</span></div></td></tr></table><mj=
+-raw></mj-raw><div style=3D"font-size: 12px; padding-bottom: 7px; line-height=
+: normal;"><div style=3D"line-height: normal;"><b>Pennsylvania: REAL 5G Home =
+Customer who switched from satellite</b></div><div style=3D"padding-top: 4px;=
+ line-height: normal;"> <b>Submissions Due</b> September 29, 2026, 8:00pm </d=
+iv></div><div style=3D"font-size: 12px; padding-bottom: 6px; line-height: nor=
+mal;"><div style=3D"line-height: normal;"><b>Principal</b> / 18 - 80 / Any Ge=
+nder</div><div style=3D"padding-top: 4px; line-height: normal;">$1000  (+20% =
+agency fee if agent involved) / Compensation: $1,000 for main person intervie=
+wed (+20% agency fee if an agent is involved)
+
+*** potential additional compensation to be discussed for other household mem=
+bers or people involved in the testimonials
+=20
+</div> <div style=3D"padding-top: 4px; font-style: italic; line-height: norma=
+l;">*REAL AUTHENTIC CUSTOMERS ONLY, NOT ACTORS* =20
+
+Looking for real customers to share their testimonials for switching from the=
+ir satellite internet TO 5G Home.=20
+
+Looking for affordability reasons + other reasons
+
+Link to past documentary type videos we&#x27;ve done for CTIA:
+https://zancasting.com/projects...</div></div><div style=3D"text-align: cente=
+r; padding: 12px 0 5px; line-height: normal;"><div style=3D"max-width: 100%; =
+overflow: hidden; line-height: normal;"><a class=3D"btn btn-responsive" style=
+=3D"background-color: #1A79AF; padding: 6px 16px; text-align: center; border-=
+radius: 4px; word-break: keep-all; display: inline-block; max-width: 100%; bo=
+x-sizing: border-box; white-space: normal; color: #FFF; text-decoration: none=
+;" href=3D"https://app.castingnetworks.com/talent/project/16060767/role/67476=
+374?source&#x3D;savedsearch_email&amp;default_app_context&#x3D;REDACTED">View=
+ Role</a></div></div></div></td></tr></tbody></table></td></tr></tbody></tabl=
+e></div><!--[if mso | IE]></td><![endif]--> <!--[if mso | IE]><td class=3D"" =
+style=3D"vertical-align:top;width:786px;" ><![endif]--><div class=3D"mj-colum=
+n-per-100 mj-outlook-group-fix" style=3D"font-size: 0px; text-align: left; di=
+rection: ltr; display: inline-block; vertical-align: top; width: 100%; line-h=
+eight: normal;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=
+=3D"presentation" width=3D"100%"><tbody><tr><td style=3D"vertical-align:top;p=
+adding:10px;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D=
+"presentation" style=3D"background-color:#F8F8F8;border:1px solid #d8d8d8;bor=
+der-radius:5px;" width=3D"100%"><tbody><tr><td align=3D"left" class=3D"roleCo=
+lumn" style=3D"font-size: 0px; word-break: break-word; padding: 6px 12px 8px;=
+"><div style=3D"font-family: IBM Plex Sans, Arial; font-size: 13px; text-alig=
+n: left; color: #3a3a3a; line-height: normal;"><table style=3D"width: 100%;
+                  table-layout: fixed;
+                  font-size: 14px;
+                  padding-bottom: 7px;"><tr><td style=3D"text-align: left;
+                      padding-bottom: 10px;
+                      word-wrap: break-word;"><div style=3D"line-height: norm=
+al;"><b style=3D"font-size: 16px">CTIA 2026: 5G Home</b> <span style=3D"font-=
+size: 14px">Internet Commercial | Non Union</span></div></td></tr></table><mj=
+-raw></mj-raw><div style=3D"font-size: 12px; padding-bottom: 7px; line-height=
+: normal;"><div style=3D"line-height: normal;"><b>Florida: REAL 5G Home Custo=
+mer who switched from satellite</b></div><div style=3D"padding-top: 4px; line=
+-height: normal;"> <b>Submissions Due</b> September 29, 2026, 8:00pm </div></=
+div><div style=3D"font-size: 12px; padding-bottom: 6px; line-height: normal;"=
+><div style=3D"line-height: normal;"><b>Principal</b> / 18 - 80 / Any Gender<=
+/div><div style=3D"padding-top: 4px; line-height: normal;">$1000  (+20% agenc=
+y fee if agent involved) / Compensation: $1,000 for main person interviewed (=
++20% agency fee if an agent is involved)
+
+*** potential additional compensation to be discussed for other household mem=
+bers or people involved in the testimonials
+=20
+</div> <div style=3D"padding-top: 4px; font-style: italic; line-height: norma=
+l;">*REAL AUTHENTIC CUSTOMERS ONLY, NOT ACTORS* =20
+
+Looking for real customers to share their testimonials for switching from the=
+ir satellite internet TO 5G Home.=20
+
+Looking for affordability reasons + other reasons
+
+Link to past documentary type videos we&#x27;ve done for CTIA:
+https://zancasting.com/projects...</div></div><div style=3D"text-align: cente=
+r; padding: 12px 0 5px; line-height: normal;"><div style=3D"max-width: 100%; =
+overflow: hidden; line-height: normal;"><a class=3D"btn btn-responsive" style=
+=3D"background-color: #1A79AF; padding: 6px 16px; text-align: center; border-=
+radius: 4px; word-break: keep-all; display: inline-block; max-width: 100%; bo=
+x-sizing: border-box; white-space: normal; color: #FFF; text-decoration: none=
+;" href=3D"https://app.castingnetworks.com/talent/project/16060767/role/67476=
+369?source&#x3D;savedsearch_email&amp;default_app_context&#x3D;REDACTED">View=
+ Role</a></div></div></div></td></tr></tbody></table></td></tr></tbody></tabl=
+e></div><!--[if mso | IE]></td><![endif]--> <!--[if mso | IE]><td class=3D"" =
+style=3D"vertical-align:top;width:786px;" ><![endif]--><div class=3D"mj-colum=
+n-per-100 mj-outlook-group-fix" style=3D"font-size: 0px; text-align: left; di=
+rection: ltr; display: inline-block; vertical-align: top; width: 100%; line-h=
+eight: normal;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=
+=3D"presentation" width=3D"100%"><tbody><tr><td style=3D"vertical-align:top;p=
+adding:10px;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D=
+"presentation" style=3D"background-color:#F8F8F8;border:1px solid #d8d8d8;bor=
+der-radius:5px;" width=3D"100%"><tbody><tr><td align=3D"left" class=3D"roleCo=
+lumn" style=3D"font-size: 0px; word-break: break-word; padding: 6px 12px 8px;=
+"><div style=3D"font-family: IBM Plex Sans, Arial; font-size: 13px; text-alig=
+n: left; color: #3a3a3a; line-height: normal;"><table style=3D"width: 100%;
+                  table-layout: fixed;
+                  font-size: 14px;
+                  padding-bottom: 7px;"><tr><td style=3D"text-align: left;
+                      padding-bottom: 10px;
+                      word-wrap: break-word;"><div style=3D"line-height: norm=
+al;"><b style=3D"font-size: 16px">CTIA 2026: 5G Home</b> <span style=3D"font-=
+size: 14px">Internet Commercial | Non Union</span></div></td></tr></table><mj=
+-raw></mj-raw><div style=3D"font-size: 12px; padding-bottom: 7px; line-height=
+: normal;"><div style=3D"line-height: normal;"><b>North / South Dakota: REAL =
+5G Home Customer who switched from satellite</b></div><div style=3D"padding-t=
+op: 4px; line-height: normal;"> <b>Submissions Due</b> September 29, 2026, 8:=
+00pm </div></div><div style=3D"font-size: 12px; padding-bottom: 6px; line-hei=
+ght: normal;"><div style=3D"line-height: normal;"><b>Principal</b> / 18 - 80 =
+/ Any Gender</div><div style=3D"padding-top: 4px; line-height: normal;">$1000=
+  (+20% agency fee if agent involved) / Compensation: $1,000 for main person =
+interviewed (+20% agency fee if an agent is involved)
+
+*** potential additional compensation to be discussed for other household mem=
+bers or people involved in the testimonials
+=20
+</div> <div style=3D"padding-top: 4px; font-style: italic; line-height: norma=
+l;">*REAL AUTHENTIC CUSTOMERS ONLY, NOT ACTORS* =20
+
+Looking for real customers to share their testimonials for switching from the=
+ir satellite internet TO 5G Home.=20
+
+Looking for affordability reasons + other reasons
+
+Link to past documentary type videos we&#x27;ve done for CTIA:
+https://zancasting.com/projects...</div></div><div style=3D"text-align: cente=
+r; padding: 12px 0 5px; line-height: normal;"><div style=3D"max-width: 100%; =
+overflow: hidden; line-height: normal;"><a class=3D"btn btn-responsive" style=
+=3D"background-color: #1A79AF; padding: 6px 16px; text-align: center; border-=
+radius: 4px; word-break: keep-all; display: inline-block; max-width: 100%; bo=
+x-sizing: border-box; white-space: normal; color: #FFF; text-decoration: none=
+;" href=3D"https://app.castingnetworks.com/talent/project/16060767/role/67476=
+368?source&#x3D;savedsearch_email&amp;default_app_context&#x3D;REDACTED">View=
+ Role</a></div></div></div></td></tr></tbody></table></td></tr></tbody></tabl=
+e></div><!--[if mso | IE]></td><![endif]--> <!--[if mso | IE]><td class=3D"" =
+style=3D"vertical-align:top;width:786px;" ><![endif]--><div class=3D"mj-colum=
+n-per-100 mj-outlook-group-fix" style=3D"font-size: 0px; text-align: left; di=
+rection: ltr; display: inline-block; vertical-align: top; width: 100%; line-h=
+eight: normal;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=
+=3D"presentation" width=3D"100%"><tbody><tr><td style=3D"vertical-align:top;p=
+adding:10px;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D=
+"presentation" style=3D"background-color:#F8F8F8;border:1px solid #d8d8d8;bor=
+der-radius:5px;" width=3D"100%"><tbody><tr><td align=3D"left" class=3D"roleCo=
+lumn" style=3D"font-size: 0px; word-break: break-word; padding: 6px 12px 8px;=
+"><div style=3D"font-family: IBM Plex Sans, Arial; font-size: 13px; text-alig=
+n: left; color: #3a3a3a; line-height: normal;"><table style=3D"width: 100%;
+                  table-layout: fixed;
+                  font-size: 14px;
+                  padding-bottom: 7px;"><tr><td style=3D"text-align: left;
+                      padding-bottom: 10px;
+                      word-wrap: break-word;"><div style=3D"line-height: norm=
+al;"><b style=3D"font-size: 16px">CTIA 2026: 5G Home</b> <span style=3D"font-=
+size: 14px">Internet Commercial | Non Union</span></div></td></tr></table><mj=
+-raw></mj-raw><div style=3D"font-size: 12px; padding-bottom: 7px; line-height=
+: normal;"><div style=3D"line-height: normal;"><b>Nebraska: REAL 5G Home Cust=
+omer who switched from satellite</b></div><div style=3D"padding-top: 4px; lin=
+e-height: normal;"> <b>Submissions Due</b> September 29, 2026, 8:00pm </div><=
+/div><div style=3D"font-size: 12px; padding-bottom: 6px; line-height: normal;=
+"><div style=3D"line-height: normal;"><b>Principal</b> / 18 - 80 / Any Gender=
+</div><div style=3D"padding-top: 4px; line-height: normal;">$1000  (+20% agen=
+cy fee if agent involved) / Compensation: $1,000 for main person interviewed =
+(+20% agency fee if an agent is involved)
+
+*** potential additional compensation to be discussed for other household mem=
+bers or people involved in the testimonials
+=20
+</div> <div style=3D"padding-top: 4px; font-style: italic; line-height: norma=
+l;">*REAL AUTHENTIC CUSTOMERS ONLY, NOT ACTORS* =20
+
+Looking for real customers to share their testimonials for switching from the=
+ir satellite internet TO 5G Home.=20
+
+Looking for affordability reasons + other reasons
+
+Link to past documentary type videos we&#x27;ve done for CTIA:
+https://zancasting.com/projects...</div></div><div style=3D"text-align: cente=
+r; padding: 12px 0 5px; line-height: normal;"><div style=3D"max-width: 100%; =
+overflow: hidden; line-height: normal;"><a class=3D"btn btn-responsive" style=
+=3D"background-color: #1A79AF; padding: 6px 16px; text-align: center; border-=
+radius: 4px; word-break: keep-all; display: inline-block; max-width: 100%; bo=
+x-sizing: border-box; white-space: normal; color: #FFF; text-decoration: none=
+;" href=3D"https://app.castingnetworks.com/talent/project/16060767/role/67476=
+380?source&#x3D;savedsearch_email&amp;default_app_context&#x3D;REDACTED">View=
+ Role</a></div></div></div></td></tr></tbody></table></td></tr></tbody></tabl=
+e></div><!--[if mso | IE]></td><![endif]--> <!--[if mso | IE]><td class=3D"" =
+style=3D"vertical-align:top;width:786px;" ><![endif]--><div class=3D"mj-colum=
+n-per-100 mj-outlook-group-fix" style=3D"font-size: 0px; text-align: left; di=
+rection: ltr; display: inline-block; vertical-align: top; width: 100%; line-h=
+eight: normal;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=
+=3D"presentation" width=3D"100%"><tbody><tr><td style=3D"vertical-align:top;p=
+adding:10px;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D=
+"presentation" style=3D"background-color:#F8F8F8;border:1px solid #d8d8d8;bor=
+der-radius:5px;" width=3D"100%"><tbody><tr><td align=3D"left" class=3D"roleCo=
+lumn" style=3D"font-size: 0px; word-break: break-word; padding: 6px 12px 8px;=
+"><div style=3D"font-family: IBM Plex Sans, Arial; font-size: 13px; text-alig=
+n: left; color: #3a3a3a; line-height: normal;"><table style=3D"width: 100%;
+                  table-layout: fixed;
+                  font-size: 14px;
+                  padding-bottom: 7px;"><tr><td style=3D"text-align: left;
+                      padding-bottom: 10px;
+                      word-wrap: break-word;"><div style=3D"line-height: norm=
+al;"><b style=3D"font-size: 16px">CTIA 2026: 5G Home</b> <span style=3D"font-=
+size: 14px">Internet Commercial | Non Union</span></div></td></tr></table><mj=
+-raw></mj-raw><div style=3D"font-size: 12px; padding-bottom: 7px; line-height=
+: normal;"><div style=3D"line-height: normal;"><b>Montana: REAL 5G Home Custo=
+mer who switched from satellite</b></div><div style=3D"padding-top: 4px; line=
+-height: normal;"> <b>Submissions Due</b> September 29, 2026, 8:00pm </div></=
+div><div style=3D"font-size: 12px; padding-bottom: 6px; line-height: normal;"=
+><div style=3D"line-height: normal;"><b>Principal</b> / 18 - 80 / Any Gender<=
+/div><div style=3D"padding-top: 4px; line-height: normal;">$1000  (+20% agenc=
+y fee if agent involved) / Compensation: $1,000 for main person interviewed (=
++20% agency fee if an agent is involved)
+
+*** potential additional compensation to be discussed for other household mem=
+bers or people involved in the testimonials
+=20
+</div> <div style=3D"padding-top: 4px; font-style: italic; line-height: norma=
+l;">*REAL AUTHENTIC CUSTOMERS ONLY, NOT ACTORS* =20
+
+Looking for real customers to share their testimonials for switching from the=
+ir satellite internet TO 5G Home.=20
+
+Looking for affordability reasons + other reasons
+
+Link to past documentary type videos we&#x27;ve done for CTIA:
+https://zancasting.com/projects...</div></div><div style=3D"text-align: cente=
+r; padding: 12px 0 5px; line-height: normal;"><div style=3D"max-width: 100%; =
+overflow: hidden; line-height: normal;"><a class=3D"btn btn-responsive" style=
+=3D"background-color: #1A79AF; padding: 6px 16px; text-align: center; border-=
+radius: 4px; word-break: keep-all; display: inline-block; max-width: 100%; bo=
+x-sizing: border-box; white-space: normal; color: #FFF; text-decoration: none=
+;" href=3D"https://app.castingnetworks.com/talent/project/16060767/role/67476=
+377?source&#x3D;savedsearch_email&amp;default_app_context&#x3D;REDACTED">View=
+ Role</a></div></div></div></td></tr></tbody></table></td></tr></tbody></tabl=
+e></div><!--[if mso | IE]></td><![endif]--> <!--[if mso | IE]><td class=3D"" =
+style=3D"vertical-align:top;width:786px;" ><![endif]--><div class=3D"mj-colum=
+n-per-100 mj-outlook-group-fix" style=3D"font-size: 0px; text-align: left; di=
+rection: ltr; display: inline-block; vertical-align: top; width: 100%; line-h=
+eight: normal;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=
+=3D"presentation" width=3D"100%"><tbody><tr><td style=3D"vertical-align:top;p=
+adding:10px;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D=
+"presentation" style=3D"background-color:#F8F8F8;border:1px solid #d8d8d8;bor=
+der-radius:5px;" width=3D"100%"><tbody><tr><td align=3D"left" class=3D"roleCo=
+lumn" style=3D"font-size: 0px; word-break: break-word; padding: 6px 12px 8px;=
+"><div style=3D"font-family: IBM Plex Sans, Arial; font-size: 13px; text-alig=
+n: left; color: #3a3a3a; line-height: normal;"><table style=3D"width: 100%;
+                  table-layout: fixed;
+                  font-size: 14px;
+                  padding-bottom: 7px;"><tr><td style=3D"text-align: left;
+                      padding-bottom: 10px;
+                      word-wrap: break-word;"><div style=3D"line-height: norm=
+al;"><b style=3D"font-size: 16px">CTIA 2026: 5G Home</b> <span style=3D"font-=
+size: 14px">Internet Commercial | Non Union</span></div></td></tr></table><mj=
+-raw></mj-raw><div style=3D"font-size: 12px; padding-bottom: 7px; line-height=
+: normal;"><div style=3D"line-height: normal;"><b>Wyoming: REAL 5G Home Custo=
+mer who switched from satellite</b></div><div style=3D"padding-top: 4px; line=
+-height: normal;"> <b>Submissions Due</b> September 29, 2026, 8:00pm </div></=
+div><div style=3D"font-size: 12px; padding-bottom: 6px; line-height: normal;"=
+><div style=3D"line-height: normal;"><b>Principal</b> / 18 - 80 / Any Gender<=
+/div><div style=3D"padding-top: 4px; line-height: normal;">$1000  (+20% agenc=
+y fee if agent involved) / Compensation: $1,000 for main person interviewed (=
++20% agency fee if an agent is involved)
+
+*** potential additional compensation to be discussed for other household mem=
+bers or people involved in the testimonials
+=20
+</div> <div style=3D"padding-top: 4px; font-style: italic; line-height: norma=
+l;">*REAL AUTHENTIC CUSTOMERS ONLY, NOT ACTORS* =20
+
+Looking for real customers to share their testimonials for switching from the=
+ir satellite internet TO 5G Home.=20
+
+Looking for affordability reasons + other reasons
+
+Link to past documentary type videos we&#x27;ve done for CTIA:
+https://zancasting.com/projects...</div></div><div style=3D"text-align: cente=
+r; padding: 12px 0 5px; line-height: normal;"><div style=3D"max-width: 100%; =
+overflow: hidden; line-height: normal;"><a class=3D"btn btn-responsive" style=
+=3D"background-color: #1A79AF; padding: 6px 16px; text-align: center; border-=
+radius: 4px; word-break: keep-all; display: inline-block; max-width: 100%; bo=
+x-sizing: border-box; white-space: normal; color: #FFF; text-decoration: none=
+;" href=3D"https://app.castingnetworks.com/talent/project/16060767/role/67476=
+378?source&#x3D;savedsearch_email&amp;default_app_context&#x3D;REDACTED">View=
+ Role</a></div></div></div></td></tr></tbody></table></td></tr></tbody></tabl=
+e></div><!--[if mso | IE]></td><![endif]--> <!--[if mso | IE]><td class=3D"" =
+style=3D"vertical-align:top;width:786px;" ><![endif]--><div class=3D"mj-colum=
+n-per-100 mj-outlook-group-fix" style=3D"font-size: 0px; text-align: left; di=
+rection: ltr; display: inline-block; vertical-align: top; width: 100%; line-h=
+eight: normal;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=
+=3D"presentation" width=3D"100%"><tbody><tr><td style=3D"vertical-align:top;p=
+adding:10px;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D=
+"presentation" style=3D"background-color:#F8F8F8;border:1px solid #d8d8d8;bor=
+der-radius:5px;" width=3D"100%"><tbody><tr><td align=3D"left" class=3D"roleCo=
+lumn" style=3D"font-size: 0px; word-break: break-word; padding: 6px 12px 8px;=
+"><div style=3D"font-family: IBM Plex Sans, Arial; font-size: 13px; text-alig=
+n: left; color: #3a3a3a; line-height: normal;"><table style=3D"width: 100%;
+                  table-layout: fixed;
+                  font-size: 14px;
+                  padding-bottom: 7px;"><tr><td style=3D"text-align: left;
+                      padding-bottom: 10px;
+                      word-wrap: break-word;"><div style=3D"line-height: norm=
+al;"><b style=3D"font-size: 16px">CTIA 2026: 5G Home</b> <span style=3D"font-=
+size: 14px">Internet Commercial | Non Union</span></div></td></tr></table><mj=
+-raw></mj-raw><div style=3D"font-size: 12px; padding-bottom: 7px; line-height=
+: normal;"><div style=3D"line-height: normal;"><b>New Jersey: REAL 5G Home Cu=
+stomer who switched from satellite</b></div><div style=3D"padding-top: 4px; l=
+ine-height: normal;"> <b>Submissions Due</b> September 29, 2026, 8:00pm </div=
+></div><div style=3D"font-size: 12px; padding-bottom: 6px; line-height: norma=
+l;"><div style=3D"line-height: normal;"><b>Principal</b> / 18 - 80 / Any Gend=
+er</div><div style=3D"padding-top: 4px; line-height: normal;">$1000  (+20% ag=
+ency fee if agent involved) / Compensation: $1,000 for main person interviewe=
+d (+20% agency fee if an agent is involved)
+
+*** potential additional compensation to be discussed for other household mem=
+bers or people involved in the testimonials
+=20
+</div> <div style=3D"padding-top: 4px; font-style: italic; line-height: norma=
+l;">*REAL AUTHENTIC CUSTOMERS ONLY, NOT ACTORS* =20
+
+Looking for real customers to share their testimonials for switching from the=
+ir satellite internet TO 5G Home.=20
+
+Looking for affordability reasons + other reasons
+
+Link to past documentary type videos we&#x27;ve done for CTIA:
+https://zancasting.com/projects...</div></div><div style=3D"text-align: cente=
+r; padding: 12px 0 5px; line-height: normal;"><div style=3D"max-width: 100%; =
+overflow: hidden; line-height: normal;"><a class=3D"btn btn-responsive" style=
+=3D"background-color: #1A79AF; padding: 6px 16px; text-align: center; border-=
+radius: 4px; word-break: keep-all; display: inline-block; max-width: 100%; bo=
+x-sizing: border-box; white-space: normal; color: #FFF; text-decoration: none=
+;" href=3D"https://app.castingnetworks.com/talent/project/16060767/role/67476=
+461?source&#x3D;savedsearch_email&amp;default_app_context&#x3D;REDACTED">View=
+ Role</a></div></div></div></td></tr></tbody></table></td></tr></tbody></tabl=
+e></div><!--[if mso | IE]></td><![endif]--> <!--[if mso | IE]><td class=3D"" =
+style=3D"vertical-align:top;width:786px;" ><![endif]--><div class=3D"mj-colum=
+n-per-100 mj-outlook-group-fix" style=3D"font-size: 0px; text-align: left; di=
+rection: ltr; display: inline-block; vertical-align: top; width: 100%; line-h=
+eight: normal;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=
+=3D"presentation" width=3D"100%"><tbody><tr><td style=3D"vertical-align:top;p=
+adding:10px;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D=
+"presentation" style=3D"background-color:#F8F8F8;border:1px solid #d8d8d8;bor=
+der-radius:5px;" width=3D"100%"><tbody><tr><td align=3D"left" class=3D"roleCo=
+lumn" style=3D"font-size: 0px; word-break: break-word; padding: 6px 12px 8px;=
+"><div style=3D"font-family: IBM Plex Sans, Arial; font-size: 13px; text-alig=
+n: left; color: #3a3a3a; line-height: normal;"><table style=3D"width: 100%;
+                  table-layout: fixed;
+                  font-size: 14px;
+                  padding-bottom: 7px;"><tr><td style=3D"text-align: left;
+                      padding-bottom: 10px;
+                      word-wrap: break-word;"><div style=3D"line-height: norm=
+al;"><b style=3D"font-size: 16px">CTIA 2026: 5G Home</b> <span style=3D"font-=
+size: 14px">Internet Commercial | Non Union</span></div></td></tr></table><mj=
+-raw></mj-raw><div style=3D"font-size: 12px; padding-bottom: 7px; line-height=
+: normal;"><div style=3D"line-height: normal;"><b>Massachusetts / Connecticut=
+: REAL 5G Home Customer who switched from satellite</b></div><div style=3D"pa=
+dding-top: 4px; line-height: normal;"> <b>Submissions Due</b> September 29, 2=
+026, 8:00pm </div></div><div style=3D"font-size: 12px; padding-bottom: 6px; l=
+ine-height: normal;"><div style=3D"line-height: normal;"><b>Principal</b> / 1=
+8 - 80 / Any Gender</div><div style=3D"padding-top: 4px; line-height: normal;=
+">$1000  (+20% agency fee if agent involved) / Compensation: $1,000 for main =
+person interviewed (+20% agency fee if an agent is involved)
+
+*** potential additional compensation to be discussed for other household mem=
+bers or people involved in the testimonials
+=20
+</div> <div style=3D"padding-top: 4px; font-style: italic; line-height: norma=
+l;">*REAL AUTHENTIC CUSTOMERS ONLY, NOT ACTORS* =20
+
+Looking for real customers to share their testimonials for switching from the=
+ir satellite internet TO 5G Home.=20
+
+Looking for affordability reasons + other reasons
+
+Link to past documentary type videos we&#x27;ve done for CTIA:
+https://zancasting.com/projects...</div></div><div style=3D"text-align: cente=
+r; padding: 12px 0 5px; line-height: normal;"><div style=3D"max-width: 100%; =
+overflow: hidden; line-height: normal;"><a class=3D"btn btn-responsive" style=
+=3D"background-color: #1A79AF; padding: 6px 16px; text-align: center; border-=
+radius: 4px; word-break: keep-all; display: inline-block; max-width: 100%; bo=
+x-sizing: border-box; white-space: normal; color: #FFF; text-decoration: none=
+;" href=3D"https://app.castingnetworks.com/talent/project/16060767/role/67476=
+460?source&#x3D;savedsearch_email&amp;default_app_context&#x3D;REDACTED">View=
+ Role</a></div></div></div></td></tr></tbody></table></td></tr></tbody></tabl=
+e></div><!--[if mso | IE]></td><![endif]--> <!--[if mso | IE]><td class=3D"" =
+style=3D"vertical-align:top;width:786px;" ><![endif]--><div class=3D"mj-colum=
+n-per-100 mj-outlook-group-fix" style=3D"font-size: 0px; text-align: left; di=
+rection: ltr; display: inline-block; vertical-align: top; width: 100%; line-h=
+eight: normal;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=
+=3D"presentation" width=3D"100%"><tbody><tr><td style=3D"vertical-align:top;p=
+adding:10px;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D=
+"presentation" style=3D"background-color:#F8F8F8;border:1px solid #d8d8d8;bor=
+der-radius:5px;" width=3D"100%"><tbody><tr><td align=3D"left" class=3D"roleCo=
+lumn" style=3D"font-size: 0px; word-break: break-word; padding: 6px 12px 8px;=
+"><div style=3D"font-family: IBM Plex Sans, Arial; font-size: 13px; text-alig=
+n: left; color: #3a3a3a; line-height: normal;"><table style=3D"width: 100%;
+                  table-layout: fixed;
+                  font-size: 14px;
+                  padding-bottom: 7px;"><tr><td style=3D"text-align: left;
+                      padding-bottom: 10px;
+                      word-wrap: break-word;"><div style=3D"line-height: norm=
+al;"><b style=3D"font-size: 16px">CTIA 2026: 5G Home</b> <span style=3D"font-=
+size: 14px">Internet Commercial | Non Union</span></div></td></tr></table><mj=
+-raw></mj-raw><div style=3D"font-size: 12px; padding-bottom: 7px; line-height=
+: normal;"><div style=3D"line-height: normal;"><b>California: REAL 5G Home Cu=
+stomer who switched from satellite</b></div><div style=3D"padding-top: 4px; l=
+ine-height: normal;"> <b>Submissions Due</b> September 29, 2026, 8:00pm </div=
+></div><div style=3D"font-size: 12px; padding-bottom: 6px; line-height: norma=
+l;"><div style=3D"line-height: normal;"><b>Principal</b> / 18 - 80 / Any Gend=
+er</div><div style=3D"padding-top: 4px; line-height: normal;">$1000  (+20% ag=
+ency fee if agent involved) / Compensation: $1,000 for main person interviewe=
+d (+20% agency fee if an agent is involved)
+
+*** potential additional compensation to be discussed for other household mem=
+bers or people involved in the testimonials
+=20
+</div> <div style=3D"padding-top: 4px; font-style: italic; line-height: norma=
+l;">*REAL AUTHENTIC CUSTOMERS ONLY, NOT ACTORS* =20
+
+Looking for real customers to share their testimonials for switching from the=
+ir satellite internet TO 5G Home.=20
+
+Looking for affordability reasons + other reasons
+
+Link to past documentary type videos we&#x27;ve done for CTIA:
+https://zancasting.com/projects...</div></div><div style=3D"text-align: cente=
+r; padding: 12px 0 5px; line-height: normal;"><div style=3D"max-width: 100%; =
+overflow: hidden; line-height: normal;"><a class=3D"btn btn-responsive" style=
+=3D"background-color: #1A79AF; padding: 6px 16px; text-align: center; border-=
+radius: 4px; word-break: keep-all; display: inline-block; max-width: 100%; bo=
+x-sizing: border-box; white-space: normal; color: #FFF; text-decoration: none=
+;" href=3D"https://app.castingnetworks.com/talent/project/16060767/role/67476=
+459?source&#x3D;savedsearch_email&amp;default_app_context&#x3D;REDACTED">View=
+ Role</a></div></div></div></td></tr></tbody></table></td></tr></tbody></tabl=
+e></div><!--[if mso | IE]></td><![endif]--> <!--[if mso | IE]><td class=3D"" =
+style=3D"vertical-align:top;width:786px;" ><![endif]--><div class=3D"mj-colum=
+n-per-100 mj-outlook-group-fix" style=3D"font-size: 0px; text-align: left; di=
+rection: ltr; display: inline-block; vertical-align: top; width: 100%; line-h=
+eight: normal;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=
+=3D"presentation" width=3D"100%"><tbody><tr><td style=3D"vertical-align:top;p=
+adding:10px;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D=
+"presentation" style=3D"background-color:#F8F8F8;border:1px solid #d8d8d8;bor=
+der-radius:5px;" width=3D"100%"><tbody><tr><td align=3D"left" class=3D"roleCo=
+lumn" style=3D"font-size: 0px; word-break: break-word; padding: 6px 12px 8px;=
+"><div style=3D"font-family: IBM Plex Sans, Arial; font-size: 13px; text-alig=
+n: left; color: #3a3a3a; line-height: normal;"><table style=3D"width: 100%;
+                  table-layout: fixed;
+                  font-size: 14px;
+                  padding-bottom: 7px;"><tr><td style=3D"text-align: left;
+                      padding-bottom: 10px;
+                      word-wrap: break-word;"><div style=3D"line-height: norm=
+al;"><b style=3D"font-size: 16px">Adult Cigarette Smokers-Paid Nicotine Pouch=
+ Study</b> <span style=3D"font-size: 14px">Other | No Union Affiliation</span=
+></div></td></tr></table><mj-raw></mj-raw><div style=3D"font-size: 12px; padd=
+ing-bottom: 7px; line-height: normal;"><span class=3D"accented" style=3D"colo=
+r: #EF9500; font-style: italic; font-size: 12px; line-height: 16px; border: 1=
+px
+  solid #D8D8D8; border-radius: 5px; padding: 2px 6px 4px;">Requesting additi=
+onal submissions</span></div><mj-raw></mj-raw><div style=3D"font-size: 12px; =
+padding-bottom: 7px; line-height: normal;"><div style=3D"line-height: normal;=
+"><b>Adult Cigarette Smokers </b></div><div style=3D"padding-top: 4px; line-h=
+eight: normal;"> <b>Submissions Due</b> October 30, 2026, 2:00pm </div></div>=
+<div style=3D"font-size: 12px; padding-bottom: 6px; line-height: normal;"><di=
+v style=3D"line-height: normal;"><b>Principal</b> / 21 - 65 / Any Gender</div=
+><div style=3D"padding-top: 4px; line-height: normal;">$675 Max</div> <div st=
+yle=3D"padding-top: 4px; font-style: italic; line-height: normal;">We=E2=80=
+=99re seeking adults ages 21=E2=80=9365 who currently smoke cigarettes for a =
+paid research study.
+
+Participants must be willing to use and evaluate an assigned nicotine pouch p=
+roduct for approximately 10 weeks and complete weekly online surveys. Product=
+s will be shipped to their homes at no cost.
+
+Compensat...</div></div><div style=3D"text-align: center; padding: 12px 0 5px=
+; line-height: normal;"><div style=3D"max-width: 100%; overflow: hidden; line=
+-height: normal;"><a class=3D"btn btn-responsive" style=3D"background-color: =
+#1A79AF; padding: 6px 16px; text-align: center; border-radius: 4px; word-brea=
+k: keep-all; display: inline-block; max-width: 100%; box-sizing: border-box; =
+white-space: normal; color: #FFF; text-decoration: none;" href=3D"https://app=
+.castingnetworks.com/talent/project/16066781/role/67487516?source&#x3D;saveds=
+earch_email&amp;default_app_context&#x3D;REDACTED">View Role</a></div></div><=
+/div></td></tr></tbody></table></td></tr></tbody></table></div><!--[if mso | =
+IE]></td><![endif]--> <!--[if mso | IE]><td class=3D"" style=3D"vertical-alig=
+n:top;width:786px;" ><![endif]--><div class=3D"mj-column-per-100 mj-outlook-g=
+roup-fix" style=3D"font-size: 0px; text-align: left; direction: ltr; display:=
+ inline-block; vertical-align: top; width: 100%; line-height: normal;"><table=
+ border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" width=
+=3D"100%"><tbody><tr><td style=3D"vertical-align:top;padding:10px;"><table bo=
+rder=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D=
+"background-color:#F8F8F8;border:1px solid #d8d8d8;border-radius:5px;" width=
+=3D"100%"><tbody><tr><td align=3D"left" class=3D"roleColumn" style=3D"font-si=
+ze: 0px; word-break: break-word; padding: 6px 12px 8px;"><div style=3D"font-f=
+amily: IBM Plex Sans, Arial; font-size: 13px; text-align: left; color: #3a3a3=
+a; line-height: normal;"><table style=3D"width: 100%;
+                  table-layout: fixed;
+                  font-size: 14px;
+                  padding-bottom: 7px;"><tr><td style=3D"text-align: left;
+                      padding-bottom: 10px;
+                      word-wrap: break-word;"><div style=3D"line-height: norm=
+al;"><b style=3D"font-size: 16px">Elsbeth</b> <span style=3D"font-size: 14px"=
+>Television Series | SAG-AFTRA</span></div></td></tr></table><mj-raw></mj-raw=
+><div style=3D"font-size: 12px; padding-bottom: 7px; line-height: normal;"><d=
+iv style=3D"line-height: normal;"><b>SAGAFTRA to portray featured Internal af=
+fairs investigator Mon Nov 2</b></div><div style=3D"padding-top: 4px; line-he=
+ight: normal;"> <b>Submissions Due</b> October 29, 2026, 1:00pm </div></div><=
+div style=3D"font-size: 12px; padding-bottom: 6px; line-height: normal;"><div=
+ style=3D"line-height: normal;"><b>Background</b> / 18 - 75 / Any Gender</div=
+><div style=3D"padding-top: 4px; line-height: normal;">231.00/8 / Comer Casti=
+ng is seeking SAGAFTRA talent to portray a featured internal affairs investig=
+ator Mon, Nov 2</div> <div style=3D"padding-top: 4px; font-style: italic; lin=
+e-height: normal;">Comer Casting is seeking SAGAFTRA talent to portray a feat=
+ured internal affairs investigator Mon, Nov 2</div></div><div style=3D"text-a=
+lign: center; padding: 12px 0 5px; line-height: normal;"><div style=3D"max-wi=
+dth: 100%; overflow: hidden; line-height: normal;"><a class=3D"btn btn-respon=
+sive" style=3D"background-color: #1A79AF; padding: 6px 16px; text-align: cent=
+er; border-radius: 4px; word-break: keep-all; display: inline-block; max-widt=
+h: 100%; box-sizing: border-box; white-space: normal; color: #FFF; text-decor=
+ation: none;" href=3D"https://app.castingnetworks.com/talent/project/15836923=
+/role/67488288?source&#x3D;savedsearch_email&amp;default_app_context&#x3D;RED=
+ACTED">View Role</a></div></div></div></td></tr></tbody></table></td></tr></t=
+body></table></div><!--[if mso | IE]></td><![endif]--> <!--[if mso | IE]><td =
+class=3D"" style=3D"vertical-align:top;width:786px;" ><![endif]--><div class=
+=3D"mj-column-per-100 mj-outlook-group-fix" style=3D"font-size: 0px; text-ali=
+gn: left; direction: ltr; display: inline-block; vertical-align: top; width: =
+100%; line-height: normal;"><table border=3D"0" cellpadding=3D"0" cellspacing=
+=3D"0" role=3D"presentation" width=3D"100%"><tbody><tr><td style=3D"vertical-=
+align:top;padding:10px;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D=
+"0" role=3D"presentation" style=3D"background-color:#F8F8F8;border:1px solid =
+#d8d8d8;border-radius:5px;" width=3D"100%"><tbody><tr><td align=3D"left" clas=
+s=3D"roleColumn" style=3D"font-size: 0px; word-break: break-word; padding: 6p=
+x 12px 8px;"><div style=3D"font-family: IBM Plex Sans, Arial; font-size: 13px=
+; text-align: left; color: #3a3a3a; line-height: normal;"><table style=3D"wid=
+th: 100%;
+                  table-layout: fixed;
+                  font-size: 14px;
+                  padding-bottom: 7px;"><tr><td style=3D"text-align: left;
+                      padding-bottom: 10px;
+                      word-wrap: break-word;"><div style=3D"line-height: norm=
+al;"><b style=3D"font-size: 16px">Hot Smirk </b> <span style=3D"font-size: 14=
+px">Feature Film | SAG-AFTRA</span></div></td></tr></table><mj-raw></mj-raw><=
+div style=3D"font-size: 12px; padding-bottom: 7px; line-height: normal;"><div=
+ style=3D"line-height: normal;"><b>Park Pedestrians (NonSAG)</b></div><div st=
+yle=3D"padding-top: 4px; line-height: normal;"> <b>Submissions Due</b> Octobe=
+r 29, 2026, 10:00am </div></div><div style=3D"font-size: 12px; padding-bottom=
+: 6px; line-height: normal;"><div style=3D"line-height: normal;"><b>Backgroun=
+d</b> / 18 - 50 / Any Gender</div><div style=3D"padding-top: 4px; line-height=
+: normal;">$187/10hrs</div> <div style=3D"padding-top: 4px; font-style: itali=
+c; line-height: normal;">Grant Wilfley Casting is seeking people for backgrou=
+nd work on the feature film Hot Smirk to portray Park Pedestrians (NonSAG)
+
+Tentative work date: 10/30 in NYC
+
+NonSAG Rate: $187/10hr=20
+
+We are committed to diverse, inclusive casting for every role. Please submit =
+qualified performers, without regar...</div></div><div style=3D"text-align: c=
+enter; padding: 12px 0 5px; line-height: normal;"><div style=3D"max-width: 10=
+0%; overflow: hidden; line-height: normal;"><a class=3D"btn btn-responsive" s=
+tyle=3D"background-color: #1A79AF; padding: 6px 16px; text-align: center; bor=
+der-radius: 4px; word-break: keep-all; display: inline-block; max-width: 100%=
+; box-sizing: border-box; white-space: normal; color: #FFF; text-decoration: =
+none;" href=3D"https://app.castingnetworks.com/talent/project/16057575/role/6=
+7488291?source&#x3D;savedsearch_email&amp;default_app_context&#x3D;REDACTED">=
+View Role</a></div></div></div></td></tr></tbody></table></td></tr></tbody></=
+table></div><!--[if mso | IE]></td><![endif]--> <!--[if mso | IE]><td class=
+=3D"" style=3D"vertical-align:top;width:786px;" ><![endif]--><div class=3D"mj=
+-column-per-100 mj-outlook-group-fix" style=3D"font-size: 0px; text-align: le=
+ft; direction: ltr; display: inline-block; vertical-align: top; width: 100%; =
+line-height: normal;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0"=
+ role=3D"presentation" width=3D"100%"><tbody><tr><td style=3D"vertical-align:=
+top;padding:10px;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" ro=
+le=3D"presentation" style=3D"background-color:#F8F8F8;border:1px solid #d8d8d=
+8;border-radius:5px;" width=3D"100%"><tbody><tr><td align=3D"left" class=3D"r=
+oleColumn" style=3D"font-size: 0px; word-break: break-word; padding: 6px 12px=
+ 8px;"><div style=3D"font-family: IBM Plex Sans, Arial; font-size: 13px; text=
+-align: left; color: #3a3a3a; line-height: normal;"><table style=3D"width: 10=
+0%;
+                  table-layout: fixed;
+                  font-size: 14px;
+                  padding-bottom: 7px;"><tr><td style=3D"text-align: left;
+                      padding-bottom: 10px;
+                      word-wrap: break-word;"><div style=3D"line-height: norm=
+al;"><b style=3D"font-size: 16px">AVAILABILITY</b> <span style=3D"font-size: =
+14px">Television Series | Other</span></div></td></tr></table><mj-raw></mj-ra=
+w><div style=3D"font-size: 12px; padding-bottom: 7px; line-height: normal;"><=
+div style=3D"line-height: normal;"><b>**SPECIAL ABILITY** UNION/NON WITH REAL=
+ MILITARY EXPERIENCE TO PORTRAY SOLDIERS</b></div><div style=3D"padding-top: =
+4px; line-height: normal;"> <b>Submissions Due</b> November 01, 2026, 7:00pm =
+</div></div><div style=3D"font-size: 12px; padding-bottom: 6px; line-height: =
+normal;"><div style=3D"line-height: normal;"><b>Background</b> / 20 - 50 / An=
+y Gender</div><div style=3D"padding-top: 4px; line-height: normal;">$241/8 HR=
+S</div> <div style=3D"padding-top: 4px; font-style: italic; line-height: norm=
+al;">**SPECIAL ABILITY** UNION/NON WITH REAL MILITARY EXPERIENCE TO PORTRAY S=
+OLDIERS_AVAIL THURS 10/5 + TUES 10/17. PLEASE EMAIL ALEXCSUBMISSIONS@CENTRALC=
+ASTING.COM A RECENT PHOTO OF YOURSELF, YOUR PHONE NUMBER, IF YOU&#x27;RE SAG-=
+AFTRA OR NON-UNION, AND A DESCRIPTION OF YOUR MILITARY EXPERIENCE. FILMING IN=
+ Y...</div></div><div style=3D"text-align: center; padding: 12px 0 5px; line-=
+height: normal;"><div style=3D"max-width: 100%; overflow: hidden; line-height=
+: normal;"><a class=3D"btn btn-responsive" style=3D"background-color: #1A79AF=
+; padding: 6px 16px; text-align: center; border-radius: 4px; word-break: keep=
+-all; display: inline-block; max-width: 100%; box-sizing: border-box; white-s=
+pace: normal; color: #FFF; text-decoration: none;" href=3D"https://app.castin=
+gnetworks.com/talent/project/357548/role/67488290?source&#x3D;savedsearch_ema=
+il&amp;default_app_context&#x3D;REDACTED">View Role</a></div></div></div></td=
+></tr></tbody></table></td></tr></tbody></table></div><!--[if mso | IE]></td>=
+<![endif]--> <!--[if mso | IE]><td class=3D"" style=3D"vertical-align:top;wid=
+th:786px;" ><![endif]--><div class=3D"mj-column-per-100 mj-outlook-group-fix"=
+ style=3D"font-size: 0px; text-align: left; direction: ltr; display: inline-b=
+lock; vertical-align: top; width: 100%; line-height: normal;"><table border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" width=3D"100=
+%"><tbody><tr><td style=3D"vertical-align:top;padding:10px;"><table border=3D=
+"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"backgr=
+ound-color:#F8F8F8;border:1px solid #d8d8d8;border-radius:5px;" width=3D"100%=
+"><tbody><tr><td align=3D"left" class=3D"roleColumn" style=3D"font-size: 0px;=
+ word-break: break-word; padding: 6px 12px 8px;"><div style=3D"font-family: I=
+BM Plex Sans, Arial; font-size: 13px; text-align: left; color: #3a3a3a; line-=
+height: normal;"><table style=3D"width: 100%;
+                  table-layout: fixed;
+                  font-size: 14px;
+                  padding-bottom: 7px;"><tr><td style=3D"text-align: left;
+                      padding-bottom: 10px;
+                      word-wrap: break-word;"><div style=3D"line-height: norm=
+al;"><b style=3D"font-size: 16px">LINE OF FIRE</b> <span style=3D"font-size: =
+14px">Television Series | SAG-AFTRA</span></div></td></tr></table><mj-raw></m=
+j-raw><div style=3D"font-size: 12px; padding-bottom: 7px; line-height: normal=
+;"><div style=3D"line-height: normal;"><b>NU to portray Pedestrians w/Picture=
+ Cars *filming in Brooklyn* Mon 11/2</b></div><div style=3D"padding-top: 4px;=
+ line-height: normal;"> <b>Submissions Due</b> October 29, 2026, 12:00pm </di=
+v></div><div style=3D"font-size: 12px; padding-bottom: 6px; line-height: norm=
+al;"><div style=3D"line-height: normal;"><b>Background</b> / 18 - 100 / Any G=
+ender</div><div style=3D"padding-top: 4px; line-height: normal;">$187/10 / + =
+$37.50 car bump</div> <div style=3D"padding-top: 4px; font-style: italic; lin=
+e-height: normal;">please note year/color/make/model of car</div></div><div s=
+tyle=3D"text-align: center; padding: 12px 0 5px; line-height: normal;"><div s=
+tyle=3D"max-width: 100%; overflow: hidden; line-height: normal;"><a class=3D"=
+btn btn-responsive" style=3D"background-color: #1A79AF; padding: 6px 16px; te=
+xt-align: center; border-radius: 4px; word-break: keep-all; display: inline-b=
+lock; max-width: 100%; box-sizing: border-box; white-space: normal; color: #F=
+FF; text-decoration: none;" href=3D"https://app.castingnetworks.com/talent/pr=
+oject/16049034/role/67488300?source&#x3D;savedsearch_email&amp;default_app_co=
+ntext&#x3D;REDACTED">View Role</a></div></div></div></td></tr></tbody></table=
+></td></tr></tbody></table></div><!--[if mso | IE]></td><![endif]--> <!--[if =
+mso | IE]><td class=3D"" style=3D"vertical-align:top;width:786px;" ><![endif]=
+--><div class=3D"mj-column-per-100 mj-outlook-group-fix" style=3D"font-size: =
+0px; text-align: left; direction: ltr; display: inline-block; vertical-align:=
+ top; width: 100%; line-height: normal;"><table border=3D"0" cellpadding=3D"0=
+" cellspacing=3D"0" role=3D"presentation" width=3D"100%"><tbody><tr><td style=
+=3D"vertical-align:top;padding:10px;"><table border=3D"0" cellpadding=3D"0" c=
+ellspacing=3D"0" role=3D"presentation" style=3D"background-color:#F8F8F8;bord=
+er:1px solid #d8d8d8;border-radius:5px;" width=3D"100%"><tbody><tr><td align=
+=3D"left" class=3D"roleColumn" style=3D"font-size: 0px; word-break: break-wor=
+d; padding: 6px 12px 8px;"><div style=3D"font-family: IBM Plex Sans, Arial; f=
+ont-size: 13px; text-align: left; color: #3a3a3a; line-height: normal;"><tabl=
+e style=3D"width: 100%;
+                  table-layout: fixed;
+                  font-size: 14px;
+                  padding-bottom: 7px;"><tr><td style=3D"text-align: left;
+                      padding-bottom: 10px;
+                      word-wrap: break-word;"><div style=3D"line-height: norm=
+al;"><b style=3D"font-size: 16px">LINE OF FIRE</b> <span style=3D"font-size: =
+14px">Television Series | SAG-AFTRA</span></div></td></tr></table><mj-raw></m=
+j-raw><div style=3D"font-size: 12px; padding-bottom: 7px; line-height: normal=
+;"><div style=3D"line-height: normal;"><b>NU to portray Restaurant Patrons *M=
+on 11/2* Filming in Brooklyn</b></div><div style=3D"padding-top: 4px; line-he=
+ight: normal;"> <b>Submissions Due</b> October 29, 2026, 3:30pm </div></div><=
+div style=3D"font-size: 12px; padding-bottom: 6px; line-height: normal;"><div=
+ style=3D"line-height: normal;"><b>Background</b> / 18 - 100 / Any Gender</di=
+v><div style=3D"padding-top: 4px; line-height: normal;">$187/10</div> <div st=
+yle=3D"padding-top: 4px; font-style: italic; line-height: normal;">Please not=
+e last time worked and who you portrayed</div></div><div style=3D"text-align:=
+ center; padding: 12px 0 5px; line-height: normal;"><div style=3D"max-width: =
+100%; overflow: hidden; line-height: normal;"><a class=3D"btn btn-responsive"=
+ style=3D"background-color: #1A79AF; padding: 6px 16px; text-align: center; b=
+order-radius: 4px; word-break: keep-all; display: inline-block; max-width: 10=
+0%; box-sizing: border-box; white-space: normal; color: #FFF; text-decoration=
+: none;" href=3D"https://app.castingnetworks.com/talent/project/16049034/role=
+/67488304?source&#x3D;savedsearch_email&amp;default_app_context&#x3D;REDACTED=
+">View Role</a></div></div></div></td></tr></tbody></table></td></tr></tbody>=
+</table></div><!--[if mso | IE]></td><![endif]--> <!--[if mso | IE]><td class=
+=3D"" style=3D"vertical-align:top;width:786px;" ><![endif]--><div class=3D"mj=
+-column-per-100 mj-outlook-group-fix" style=3D"font-size: 0px; text-align: le=
+ft; direction: ltr; display: inline-block; vertical-align: top; width: 100%; =
+line-height: normal;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0"=
+ role=3D"presentation" width=3D"100%"><tbody><tr><td style=3D"vertical-align:=
+top;padding:10px;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" ro=
+le=3D"presentation" style=3D"background-color:#F8F8F8;border:1px solid #d8d8d=
+8;border-radius:5px;" width=3D"100%"><tbody><tr><td align=3D"left" class=3D"r=
+oleColumn" style=3D"font-size: 0px; word-break: break-word; padding: 6px 12px=
+ 8px;"><div style=3D"font-family: IBM Plex Sans, Arial; font-size: 13px; text=
+-align: left; color: #3a3a3a; line-height: normal;"><table style=3D"width: 10=
+0%;
+                  table-layout: fixed;
+                  font-size: 14px;
+                  padding-bottom: 7px;"><tr><td style=3D"text-align: left;
+                      padding-bottom: 10px;
+                      word-wrap: break-word;"><div style=3D"line-height: norm=
+al;"><b style=3D"font-size: 16px">Amex</b> <span style=3D"font-size: 14px">St=
+ock Photography | No Union Affiliation</span></div></td></tr></table><mj-raw>=
+</mj-raw><div style=3D"font-size: 12px; padding-bottom: 7px; line-height: nor=
+mal;"><div style=3D"line-height: normal;"><b>Model</b></div><div style=3D"pad=
+ding-top: 4px; line-height: normal;"> <b>Submissions Due</b> November 03, 202=
+6, 7:00pm </div></div><div style=3D"font-size: 12px; padding-bottom: 6px; lin=
+e-height: normal;"><div style=3D"line-height: normal;"><b>Supporting</b> / 25=
+ - 55 / Multiple Genders</div><div style=3D"padding-top: 4px; line-height: no=
+rmal;">450</div> <div style=3D"padding-top: 4px; font-style: italic; line-hei=
+ght: normal;">Models needed for editorial still photography project at Americ=
+an Express office locations.
+Models will be acting as stand-in office workers interacting with a company l=
+eader and other model &quot;extras&quot;.
+While we are looking for ethnic and racial diversity, we ask that the model i=
+s able to understand E...</div></div><div style=3D"text-align: center; paddin=
+g: 12px 0 5px; line-height: normal;"><div style=3D"max-width: 100%; overflow:=
+ hidden; line-height: normal;"><a class=3D"btn btn-responsive" style=3D"backg=
+round-color: #1A79AF; padding: 6px 16px; text-align: center; border-radius: 4=
+px; word-break: keep-all; display: inline-block; max-width: 100%; box-sizing:=
+ border-box; white-space: normal; color: #FFF; text-decoration: none;" href=
+=3D"https://app.castingnetworks.com/talent/project/16066992/role/67488306?sou=
+rce&#x3D;savedsearch_email&amp;default_app_context&#x3D;REDACTED">View Role</=
+a></div></div></div></td></tr></tbody></table></td></tr></tbody></table></div=
+><!--[if mso | IE]></td><![endif]--> <!--[if mso | IE]><td class=3D"" style=
+=3D"vertical-align:top;width:786px;" ><![endif]--><div class=3D"mj-column-per=
+-100 mj-outlook-group-fix" style=3D"font-size: 0px; text-align: left; directi=
+on: ltr; display: inline-block; vertical-align: top; width: 100%; line-height=
+: normal;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"pr=
+esentation" width=3D"100%"><tbody><tr><td style=3D"vertical-align:top;padding=
+:10px;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"prese=
+ntation" style=3D"background-color:#F8F8F8;border:1px solid #d8d8d8;border-ra=
+dius:5px;" width=3D"100%"><tbody><tr><td align=3D"left" class=3D"roleColumn" =
+style=3D"font-size: 0px; word-break: break-word; padding: 6px 12px 8px;"><div=
+ style=3D"font-family: IBM Plex Sans, Arial; font-size: 13px; text-align: lef=
+t; color: #3a3a3a; line-height: normal;"><table style=3D"width: 100%;
+                  table-layout: fixed;
+                  font-size: 14px;
+                  padding-bottom: 7px;"><tr><td style=3D"text-align: left;
+                      padding-bottom: 10px;
+                      word-wrap: break-word;"><div style=3D"line-height: norm=
+al;"><b style=3D"font-size: 16px">Harlan Coben=E2=80=99s Myron Bolitar</b> <s=
+pan style=3D"font-size: 14px">Television Series | SAG-AFTRA</span></div></td>=
+</tr></table><mj-raw></mj-raw><div style=3D"font-size: 12px; padding-bottom: =
+7px; line-height: normal;"><div style=3D"line-height: normal;"><b>Nonunion to=
+ portray Blue Collar Bar Patrons filming WED 11.4 - filming current season in=
+t/ext in Man</b></div><div style=3D"padding-top: 4px; line-height: normal;"> =
+<b>Submissions Due</b> November 02, 2026, 4:00am </div></div><div style=3D"fo=
+nt-size: 12px; padding-bottom: 6px; line-height: normal;"><div style=3D"line-=
+height: normal;"><b>Background</b> / 18 - 70 / Any Gender</div><div style=3D"=
+padding-top: 4px; line-height: normal;">$187/10</div> <div style=3D"padding-t=
+op: 4px; font-style: italic; line-height: normal;">Nonunion to portray Blue C=
+ollar Bar Patrons filming WED 11.4 - filming current season int/ext in Manhat=
+tan
+
+Note last date worked or not yet worked this project</div></div><div style=3D=
+"text-align: center; padding: 12px 0 5px; line-height: normal;"><div style=3D=
+"max-width: 100%; overflow: hidden; line-height: normal;"><a class=3D"btn btn=
+-responsive" style=3D"background-color: #1A79AF; padding: 6px 16px; text-alig=
+n: center; border-radius: 4px; word-break: keep-all; display: inline-block; m=
+ax-width: 100%; box-sizing: border-box; white-space: normal; color: #FFF; tex=
+t-decoration: none;" href=3D"https://app.castingnetworks.com/talent/project/1=
+6049614/role/67488319?source&#x3D;savedsearch_email&amp;default_app_context&#=
+x3D;REDACTED">View Role</a></div></div></div></td></tr></tbody></table></td><=
+/tr></tbody></table></div><!--[if mso | IE]></td><![endif]--> <!--[if mso | I=
+E]><td class=3D"" style=3D"vertical-align:top;width:786px;" ><![endif]--><div=
+ class=3D"mj-column-per-100 mj-outlook-group-fix" style=3D"font-size: 0px; te=
+xt-align: left; direction: ltr; display: inline-block; vertical-align: top; w=
+idth: 100%; line-height: normal;"><table border=3D"0" cellpadding=3D"0" cells=
+pacing=3D"0" role=3D"presentation" width=3D"100%"><tbody><tr><td style=3D"ver=
+tical-align:top;padding:10px;"><table border=3D"0" cellpadding=3D"0" cellspac=
+ing=3D"0" role=3D"presentation" style=3D"background-color:#F8F8F8;border:1px =
+solid #d8d8d8;border-radius:5px;" width=3D"100%"><tbody><tr><td align=3D"left=
+" class=3D"roleColumn" style=3D"font-size: 0px; word-break: break-word; paddi=
+ng: 6px 12px 8px;"><div style=3D"font-family: IBM Plex Sans, Arial; font-size=
+: 13px; text-align: left; color: #3a3a3a; line-height: normal;"><table style=
+=3D"width: 100%;
+                  table-layout: fixed;
+                  font-size: 14px;
+                  padding-bottom: 7px;"><tr><td style=3D"text-align: left;
+                      padding-bottom: 10px;
+                      word-wrap: break-word;"><div style=3D"line-height: norm=
+al;"><b style=3D"font-size: 16px">&quot;THE ROMAN&quot; NETFLIX SERIES</b> <s=
+pan style=3D"font-size: 14px">Television Series | SAG-AFTRA</span></div></td>=
+</tr></table><mj-raw></mj-raw><div style=3D"font-size: 12px; padding-bottom: =
+7px; line-height: normal;"><div style=3D"line-height: normal;"><b>**ADDITIONA=
+L SUBMISSION REQUEST** FOR RING GIRL - AVAILABLE 11/4 AND FITTING 10/30</b></=
+div><div style=3D"padding-top: 4px; line-height: normal;"> <b>Submissions Due=
+</b> October 29, 2026, 7:30pm </div></div><div style=3D"font-size: 12px; padd=
+ing-bottom: 6px; line-height: normal;"><div style=3D"line-height: normal;"><b=
+>Background</b> / 18 - 35 / Woman</div><div style=3D"padding-top: 4px; line-h=
+eight: normal;">SAG / **ADDITIONAL SUBMISSION REQUEST** FOR RING GIRL - AVAIL=
+ABLE 11/4 AND FITTING 10/30
+
+**NOT WORKED RECENTLY** NOT IF YOU&#x27;RE OK SHOWING MIDSECTION WITH MATCHIN=
+G BRA SET AS RING GIRL. NOTE ALL MEASUREMENTS/SIZES  WHEN SUBMITTING</div> <d=
+iv style=3D"padding-top: 4px; font-style: italic; line-height: normal;">**ADD=
+ITIONAL SUBMISSION REQUEST** FOR RING GIRL - AVAILABLE 11/4 AND FITTING 10/30
+
+**NOT WORKED RECENTLY** NOT IF YOU&#x27;RE OK SHOWING MIDSECTION WITH MATCHIN=
+G BRA SET AS RING GIRL. NOTE ALL MEASUREMENTS/SIZES  WHEN SUBMITTING...</div>=
+</div><div style=3D"text-align: center; padding: 12px 0 5px; line-height: nor=
+mal;"><div style=3D"max-width: 100%; overflow: hidden; line-height: normal;">=
+<a class=3D"btn btn-responsive" style=3D"background-color: #1A79AF; padding: =
+6px 16px; text-align: center; border-radius: 4px; word-break: keep-all; displ=
+ay: inline-block; max-width: 100%; box-sizing: border-box; white-space: norma=
+l; color: #FFF; text-decoration: none;" href=3D"https://app.castingnetworks.c=
+om/talent/project/16048371/role/67488321?source&#x3D;savedsearch_email&amp;de=
+fault_app_context&#x3D;REDACTED">View Role</a></div></div></div></td></tr></t=
+body></table></td></tr></tbody></table></div><!--[if mso | IE]></td><![endif]=
+--> <!--[if mso | IE]><td class=3D"" style=3D"vertical-align:top;width:786px;=
+" ><![endif]--><div class=3D"mj-column-per-100 mj-outlook-group-fix" style=3D=
+"font-size: 0px; text-align: left; direction: ltr; display: inline-block; ver=
+tical-align: top; width: 100%; line-height: normal;"><table border=3D"0" cell=
+padding=3D"0" cellspacing=3D"0" role=3D"presentation" width=3D"100%"><tbody><=
+tr><td style=3D"vertical-align:top;padding:10px;"><table border=3D"0" cellpad=
+ding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"background-color:=
+#F8F8F8;border:1px solid #d8d8d8;border-radius:5px;" width=3D"100%"><tbody><t=
+r><td align=3D"left" class=3D"roleColumn" style=3D"font-size: 0px; word-break=
+: break-word; padding: 6px 12px 8px;"><div style=3D"font-family: IBM Plex San=
+s, Arial; font-size: 13px; text-align: left; color: #3a3a3a; line-height: nor=
+mal;"><table style=3D"width: 100%;
+                  table-layout: fixed;
+                  font-size: 14px;
+                  padding-bottom: 7px;"><tr><td style=3D"text-align: left;
+                      padding-bottom: 10px;
+                      word-wrap: break-word;"><div style=3D"line-height: norm=
+al;"><b style=3D"font-size: 16px">Harlan Coben=E2=80=99s Myron Bolitar</b> <s=
+pan style=3D"font-size: 14px">Television Series | SAG-AFTRA</span></div></td>=
+</tr></table><mj-raw></mj-raw><div style=3D"font-size: 12px; padding-bottom: =
+7px; line-height: normal;"><div style=3D"line-height: normal;"><b>Nonunion to=
+ portray Pedestrians filming WED 11.4 - filming current season int/ext in Man=
+hattan  Note</b></div><div style=3D"padding-top: 4px; line-height: normal;"> =
+<b>Submissions Due</b> November 02, 2026, 4:00am </div></div><div style=3D"fo=
+nt-size: 12px; padding-bottom: 6px; line-height: normal;"><div style=3D"line-=
+height: normal;"><b>Background</b> / 18 - 70 / Any Gender</div><div style=3D"=
+padding-top: 4px; line-height: normal;">$187/10</div> <div style=3D"padding-t=
+op: 4px; font-style: italic; line-height: normal;">Nonunion to portray Pedest=
+rians filming WED 11.4 - filming current season int/ext in Manhattan
+
+Note last date worked or not yet worked this project</div></div><div style=3D=
+"text-align: center; padding: 12px 0 5px; line-height: normal;"><div style=3D=
+"max-width: 100%; overflow: hidden; line-height: normal;"><a class=3D"btn btn=
+-responsive" style=3D"background-color: #1A79AF; padding: 6px 16px; text-alig=
+n: center; border-radius: 4px; word-break: keep-all; display: inline-block; m=
+ax-width: 100%; box-sizing: border-box; white-space: normal; color: #FFF; tex=
+t-decoration: none;" href=3D"https://app.castingnetworks.com/talent/project/1=
+6049614/role/67488320?source&#x3D;savedsearch_email&amp;default_app_context&#=
+x3D;REDACTED">View Role</a></div></div></div></td></tr></tbody></table></td><=
+/tr></tbody></table></div><!--[if mso | IE]></td><![endif]--> <!--[if mso | I=
+E]><td class=3D"" style=3D"vertical-align:top;width:786px;" ><![endif]--><div=
+ class=3D"mj-column-per-100 mj-outlook-group-fix" style=3D"font-size: 0px; te=
+xt-align: left; direction: ltr; display: inline-block; vertical-align: top; w=
+idth: 100%; line-height: normal;"><table border=3D"0" cellpadding=3D"0" cells=
+pacing=3D"0" role=3D"presentation" width=3D"100%"><tbody><tr><td style=3D"ver=
+tical-align:top;padding:10px;"><table border=3D"0" cellpadding=3D"0" cellspac=
+ing=3D"0" role=3D"presentation" style=3D"background-color:#F8F8F8;border:1px =
+solid #d8d8d8;border-radius:5px;" width=3D"100%"><tbody><tr><td align=3D"left=
+" class=3D"roleColumn" style=3D"font-size: 0px; word-break: break-word; paddi=
+ng: 6px 12px 8px;"><div style=3D"font-family: IBM Plex Sans, Arial; font-size=
+: 13px; text-align: left; color: #3a3a3a; line-height: normal;"><table style=
+=3D"width: 100%;
+                  table-layout: fixed;
+                  font-size: 14px;
+                  padding-bottom: 7px;"><tr><td style=3D"text-align: left;
+                      padding-bottom: 10px;
+                      word-wrap: break-word;"><div style=3D"line-height: norm=
+al;"><b style=3D"font-size: 16px">Eating While Walking</b> <span style=3D"fon=
+t-size: 14px">Sketch | Non Union</span></div></td></tr></table><mj-raw></mj-r=
+aw><div style=3D"font-size: 12px; padding-bottom: 7px; line-height: normal;">=
+<div style=3D"line-height: normal;"><b>Everyday New Yorkers</b></div><div sty=
+le=3D"padding-top: 4px; line-height: normal;"> <b>Submissions Due</b> October=
+ 30, 2026, 4:00am </div></div><div style=3D"font-size: 12px; padding-bottom: =
+6px; line-height: normal;"><div style=3D"line-height: normal;"><b>Co-Star</b>=
+ / 18 - 35 / Any Gender</div><div style=3D"padding-top: 4px; line-height: nor=
+mal;">$10 and copy/ credit / Video will be premiered in comedy show Sunday at=
+ Brooklyn Comedy Collective at 8:30pm ET </div> <div style=3D"padding-top: 4p=
+x; font-style: italic; line-height: normal;">-Energetic, people on their way =
+to work or hanging out at the park=20
+- must be eating foot on camera=20
+- bring a snack of your choice for the filming
+- person will be asked what their eating/ where are they going? ...</div></di=
+v><div style=3D"text-align: center; padding: 12px 0 5px; line-height: normal;=
+"><div style=3D"max-width: 100%; overflow: hidden; line-height: normal;"><a c=
+lass=3D"btn btn-responsive" style=3D"background-color: #1A79AF; padding: 6px =
+16px; text-align: center; border-radius: 4px; word-break: keep-all; display: =
+inline-block; max-width: 100%; box-sizing: border-box; white-space: normal; c=
+olor: #FFF; text-decoration: none;" href=3D"https://app.castingnetworks.com/t=
+alent/project/16066995/role/67488322?source&#x3D;savedsearch_email&amp;defaul=
+t_app_context&#x3D;REDACTED">View Role</a></div></div></div></td></tr></tbody=
+></table></td></tr></tbody></table></div><!--[if mso | IE]></td><![endif]--> =
+<!--[if mso | IE]><td class=3D"" style=3D"vertical-align:top;width:786px;" ><=
+![endif]--><div class=3D"mj-column-per-100 mj-outlook-group-fix" style=3D"fon=
+t-size: 0px; text-align: left; direction: ltr; display: inline-block; vertica=
+l-align: top; width: 100%; line-height: normal;"><table border=3D"0" cellpadd=
+ing=3D"0" cellspacing=3D"0" role=3D"presentation" width=3D"100%"><tbody><tr><=
+td style=3D"vertical-align:top;padding:10px;"><table border=3D"0" cellpadding=
+=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"background-color:#F8F=
+8F8;border:1px solid #d8d8d8;border-radius:5px;" width=3D"100%"><tbody><tr><t=
+d align=3D"left" class=3D"roleColumn" style=3D"font-size: 0px; word-break: br=
+eak-word; padding: 6px 12px 8px;"><div style=3D"font-family: IBM Plex Sans, A=
+rial; font-size: 13px; text-align: left; color: #3a3a3a; line-height: normal;=
+"><table style=3D"width: 100%;
+                  table-layout: fixed;
+                  font-size: 14px;
+                  padding-bottom: 7px;"><tr><td style=3D"text-align: left;
+                      padding-bottom: 10px;
+                      word-wrap: break-word;"><div style=3D"line-height: norm=
+al;"><b style=3D"font-size: 16px">King Street</b> <span style=3D"font-size: 1=
+4px">Television Series | SAG-AFTRA</span></div></td></tr></table><mj-raw></mj=
+-raw><div style=3D"font-size: 12px; padding-bottom: 7px; line-height: normal;=
+"><div style=3D"line-height: normal;"><b>NON-UNION to portray Pedestrians and=
+ then change to hospital types TUE 11/3</b></div><div style=3D"padding-top: 4=
+px; line-height: normal;"> <b>Submissions Due</b> October 30, 2026, 7:30pm </=
+div></div><div style=3D"font-size: 12px; padding-bottom: 6px; line-height: no=
+rmal;"><div style=3D"line-height: normal;"><b>Background</b> / 18 - 99 / Any =
+Gender</div><div style=3D"padding-top: 4px; line-height: normal;">187/10</div=
+> <div style=3D"padding-top: 4px; font-style: italic; line-height: normal;">N=
+ON-UNION to portray Pedestrians and then change to hospital types (Doctors, N=
+urses, patients, and such) available TUE 11/3.
+Filming exteriors and interiors for the current season. Must be available aro=
+und atmospheric smoke and cigar smoke.=20
+Note last time work on King Street....</div></div><div style=3D"text-align: c=
+enter; padding: 12px 0 5px; line-height: normal;"><div style=3D"max-width: 10=
+0%; overflow: hidden; line-height: normal;"><a class=3D"btn btn-responsive" s=
+tyle=3D"background-color: #1A79AF; padding: 6px 16px; text-align: center; bor=
+der-radius: 4px; word-break: keep-all; display: inline-block; max-width: 100%=
+; box-sizing: border-box; white-space: normal; color: #FFF; text-decoration: =
+none;" href=3D"https://app.castingnetworks.com/talent/project/16054208/role/6=
+7488337?source&#x3D;savedsearch_email&amp;default_app_context&#x3D;REDACTED">=
+View Role</a></div></div></div></td></tr></tbody></table></td></tr></tbody></=
+table></div><!--[if mso | IE]></td><![endif]--> <!--[if mso | IE]><td class=
+=3D"" style=3D"vertical-align:top;width:786px;" ><![endif]--><div class=3D"mj=
+-column-per-100 mj-outlook-group-fix" style=3D"font-size: 0px; text-align: le=
+ft; direction: ltr; display: inline-block; vertical-align: top; width: 100%; =
+line-height: normal;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0"=
+ role=3D"presentation" width=3D"100%"><tbody><tr><td style=3D"vertical-align:=
+top;padding:10px;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" ro=
+le=3D"presentation" style=3D"background-color:#F8F8F8;border:1px solid #d8d8d=
+8;border-radius:5px;" width=3D"100%"><tbody><tr><td align=3D"left" class=3D"r=
+oleColumn" style=3D"font-size: 0px; word-break: break-word; padding: 6px 12px=
+ 8px;"><div style=3D"font-family: IBM Plex Sans, Arial; font-size: 13px; text=
+-align: left; color: #3a3a3a; line-height: normal;"><table style=3D"width: 10=
+0%;
+                  table-layout: fixed;
+                  font-size: 14px;
+                  padding-bottom: 7px;"><tr><td style=3D"text-align: left;
+                      padding-bottom: 10px;
+                      word-wrap: break-word;"><div style=3D"line-height: norm=
+al;"><b style=3D"font-size: 16px">DOLCE</b> <span style=3D"font-size: 14px">T=
+elevision Series | SAG-AFTRA</span></div></td></tr></table><mj-raw></mj-raw><=
+div style=3D"font-size: 12px; padding-bottom: 7px; line-height: normal;"><div=
+ style=3D"line-height: normal;"><b>Dog Walker w/ Dog (NONSAG COVERED)</b></di=
+v><div style=3D"padding-top: 4px; line-height: normal;"> <b>Submissions Due</=
+b> November 29, 2026, 7:00am </div></div><div style=3D"font-size: 12px; paddi=
+ng-bottom: 6px; line-height: normal;"><div style=3D"line-height: normal;"><b>=
+Background</b> / 18 - 70 / Any Gender</div><div style=3D"padding-top: 4px; li=
+ne-height: normal;">$187/10 / Pet Bump</div> <div style=3D"padding-top: 4px; =
+font-style: italic; line-height: normal;">GWCI is seeking people to portray D=
+og Walker w/ Dog for the limited series DOLCE (NON SAG-AFTRA Covered). Please=
+ note the breed of your dog.
+
+TENTATIVE DATES: Shooting Mon 11/2 shooting in Jersey City, NJ
+
+RATE: $187/10hrs + Pet Bump
+
+This Background role is NOT covered by SAG-AFTRA CBA and subject ...</div></d=
+iv><div style=3D"text-align: center; padding: 12px 0 5px; line-height: normal=
+;"><div style=3D"max-width: 100%; overflow: hidden; line-height: normal;"><a =
+class=3D"btn btn-responsive" style=3D"background-color: #1A79AF; padding: 6px=
+ 16px; text-align: center; border-radius: 4px; word-break: keep-all; display:=
+ inline-block; max-width: 100%; box-sizing: border-box; white-space: normal; =
+color: #FFF; text-decoration: none;" href=3D"https://app.castingnetworks.com/=
+talent/project/16052752/role/67488349?source&#x3D;savedsearch_email&amp;defau=
+lt_app_context&#x3D;REDACTED">View Role</a></div></div></div></td></tr></tbod=
+y></table></td></tr></tbody></table></div><!--[if mso | IE]></td><![endif]-->=
+ <!--[if mso | IE]><td class=3D"" style=3D"vertical-align:top;width:786px;" >=
+<![endif]--><div class=3D"mj-column-per-100 mj-outlook-group-fix" style=3D"fo=
+nt-size: 0px; text-align: left; direction: ltr; display: inline-block; vertic=
+al-align: top; width: 100%; line-height: normal;"><table border=3D"0" cellpad=
+ding=3D"0" cellspacing=3D"0" role=3D"presentation" width=3D"100%"><tbody><tr>=
+<td style=3D"vertical-align:top;padding:10px;"><table border=3D"0" cellpaddin=
+g=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"background-color:#F8=
+F8F8;border:1px solid #d8d8d8;border-radius:5px;" width=3D"100%"><tbody><tr><=
+td align=3D"left" class=3D"roleColumn" style=3D"font-size: 0px; word-break: b=
+reak-word; padding: 6px 12px 8px;"><div style=3D"font-family: IBM Plex Sans, =
+Arial; font-size: 13px; text-align: left; color: #3a3a3a; line-height: normal=
+;"><table style=3D"width: 100%;
+                  table-layout: fixed;
+                  font-size: 14px;
+                  padding-bottom: 7px;"><tr><td style=3D"text-align: left;
+                      padding-bottom: 10px;
+                      word-wrap: break-word;"><div style=3D"line-height: norm=
+al;"><b style=3D"font-size: 16px">DOLCE</b> <span style=3D"font-size: 14px">T=
+elevision Series | SAG-AFTRA</span></div></td></tr></table><mj-raw></mj-raw><=
+div style=3D"font-size: 12px; padding-bottom: 7px; line-height: normal;"><div=
+ style=3D"line-height: normal;"><b>Joggers (NONSAG COVERED)</b></div><div sty=
+le=3D"padding-top: 4px; line-height: normal;"> <b>Submissions Due</b> Novembe=
+r 29, 2026, 7:00am </div></div><div style=3D"font-size: 12px; padding-bottom:=
+ 6px; line-height: normal;"><div style=3D"line-height: normal;"><b>Background=
+</b> / 18 - 60 / Any Gender</div><div style=3D"padding-top: 4px; line-height:=
+ normal;">$187/10</div> <div style=3D"padding-top: 4px; font-style: italic; l=
+ine-height: normal;">GWCI is seeking people to portray Joggers for the limite=
+d series DOLCE (NON SAG-AFTRA Covered).
+
+TENTATIVE DATES: Shooting Mon 11/2 in Jersey City, NJ
+
+RATE: $187/10hrs
+
+This Background role is NOT covered by SAG-AFTRA CBA and subject to a Prefere=
+nce of Employment provision.=20
+
+Please note, you must ...</div></div><div style=3D"text-align: center; paddin=
+g: 12px 0 5px; line-height: normal;"><div style=3D"max-width: 100%; overflow:=
+ hidden; line-height: normal;"><a class=3D"btn btn-responsive" style=3D"backg=
+round-color: #1A79AF; padding: 6px 16px; text-align: center; border-radius: 4=
+px; word-break: keep-all; display: inline-block; max-width: 100%; box-sizing:=
+ border-box; white-space: normal; color: #FFF; text-decoration: none;" href=
+=3D"https://app.castingnetworks.com/talent/project/16052752/role/67488347?sou=
+rce&#x3D;savedsearch_email&amp;default_app_context&#x3D;REDACTED">View Role</=
+a></div></div></div></td></tr></tbody></table></td></tr></tbody></table></div=
+><!--[if mso | IE]></td><![endif]--> <!--[if mso | IE]><td class=3D"" style=
+=3D"vertical-align:top;width:786px;" ><![endif]--><div class=3D"mj-column-per=
+-100 mj-outlook-group-fix" style=3D"font-size: 0px; text-align: left; directi=
+on: ltr; display: inline-block; vertical-align: top; width: 100%; line-height=
+: normal;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"pr=
+esentation" width=3D"100%"><tbody><tr><td style=3D"vertical-align:top;padding=
+:10px;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"prese=
+ntation" style=3D"background-color:#F8F8F8;border:1px solid #d8d8d8;border-ra=
+dius:5px;" width=3D"100%"><tbody><tr><td align=3D"left" class=3D"roleColumn" =
+style=3D"font-size: 0px; word-break: break-word; padding: 6px 12px 8px;"><div=
+ style=3D"font-family: IBM Plex Sans, Arial; font-size: 13px; text-align: lef=
+t; color: #3a3a3a; line-height: normal;"><table style=3D"width: 100%;
+                  table-layout: fixed;
+                  font-size: 14px;
+                  padding-bottom: 7px;"><tr><td style=3D"text-align: left;
+                      padding-bottom: 10px;
+                      word-wrap: break-word;"><div style=3D"line-height: norm=
+al;"><b style=3D"font-size: 16px">DOLCE</b> <span style=3D"font-size: 14px">T=
+elevision Series | SAG-AFTRA</span></div></td></tr></table><mj-raw></mj-raw><=
+div style=3D"font-size: 12px; padding-bottom: 7px; line-height: normal;"><div=
+ style=3D"line-height: normal;"><b>Park Goers (NON SAG COVERED)</b></div><div=
+ style=3D"padding-top: 4px; line-height: normal;"> <b>Submissions Due</b> Nov=
+ember 29, 2026, 7:00am </div></div><div style=3D"font-size: 12px; padding-bot=
+tom: 6px; line-height: normal;"><div style=3D"line-height: normal;"><b>Backgr=
+ound</b> / 18 - 70 / Any Gender</div><div style=3D"padding-top: 4px; line-hei=
+ght: normal;">$187/10</div> <div style=3D"padding-top: 4px; font-style: itali=
+c; line-height: normal;">GWCI is seeking people to portray Park Goers for the=
+ limited series DOLCE (NON SAG-AFTRA Covered).
+
+TENTATIVE DATES: Shooting Mon 11/2 In Jersey City, NJ
+
+RATE: $187/10hrs
+
+This Background role is NOT covered by SAG-AFTRA CBA and subject to a Prefere=
+nce of Employment provision.=20
+
+Please note, you mu...</div></div><div style=3D"text-align: center; padding: =
+12px 0 5px; line-height: normal;"><div style=3D"max-width: 100%; overflow: hi=
+dden; line-height: normal;"><a class=3D"btn btn-responsive" style=3D"backgrou=
+nd-color: #1A79AF; padding: 6px 16px; text-align: center; border-radius: 4px;=
+ word-break: keep-all; display: inline-block; max-width: 100%; box-sizing: bo=
+rder-box; white-space: normal; color: #FFF; text-decoration: none;" href=3D"h=
+ttps://app.castingnetworks.com/talent/project/16052752/role/67488353?source&#=
+x3D;savedsearch_email&amp;default_app_context&#x3D;REDACTED">View Role</a></d=
+iv></div></div></td></tr></tbody></table></td></tr></tbody></table></div><!--=
+[if mso | IE]></td><![endif]--> <!--[if mso | IE]><td class=3D"" style=3D"ver=
+tical-align:top;width:786px;" ><![endif]--><div class=3D"mj-column-per-100 mj=
+-outlook-group-fix" style=3D"font-size: 0px; text-align: left; direction: ltr=
+; display: inline-block; vertical-align: top; width: 100%; line-height: norma=
+l;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentat=
+ion" width=3D"100%"><tbody><tr><td style=3D"vertical-align:top;padding:10px;"=
+><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation=
+" style=3D"background-color:#F8F8F8;border:1px solid #d8d8d8;border-radius:5p=
+x;" width=3D"100%"><tbody><tr><td align=3D"left" class=3D"roleColumn" style=
+=3D"font-size: 0px; word-break: break-word; padding: 6px 12px 8px;"><div styl=
+e=3D"font-family: IBM Plex Sans, Arial; font-size: 13px; text-align: left; co=
+lor: #3a3a3a; line-height: normal;"><table style=3D"width: 100%;
+                  table-layout: fixed;
+                  font-size: 14px;
+                  padding-bottom: 7px;"><tr><td style=3D"text-align: left;
+                      padding-bottom: 10px;
+                      word-wrap: break-word;"><div style=3D"line-height: norm=
+al;"><b style=3D"font-size: 16px">DOLCE</b> <span style=3D"font-size: 14px">T=
+elevision Series | SAG-AFTRA</span></div></td></tr></table><mj-raw></mj-raw><=
+div style=3D"font-size: 12px; padding-bottom: 7px; line-height: normal;"><div=
+ style=3D"line-height: normal;"><b>Tennis Attendants (NONSAG COVERED)</b></di=
+v><div style=3D"padding-top: 4px; line-height: normal;"> <b>Submissions Due</=
+b> November 29, 2026, 7:30am </div></div><div style=3D"font-size: 12px; paddi=
+ng-bottom: 6px; line-height: normal;"><div style=3D"line-height: normal;"><b>=
+Background</b> / 20 - 60 / Any Gender</div><div style=3D"padding-top: 4px; li=
+ne-height: normal;">$187/10</div> <div style=3D"padding-top: 4px; font-style:=
+ italic; line-height: normal;">GWCI is seeking Tennis Attendants with experie=
+nce for the limited series DOLCE (NON SAG COVERED).
+
+TENTATIVE DATES: Shooting Mon 11/2 in Jersey City, NJ
+
+Rate&quot; $187/10
+
+This background role is NOTcovered by SAG-AFTRA CBA and subject to a Preferen=
+ce of Employment Provision.
+
+You must be able to prese...</div></div><div style=3D"text-align: center; pad=
+ding: 12px 0 5px; line-height: normal;"><div style=3D"max-width: 100%; overfl=
+ow: hidden; line-height: normal;"><a class=3D"btn btn-responsive" style=3D"ba=
+ckground-color: #1A79AF; padding: 6px 16px; text-align: center; border-radius=
+: 4px; word-break: keep-all; display: inline-block; max-width: 100%; box-sizi=
+ng: border-box; white-space: normal; color: #FFF; text-decoration: none;" hre=
+f=3D"https://app.castingnetworks.com/talent/project/16052752/role/67488355?so=
+urce&#x3D;savedsearch_email&amp;default_app_context&#x3D;REDACTED">View Role<=
+/a></div></div></div></td></tr></tbody></table></td></tr></tbody></table></di=
+v><!--[if mso | IE]></td><![endif]--> <!--[if mso | IE]><td class=3D"" style=
+=3D"vertical-align:top;width:786px;" ><![endif]--><div class=3D"mj-column-per=
+-100 mj-outlook-group-fix" style=3D"font-size: 0px; text-align: left; directi=
+on: ltr; display: inline-block; vertical-align: top; width: 100%; line-height=
+: normal;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"pr=
+esentation" width=3D"100%"><tbody><tr><td style=3D"vertical-align:top;padding=
+:10px;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"prese=
+ntation" style=3D"background-color:#F8F8F8;border:1px solid #d8d8d8;border-ra=
+dius:5px;" width=3D"100%"><tbody><tr><td align=3D"left" class=3D"roleColumn" =
+style=3D"font-size: 0px; word-break: break-word; padding: 6px 12px 8px;"><div=
+ style=3D"font-family: IBM Plex Sans, Arial; font-size: 13px; text-align: lef=
+t; color: #3a3a3a; line-height: normal;"><table style=3D"width: 100%;
+                  table-layout: fixed;
+                  font-size: 14px;
+                  padding-bottom: 7px;"><tr><td style=3D"text-align: left;
+                      padding-bottom: 10px;
+                      word-wrap: break-word;"><div style=3D"line-height: norm=
+al;"><b style=3D"font-size: 16px">Abandoned Or Ghosted By Your Significant Ot=
+her?</b> <span style=3D"font-size: 14px">Reality TV | Non Union</span></div><=
+/td></tr></table><mj-raw></mj-raw><div style=3D"font-size: 12px; padding-bott=
+om: 7px; line-height: normal;"><div style=3D"line-height: normal;"><b>Has You=
+r Spouse/Partner Ghosted You? </b></div><div style=3D"padding-top: 4px; line-=
+height: normal;"> <b>Submissions Due</b> November 06, 2026, 12:00pm </div></d=
+iv><div style=3D"font-size: 12px; padding-bottom: 6px; line-height: normal;">=
+<div style=3D"line-height: normal;"><b>Principal</b> / 21 - 51 / Any Gender</=
+div><div style=3D"padding-top: 4px; line-height: normal;">Paid $1000 / Paid P=
+er Episode Fee + Expert Help</div> <div style=3D"padding-top: 4px; font-style=
+: italic; line-height: normal;">An acclaimed television production company, i=
+n partnership with a major cable network, is creating a new documentary serie=
+s about people whose spouse or serious, long-term partner suddenly vanished f=
+rom their life without warning or explanation, leaving them with no contact a=
+nd unanswered questions....</div></div><div style=3D"text-align: center; padd=
+ing: 12px 0 5px; line-height: normal;"><div style=3D"max-width: 100%; overflo=
+w: hidden; line-height: normal;"><a class=3D"btn btn-responsive" style=3D"bac=
+kground-color: #1A79AF; padding: 6px 16px; text-align: center; border-radius:=
+ 4px; word-break: keep-all; display: inline-block; max-width: 100%; box-sizin=
+g: border-box; white-space: normal; color: #FFF; text-decoration: none;" href=
+=3D"https://app.castingnetworks.com/talent/project/16067011/role/67488366?sou=
+rce&#x3D;savedsearch_email&amp;default_app_context&#x3D;REDACTED">View Role</=
+a></div></div></div></td></tr></tbody></table></td></tr></tbody></table></div=
+><!--[if mso | IE]></td><![endif]--> <!--[if mso | IE]><td class=3D"" style=
+=3D"vertical-align:top;width:786px;" ><![endif]--><div class=3D"mj-column-per=
+-100 mj-outlook-group-fix" style=3D"font-size: 0px; text-align: left; directi=
+on: ltr; display: inline-block; vertical-align: top; width: 100%; line-height=
+: normal;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"pr=
+esentation" width=3D"100%"><tbody><tr><td style=3D"vertical-align:top;padding=
+:10px;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"prese=
+ntation" style=3D"background-color:#F8F8F8;border:1px solid #d8d8d8;border-ra=
+dius:5px;" width=3D"100%"><tbody><tr><td align=3D"left" class=3D"roleColumn" =
+style=3D"font-size: 0px; word-break: break-word; padding: 6px 12px 8px;"><div=
+ style=3D"font-family: IBM Plex Sans, Arial; font-size: 13px; text-align: lef=
+t; color: #3a3a3a; line-height: normal;"><table style=3D"width: 100%;
+                  table-layout: fixed;
+                  font-size: 14px;
+                  padding-bottom: 7px;"><tr><td style=3D"text-align: left;
+                      padding-bottom: 10px;
+                      word-wrap: break-word;"><div style=3D"line-height: norm=
+al;"><b style=3D"font-size: 16px">Elsbeth</b> <span style=3D"font-size: 14px"=
+>Television Series | SAG-AFTRA</span></div></td></tr></table><mj-raw></mj-raw=
+><div style=3D"font-size: 12px; padding-bottom: 7px; line-height: normal;"><d=
+iv style=3D"line-height: normal;"><b>Union avail Monday 11/2</b></div><div st=
+yle=3D"padding-top: 4px; line-height: normal;"> <b>Submissions Due</b> Novemb=
+er 01, 2026, 6:30pm </div></div><div style=3D"font-size: 12px; padding-bottom=
+: 6px; line-height: normal;"><div style=3D"line-height: normal;"><b>Backgroun=
+d</b> / 18 - 36 / Any Gender</div><div style=3D"padding-top: 4px; line-height=
+: normal;">SAG AFTRA scale</div> <div style=3D"padding-top: 4px; font-style: =
+italic; line-height: normal;">Union avail Monday 11/2</div></div><div style=
+=3D"text-align: center; padding: 12px 0 5px; line-height: normal;"><div style=
+=3D"max-width: 100%; overflow: hidden; line-height: normal;"><a class=3D"btn =
+btn-responsive" style=3D"background-color: #1A79AF; padding: 6px 16px; text-a=
+lign: center; border-radius: 4px; word-break: keep-all; display: inline-block=
+; max-width: 100%; box-sizing: border-box; white-space: normal; color: #FFF; =
+text-decoration: none;" href=3D"https://app.castingnetworks.com/talent/projec=
+t/15836923/role/67488370?source&#x3D;savedsearch_email&amp;default_app_contex=
+t&#x3D;REDACTED">View Role</a></div></div></div></td></tr></tbody></table></t=
+d></tr></tbody></table></div><!--[if mso | IE]></td><![endif]--> <!--[if mso =
+| IE]><td class=3D"" style=3D"vertical-align:top;width:786px;" ><![endif]--><=
+div class=3D"mj-column-per-100 mj-outlook-group-fix" style=3D"font-size: 0px;=
+ text-align: left; direction: ltr; display: inline-block; vertical-align: top=
+; width: 100%; line-height: normal;"><table border=3D"0" cellpadding=3D"0" ce=
+llspacing=3D"0" role=3D"presentation" width=3D"100%"><tbody><tr><td style=3D"=
+vertical-align:top;padding:10px;"><table border=3D"0" cellpadding=3D"0" cells=
+pacing=3D"0" role=3D"presentation" style=3D"background-color:#F8F8F8;border:1=
+px solid #d8d8d8;border-radius:5px;" width=3D"100%"><tbody><tr><td align=3D"l=
+eft" class=3D"roleColumn" style=3D"font-size: 0px; word-break: break-word; pa=
+dding: 6px 12px 8px;"><div style=3D"font-family: IBM Plex Sans, Arial; font-s=
+ize: 13px; text-align: left; color: #3a3a3a; line-height: normal;"><table sty=
+le=3D"width: 100%;
+                  table-layout: fixed;
+                  font-size: 14px;
+                  padding-bottom: 7px;"><tr><td style=3D"text-align: left;
+                      padding-bottom: 10px;
+                      word-wrap: break-word;"><div style=3D"line-height: norm=
+al;"><b style=3D"font-size: 16px">Out the Kitchen</b> <span style=3D"font-siz=
+e: 14px">Television Series | SAG-AFTRA</span></div></td></tr></table><mj-raw>=
+</mj-raw><div style=3D"font-size: 12px; padding-bottom: 7px; line-height: nor=
+mal;"><div style=3D"line-height: normal;"><b>Pedestrians - Tent. work 11/1 (n=
+on-SAG-AFTRA COVERED) </b></div><div style=3D"padding-top: 4px; line-height: =
+normal;"> <b>Submissions Due</b> October 30, 2026, 11:00am </div></div><div s=
+tyle=3D"font-size: 12px; padding-bottom: 6px; line-height: normal;"><div styl=
+e=3D"line-height: normal;"><b>Background</b> / 18 - 99 / Any Gender</div><div=
+ style=3D"padding-top: 4px; line-height: normal;">$187/10hrs</div> <div style=
+=3D"padding-top: 4px; font-style: italic; line-height: normal;">Grant Wilfley=
+ Casting is seeking people for paid background work on the series OUT THE KIT=
+CHEN to portray=C2=A0Pedestrians=C2=A0(Non-SAG-AFTRA COVERED)=C2=A0
+
+Tentative dates:=C2=A0
+Work: 11/1 exterior=C2=A0work in NYC area.
+
+Non-SAG-AFTRA work rate: $187/10hrs
+
+MUST NOT HAVE WORKED ON THE SERIES THIS SEASON.
+
+No recording ...</div></div><div style=3D"text-align: center; padding: 12px 0=
+ 5px; line-height: normal;"><div style=3D"max-width: 100%; overflow: hidden; =
+line-height: normal;"><a class=3D"btn btn-responsive" style=3D"background-col=
+or: #1A79AF; padding: 6px 16px; text-align: center; border-radius: 4px; word-=
+break: keep-all; display: inline-block; max-width: 100%; box-sizing: border-b=
+ox; white-space: normal; color: #FFF; text-decoration: none;" href=3D"https:/=
+/app.castingnetworks.com/talent/project/15999228/role/67488416?source&#x3D;sa=
+vedsearch_email&amp;default_app_context&#x3D;REDACTED">View Role</a></div></d=
+iv></div></td></tr></tbody></table></td></tr></tbody></table></div><!--[if ms=
+o | IE]></td><![endif]--> <!--[if mso | IE]><td class=3D"" style=3D"vertical-=
+align:top;width:786px;" ><![endif]--><div class=3D"mj-column-per-100 mj-outlo=
+ok-group-fix" style=3D"font-size: 0px; text-align: left; direction: ltr; disp=
+lay: inline-block; vertical-align: top; width: 100%; line-height: normal;"><t=
+able border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" w=
+idth=3D"100%"><tbody><tr><td style=3D"vertical-align:top;padding:10px;"><tabl=
+e border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" styl=
+e=3D"background-color:#F8F8F8;border:1px solid #d8d8d8;border-radius:5px;" wi=
+dth=3D"100%"><tbody><tr><td align=3D"left" class=3D"roleColumn" style=3D"font=
+-size: 0px; word-break: break-word; padding: 6px 12px 8px;"><div style=3D"fon=
+t-family: IBM Plex Sans, Arial; font-size: 13px; text-align: left; color: #3a=
+3a3a; line-height: normal;"><table style=3D"width: 100%;
+                  table-layout: fixed;
+                  font-size: 14px;
+                  padding-bottom: 7px;"><tr><td style=3D"text-align: left;
+                      padding-bottom: 10px;
+                      word-wrap: break-word;"><div style=3D"line-height: norm=
+al;"><b style=3D"font-size: 16px">Harlan Coben=E2=80=99s Myron Bolitar</b> <s=
+pan style=3D"font-size: 14px">Television Series | SAG-AFTRA</span></div></td>=
+</tr></table><mj-raw></mj-raw><div style=3D"font-size: 12px; padding-bottom: =
+7px; line-height: normal;"><div style=3D"line-height: normal;"><b>Non Union t=
+o portray Wrestling Fans *WORK THURSDAY 11.5*</b></div><div style=3D"padding-=
+top: 4px; line-height: normal;"> <b>Submissions Due</b> October 29, 2026, 7:3=
+0pm </div></div><div style=3D"font-size: 12px; padding-bottom: 6px; line-heig=
+ht: normal;"><div style=3D"line-height: normal;"><b>Background</b> / 19 - 99 =
+/ Any Gender</div><div style=3D"padding-top: 4px; line-height: normal;">$187/=
+10</div> <div style=3D"padding-top: 4px; font-style: italic; line-height: nor=
+mal;">Non Union to portray Wrestling Fans *WORK THURSDAY 11.5* filming interi=
+ors in Brooklyn</div></div><div style=3D"text-align: center; padding: 12px 0 =
+5px; line-height: normal;"><div style=3D"max-width: 100%; overflow: hidden; l=
+ine-height: normal;"><a class=3D"btn btn-responsive" style=3D"background-colo=
+r: #1A79AF; padding: 6px 16px; text-align: center; border-radius: 4px; word-b=
+reak: keep-all; display: inline-block; max-width: 100%; box-sizing: border-bo=
+x; white-space: normal; color: #FFF; text-decoration: none;" href=3D"https://=
+app.castingnetworks.com/talent/project/16049614/role/67488431?source&#x3D;sav=
+edsearch_email&amp;default_app_context&#x3D;REDACTED">View Role</a></div></di=
+v></div></td></tr></tbody></table></td></tr></tbody></table></div><!--[if mso=
+ | IE]></td><![endif]--> <!--[if mso | IE]><td class=3D"" style=3D"vertical-a=
+lign:top;width:786px;" ><![endif]--><div class=3D"mj-column-per-100 mj-outloo=
+k-group-fix" style=3D"font-size: 0px; text-align: left; direction: ltr; displ=
+ay: inline-block; vertical-align: top; width: 100%; line-height: normal;"><ta=
+ble border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" wi=
+dth=3D"100%"><tbody><tr><td style=3D"vertical-align:top;padding:10px;"><table=
+ border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=
+=3D"background-color:#F8F8F8;border:1px solid #d8d8d8;border-radius:5px;" wid=
+th=3D"100%"><tbody><tr><td align=3D"left" class=3D"roleColumn" style=3D"font-=
+size: 0px; word-break: break-word; padding: 6px 12px 8px;"><div style=3D"font=
+-family: IBM Plex Sans, Arial; font-size: 13px; text-align: left; color: #3a3=
+a3a; line-height: normal;"><table style=3D"width: 100%;
+                  table-layout: fixed;
+                  font-size: 14px;
+                  padding-bottom: 7px;"><tr><td style=3D"text-align: left;
+                      padding-bottom: 10px;
+                      word-wrap: break-word;"><div style=3D"line-height: norm=
+al;"><b style=3D"font-size: 16px">LIVE SHOPPING HOSTS / ON-CAMERA PERSONALITI=
+ES</b> <span style=3D"font-size: 14px">Reality TV | Non Union</span></div></t=
+d></tr></table><mj-raw></mj-raw><div style=3D"font-size: 12px; padding-bottom=
+: 7px; line-height: normal;"><div style=3D"line-height: normal;"><b>LIVE Shop=
+ping Host | Reality Series Cast</b></div><div style=3D"padding-top: 4px; line=
+-height: normal;"> <b>Submissions Due</b> November 05, 2026, 7:00pm </div></d=
+iv><div style=3D"font-size: 12px; padding-bottom: 6px; line-height: normal;">=
+<div style=3D"line-height: normal;"><b>Host</b> / 18 - 37 / Any Gender</div><=
+div style=3D"padding-top: 4px; line-height: normal;">$150-$450 / Hourly+commi=
+ssion-based compensation with uncapped earning potential, additional shoppabl=
+e-content commissions, and eligibility for a $10,000 monthly top-seller prize=
+. Flexible scheduling and ongoing opportunities.</div> <div style=3D"padding-=
+top: 4px; font-style: italic; line-height: normal;">Seeking outgoing, confide=
+nt, highly engaging personalities with strong communication skills, natural c=
+harisma, and the ability to entertain and connect with audiences on camera.
+
+Ideal candidates are energetic, quick-thinking, persuasive, competitive, and =
+comfortable improvising.
+
+Backgrounds in hos...</div></div><div style=3D"text-align: center; padding: 1=
+2px 0 5px; line-height: normal;"><div style=3D"max-width: 100%; overflow: hid=
+den; line-height: normal;"><a class=3D"btn btn-responsive" style=3D"backgroun=
+d-color: #1A79AF; padding: 6px 16px; text-align: center; border-radius: 4px; =
+word-break: keep-all; display: inline-block; max-width: 100%; box-sizing: bor=
+der-box; white-space: normal; color: #FFF; text-decoration: none;" href=3D"ht=
+tps://app.castingnetworks.com/talent/project/16067033/role/67488451?source&#x=
+3D;savedsearch_email&amp;default_app_context&#x3D;REDACTED">View Role</a></di=
+v></div></div></td></tr></tbody></table></td></tr></tbody></table></div><!--[=
+if mso | IE]></td><![endif]--> <!--[if mso | IE]><td class=3D"" style=3D"vert=
+ical-align:top;width:786px;" ><![endif]--><div class=3D"mj-column-per-100 mj-=
+outlook-group-fix" style=3D"font-size: 0px; text-align: left; direction: ltr;=
+ display: inline-block; vertical-align: top; width: 100%; line-height: normal=
+;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentati=
+on" width=3D"100%"><tbody><tr><td style=3D"vertical-align:top;padding:10px;">=
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation"=
+ style=3D"background-color:#F8F8F8;border:1px solid #d8d8d8;border-radius:5px=
+;" width=3D"100%"><tbody><tr><td align=3D"left" class=3D"roleColumn" style=3D=
+"font-size: 0px; word-break: break-word; padding: 6px 12px 8px;"><div style=
+=3D"font-family: IBM Plex Sans, Arial; font-size: 13px; text-align: left; col=
+or: #3a3a3a; line-height: normal;"><table style=3D"width: 100%;
+                  table-layout: fixed;
+                  font-size: 14px;
+                  padding-bottom: 7px;"><tr><td style=3D"text-align: left;
+                      padding-bottom: 10px;
+                      word-wrap: break-word;"><div style=3D"line-height: norm=
+al;"><b style=3D"font-size: 16px">JPMorgan Chase- Stills and non union video<=
+/b> <span style=3D"font-size: 14px">Print | Non Union</span></div></td></tr><=
+/table><mj-raw></mj-raw><div style=3D"font-size: 12px; padding-bottom: 7px; l=
+ine-height: normal;"><div style=3D"line-height: normal;"><b>WOMEN 20s</b></di=
+v><div style=3D"padding-top: 4px; line-height: normal;"> <b>Submissions Due</=
+b> November 02, 2026, 11:00am </div></div><div style=3D"font-size: 12px; padd=
+ing-bottom: 6px; line-height: normal;"><div style=3D"line-height: normal;"><b=
+>Principal</b> / 23 - 29 / Woman</div><div style=3D"padding-top: 4px; line-he=
+ight: normal;">see breakdown</div> <div style=3D"padding-top: 4px; font-style=
+: italic; line-height: normal;">ALL ETHNICITIES. DIVERSITY IN GENDER, RACE, B=
+ODY TYPE, ABILITIES, HAIR &amp; AGE</div></div><div style=3D"text-align: cent=
+er; padding: 12px 0 5px; line-height: normal;"><div style=3D"max-width: 100%;=
+ overflow: hidden; line-height: normal;"><a class=3D"btn btn-responsive" styl=
+e=3D"background-color: #1A79AF; padding: 6px 16px; text-align: center; border=
+-radius: 4px; word-break: keep-all; display: inline-block; max-width: 100%; b=
+ox-sizing: border-box; white-space: normal; color: #FFF; text-decoration: non=
+e;" href=3D"https://app.castingnetworks.com/talent/project/16067042/role/6748=
+8491?source&#x3D;savedsearch_email&amp;default_app_context&#x3D;REDACTED">Vie=
+w Role</a></div></div></div></td></tr></tbody></table></td></tr></tbody></tab=
+le></div><!--[if mso | IE]></td><![endif]--> <!--[if mso | IE]><td class=3D""=
+ style=3D"vertical-align:top;width:786px;" ><![endif]--><div class=3D"mj-colu=
+mn-per-100 mj-outlook-group-fix" style=3D"font-size: 0px; text-align: left; d=
+irection: ltr; display: inline-block; vertical-align: top; width: 100%; line-=
+height: normal;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=
+=3D"presentation" width=3D"100%"><tbody><tr><td style=3D"vertical-align:top;p=
+adding:10px;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D=
+"presentation" style=3D"background-color:#F8F8F8;border:1px solid #d8d8d8;bor=
+der-radius:5px;" width=3D"100%"><tbody><tr><td align=3D"left" class=3D"roleCo=
+lumn" style=3D"font-size: 0px; word-break: break-word; padding: 6px 12px 8px;=
+"><div style=3D"font-family: IBM Plex Sans, Arial; font-size: 13px; text-alig=
+n: left; color: #3a3a3a; line-height: normal;"><table style=3D"width: 100%;
+                  table-layout: fixed;
+                  font-size: 14px;
+                  padding-bottom: 7px;"><tr><td style=3D"text-align: left;
+                      padding-bottom: 10px;
+                      word-wrap: break-word;"><div style=3D"line-height: norm=
+al;"><b style=3D"font-size: 16px">JPMorgan Chase- Stills and non union video<=
+/b> <span style=3D"font-size: 14px">Print | Non Union</span></div></td></tr><=
+/table><mj-raw></mj-raw><div style=3D"font-size: 12px; padding-bottom: 7px; l=
+ine-height: normal;"><div style=3D"line-height: normal;"><b>REAL FRIENDS</b><=
+/div><div style=3D"padding-top: 4px; line-height: normal;"> <b>Submissions Du=
+e</b> November 02, 2026, 11:00am </div></div><div style=3D"font-size: 12px; p=
+adding-bottom: 6px; line-height: normal;"><div style=3D"line-height: normal;"=
+><b>Principal</b> / 25 - 47 / Multiple Genders</div><div style=3D"padding-top=
+: 4px; line-height: normal;">see breakdown</div> <div style=3D"padding-top: 4=
+px; font-style: italic; line-height: normal;">Real groups of friends, will be=
+ asked to tape together! </div></div><div style=3D"text-align: center; paddin=
+g: 12px 0 5px; line-height: normal;"><div style=3D"max-width: 100%; overflow:=
+ hidden; line-height: normal;"><a class=3D"btn btn-responsive" style=3D"backg=
+round-color: #1A79AF; padding: 6px 16px; text-align: center; border-radius: 4=
+px; word-break: keep-all; display: inline-block; max-width: 100%; box-sizing:=
+ border-box; white-space: normal; color: #FFF; text-decoration: none;" href=
+=3D"https://app.castingnetworks.com/talent/project/16067042/role/67488501?sou=
+rce&#x3D;savedsearch_email&amp;default_app_context&#x3D;REDACTED">View Role</=
+a></div></div></div></td></tr></tbody></table></td></tr></tbody></table></div=
+><!--[if mso | IE]></td><![endif]--> <!--[if mso | IE]><td class=3D"" style=
+=3D"vertical-align:top;width:786px;" ><![endif]--><div class=3D"mj-column-per=
+-100 mj-outlook-group-fix" style=3D"font-size: 0px; text-align: left; directi=
+on: ltr; display: inline-block; vertical-align: top; width: 100%; line-height=
+: normal;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"pr=
+esentation" width=3D"100%"><tbody><tr><td style=3D"vertical-align:top;padding=
+:10px;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"prese=
+ntation" style=3D"background-color:#F8F8F8;border:1px solid #d8d8d8;border-ra=
+dius:5px;" width=3D"100%"><tbody><tr><td align=3D"left" class=3D"roleColumn" =
+style=3D"font-size: 0px; word-break: break-word; padding: 6px 12px 8px;"><div=
+ style=3D"font-family: IBM Plex Sans, Arial; font-size: 13px; text-align: lef=
+t; color: #3a3a3a; line-height: normal;"><table style=3D"width: 100%;
+                  table-layout: fixed;
+                  font-size: 14px;
+                  padding-bottom: 7px;"><tr><td style=3D"text-align: left;
+                      padding-bottom: 10px;
+                      word-wrap: break-word;"><div style=3D"line-height: norm=
+al;"><b style=3D"font-size: 16px">BERO =E2=80=9C5 to 9=E2=80=9D | NY SHOOT</b=
+> <span style=3D"font-size: 14px">Commercial | Non Union</span></div></td></t=
+r></table><mj-raw></mj-raw><div style=3D"font-size: 12px; padding-bottom: 7px=
+; line-height: normal;"><div style=3D"line-height: normal;"><b>PRINCIPAL TALE=
+NT | Casting 4-5 TALENT</b></div><div style=3D"padding-top: 4px; line-height:=
+ normal;"> <b>Submissions Due</b> October 30, 2026, 4:00am </div></div><div s=
+tyle=3D"font-size: 12px; padding-bottom: 6px; line-height: normal;"><div styl=
+e=3D"line-height: normal;"><b>Principal</b> / 27 - 35 / Any Gender</div><div =
+style=3D"padding-top: 4px; line-height: normal;">RATE: $500/10 hr day / SHOOT=
+ HOURS: One 10-hour day, expected to include dusk and evening scenes. Exact c=
+all and wrap times to be confirmed.=20
+CASTING: 4-5 Principal Talent
+RATE: $500/day
+USAGE: $250 for 1 year of organic usage. Digital, Organic Social, Paid social=
+, Newsletter, email</div> <div style=3D"padding-top: 4px; font-style: italic;=
+ line-height: normal;">CASTING 4 TO 5 PRINCIPAL TALENT
+All genders | Playing early to mid-30s | All ethnicities
+Seeking talent who feel like established NYC professionals, with personal sty=
+le, confidence, and warmth. Polished enough to carry the campaign, but approa=
+chable enough to feel like someone you know.=20
+
+The age ra...</div></div><div style=3D"text-align: center; padding: 12px 0 5p=
+x; line-height: normal;"><div style=3D"max-width: 100%; overflow: hidden; lin=
+e-height: normal;"><a class=3D"btn btn-responsive" style=3D"background-color:=
+ #1A79AF; padding: 6px 16px; text-align: center; border-radius: 4px; word-bre=
+ak: keep-all; display: inline-block; max-width: 100%; box-sizing: border-box;=
+ white-space: normal; color: #FFF; text-decoration: none;" href=3D"https://ap=
+p.castingnetworks.com/talent/project/16067052/role/67488533?source&#x3D;saved=
+search_email&amp;default_app_context&#x3D;REDACTED">View Role</a></div></div>=
+</div></td></tr></tbody></table></td></tr></tbody></table></div><!--[if mso |=
+ IE]></td><![endif]--> <!--[if mso | IE]><td class=3D"" style=3D"vertical-ali=
+gn:top;width:786px;" ><![endif]--><div class=3D"mj-column-per-100 mj-outlook-=
+group-fix" style=3D"font-size: 0px; text-align: left; direction: ltr; display=
+: inline-block; vertical-align: top; width: 100%; line-height: normal;"><tabl=
+e border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" widt=
+h=3D"100%"><tbody><tr><td style=3D"vertical-align:top;padding:10px;"><table b=
+order=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=
+=3D"background-color:#F8F8F8;border:1px solid #d8d8d8;border-radius:5px;" wid=
+th=3D"100%"><tbody><tr><td align=3D"left" class=3D"roleColumn" style=3D"font-=
+size: 0px; word-break: break-word; padding: 6px 12px 8px;"><div style=3D"font=
+-family: IBM Plex Sans, Arial; font-size: 13px; text-align: left; color: #3a3=
+a3a; line-height: normal;"><table style=3D"width: 100%;
+                  table-layout: fixed;
+                  font-size: 14px;
+                  padding-bottom: 7px;"><tr><td style=3D"text-align: left;
+                      padding-bottom: 10px;
+                      word-wrap: break-word;"><div style=3D"line-height: norm=
+al;"><b style=3D"font-size: 16px">Hate Your Boss? Quit Your Job!</b> <span st=
+yle=3D"font-size: 14px">Streaming Series | Non Union</span></div></td></tr></=
+table><mj-raw></mj-raw><div style=3D"font-size: 12px; padding-bottom: 7px; li=
+ne-height: normal;"><div style=3D"line-height: normal;"><b>The Quitter</b></d=
+iv><div style=3D"padding-top: 4px; line-height: normal;"> <b>Submissions Due<=
+/b> November 01, 2026, 12:00pm </div></div><div style=3D"font-size: 12px; pad=
+ding-bottom: 6px; line-height: normal;"><div style=3D"line-height: normal;"><=
+b>Principal</b> / 18 - 55 / Multiple Genders</div><div style=3D"padding-top: =
+4px; line-height: normal;">PAID</div> <div style=3D"padding-top: 4px; font-st=
+yle: italic; line-height: normal;">CASTING CALL: Quit Your Job. Epically.
+
+We&#x27;re casting real people anywhere in the US who are about to quit a job=
+ they hate, and want to go out BIG. Not a two-week notice. A moment your cowo=
+rkers will talk about for years.
+
+IMPORTANT: Do not quit your job, confront your boss, or secretly record anyon=
+...</div></div><div style=3D"text-align: center; padding: 12px 0 5px; line-he=
+ight: normal;"><div style=3D"max-width: 100%; overflow: hidden; line-height: =
+normal;"><a class=3D"btn btn-responsive" style=3D"background-color: #1A79AF; =
+padding: 6px 16px; text-align: center; border-radius: 4px; word-break: keep-a=
+ll; display: inline-block; max-width: 100%; box-sizing: border-box; white-spa=
+ce: normal; color: #FFF; text-decoration: none;" href=3D"https://app.castingn=
+etworks.com/talent/project/16067058/role/67488571?source&#x3D;savedsearch_ema=
+il&amp;default_app_context&#x3D;REDACTED">View Role</a></div></div></div></td=
+></tr></tbody></table></td></tr></tbody></table></div><!--[if mso | IE]></td>=
+<![endif]--> <!--[if mso | IE]><td class=3D"" style=3D"vertical-align:top;wid=
+th:786px;" ><![endif]--><div class=3D"mj-column-per-100 mj-outlook-group-fix"=
+ style=3D"font-size: 0px; text-align: left; direction: ltr; display: inline-b=
+lock; vertical-align: top; width: 100%; line-height: normal;"><table border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" width=3D"100=
+%"><tbody><tr><td style=3D"vertical-align:top;padding:10px;"><table border=3D=
+"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"backgr=
+ound-color:#F8F8F8;border:1px solid #d8d8d8;border-radius:5px;" width=3D"100%=
+"><tbody><tr><td align=3D"left" class=3D"roleColumn" style=3D"font-size: 0px;=
+ word-break: break-word; padding: 6px 12px 8px;"><div style=3D"font-family: I=
+BM Plex Sans, Arial; font-size: 13px; text-align: left; color: #3a3a3a; line-=
+height: normal;"><table style=3D"width: 100%;
+                  table-layout: fixed;
+                  font-size: 14px;
+                  padding-bottom: 7px;"><tr><td style=3D"text-align: left;
+                      padding-bottom: 10px;
+                      word-wrap: break-word;"><div style=3D"line-height: norm=
+al;"><b style=3D"font-size: 16px">On Camera Host - REAL NURSES ONLY</b> <span=
+ style=3D"font-size: 14px">Streaming Series | Non Union</span></div></td></tr=
+></table><mj-raw></mj-raw><div style=3D"font-size: 12px; padding-bottom: 7px;=
+ line-height: normal;"><div style=3D"line-height: normal;"><b>On Camera Host =
+</b></div><div style=3D"padding-top: 4px; line-height: normal;"> <b>Submissio=
+ns Due</b> November 01, 2026, 12:00pm </div></div><div style=3D"font-size: 12=
+px; padding-bottom: 6px; line-height: normal;"><div style=3D"line-height: nor=
+mal;"><b>Principal</b> / 25 - 45 / Multiple Genders</div><div style=3D"paddin=
+g-top: 4px; line-height: normal;">PAID</div> <div style=3D"padding-top: 4px; =
+font-style: italic; line-height: normal;">CASTING CALL: Nurse On-Camera Host
+
+We&#x27;re casting a current or former nurse anywhere in the US to host a new=
+ educational YouTube channel for nurses. The topics are the stuff nobody teac=
+hes you in nursing school: investing, student debt, budgeting, taxes.
+
+The host we&#x27;re looking for:
+=E2=80=A2 A current or f...</div></div><div style=3D"text-align: center; padd=
+ing: 12px 0 5px; line-height: normal;"><div style=3D"max-width: 100%; overflo=
+w: hidden; line-height: normal;"><a class=3D"btn btn-responsive" style=3D"bac=
+kground-color: #1A79AF; padding: 6px 16px; text-align: center; border-radius:=
+ 4px; word-break: keep-all; display: inline-block; max-width: 100%; box-sizin=
+g: border-box; white-space: normal; color: #FFF; text-decoration: none;" href=
+=3D"https://app.castingnetworks.com/talent/project/16067063/role/67488599?sou=
+rce&#x3D;savedsearch_email&amp;default_app_context&#x3D;REDACTED">View Role</=
+a></div></div></div></td></tr></tbody></table></td></tr></tbody></table></div=
+><!--[if mso | IE]></td><![endif]--> <!--[if mso | IE]><td class=3D"" style=
+=3D"vertical-align:top;width:786px;" ><![endif]--><div class=3D"mj-column-per=
+-100 mj-outlook-group-fix" style=3D"font-size: 0px; text-align: left; directi=
+on: ltr; display: inline-block; vertical-align: top; width: 100%; line-height=
+: normal;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"pr=
+esentation" width=3D"100%"><tbody><tr><td style=3D"vertical-align:top;padding=
+:10px;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"prese=
+ntation" style=3D"background-color:#F8F8F8;border:1px solid #d8d8d8;border-ra=
+dius:5px;" width=3D"100%"><tbody><tr><td align=3D"left" class=3D"roleColumn" =
+style=3D"font-size: 0px; word-break: break-word; padding: 6px 12px 8px;"><div=
+ style=3D"font-family: IBM Plex Sans, Arial; font-size: 13px; text-align: lef=
+t; color: #3a3a3a; line-height: normal;"><table style=3D"width: 100%;
+                  table-layout: fixed;
+                  font-size: 14px;
+                  padding-bottom: 7px;"><tr><td style=3D"text-align: left;
+                      padding-bottom: 10px;
+                      word-wrap: break-word;"><div style=3D"line-height: norm=
+al;"><b style=3D"font-size: 16px">Female Model Needed NJ</b> <span style=3D"f=
+ont-size: 14px">Music Video | Non Union</span></div></td></tr></table><mj-raw=
+></mj-raw><div style=3D"font-size: 12px; padding-bottom: 7px; line-height: no=
+rmal;"><div style=3D"line-height: normal;"><b>Female Model Needed</b></div><d=
+iv style=3D"padding-top: 4px; line-height: normal;"> <b>Submissions Due</b> O=
+ctober 30, 2026, 8:00pm </div></div><div style=3D"font-size: 12px; padding-bo=
+ttom: 6px; line-height: normal;"><div style=3D"line-height: normal;"><b>Lead<=
+/b> / 21 - 33 / Woman</div><div style=3D"padding-top: 4px; line-height: norma=
+l;">$250 - paid at wrap  / $250 - paid at wrap </div> <div style=3D"padding-t=
+op: 4px; font-style: italic; line-height: normal;">Punjabi Music Video Shoot
+Saturday, October 31st=20
+Time: 11:00am-6:00pm (7 hrs)
+Location: Montammy Golf Club(Apline, NJ)
+$250 - Paid at wrap
+
+Details:
+Seeking a female lead of any ethnicity to play the artist=E2=80=99s love inte=
+rest in a cinematic Punjabi music video about confidence, loyalty, and moving=
+ on ...</div></div><div style=3D"text-align: center; padding: 12px 0 5px; lin=
+e-height: normal;"><div style=3D"max-width: 100%; overflow: hidden; line-heig=
+ht: normal;"><a class=3D"btn btn-responsive" style=3D"background-color: #1A79=
+AF; padding: 6px 16px; text-align: center; border-radius: 4px; word-break: ke=
+ep-all; display: inline-block; max-width: 100%; box-sizing: border-box; white=
+-space: normal; color: #FFF; text-decoration: none;" href=3D"https://app.cast=
+ingnetworks.com/talent/project/16067068/role/67488628?source&#x3D;savedsearch=
+_email&amp;default_app_context&#x3D;REDACTED">View Role</a></div></div></div>=
+</td></tr></tbody></table></td></tr></tbody></table></div><!--[if mso | IE]><=
+/td><![endif]--> <!--[if mso | IE]><td class=3D"" style=3D"vertical-align:top=
+;width:786px;" ><![endif]--><div class=3D"mj-column-per-100 mj-outlook-group-=
+fix" style=3D"font-size: 0px; text-align: left; direction: ltr; display: inli=
+ne-block; vertical-align: top; width: 100%; line-height: normal;"><table bord=
+er=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" width=3D"1=
+00%"><tbody><tr><td style=3D"vertical-align:top;padding:10px;"><table border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"bac=
+kground-color:#F8F8F8;border:1px solid #d8d8d8;border-radius:5px;" width=3D"1=
+00%"><tbody><tr><td align=3D"left" class=3D"roleColumn" style=3D"font-size: 0=
+px; word-break: break-word; padding: 6px 12px 8px;"><div style=3D"font-family=
+: IBM Plex Sans, Arial; font-size: 13px; text-align: left; color: #3a3a3a; li=
+ne-height: normal;"><table style=3D"width: 100%;
+                  table-layout: fixed;
+                  font-size: 14px;
+                  padding-bottom: 7px;"><tr><td style=3D"text-align: left;
+                      padding-bottom: 10px;
+                      word-wrap: break-word;"><div style=3D"line-height: norm=
+al;"><b style=3D"font-size: 16px">What Silences You?</b> <span style=3D"font-=
+size: 14px">PSA | Non Union</span></div></td></tr></table><mj-raw></mj-raw><d=
+iv style=3D"font-size: 12px; padding-bottom: 7px; line-height: normal;"><div =
+style=3D"line-height: normal;"><b>Silenced Younger Adults</b></div><div style=
+=3D"padding-top: 4px; line-height: normal;"> <b>Submissions Due</b> November =
+29, 2026, 7:00pm </div></div><div style=3D"font-size: 12px; padding-bottom: 6=
+px; line-height: normal;"><div style=3D"line-height: normal;"><b>Featured Bac=
+kground</b> / 18 - 30 / Any Gender</div> <div style=3D"padding-top: 4px; font=
+-style: italic; line-height: normal;">Nonspeaking, but showing pain and suffe=
+ring through silence in your eyes.</div></div><div style=3D"text-align: cente=
+r; padding: 12px 0 5px; line-height: normal;"><div style=3D"max-width: 100%; =
+overflow: hidden; line-height: normal;"><a class=3D"btn btn-responsive" style=
+=3D"background-color: #1A79AF; padding: 6px 16px; text-align: center; border-=
+radius: 4px; word-break: keep-all; display: inline-block; max-width: 100%; bo=
+x-sizing: border-box; white-space: normal; color: #FFF; text-decoration: none=
+;" href=3D"https://app.castingnetworks.com/talent/project/16067071/role/67488=
+636?source&#x3D;savedsearch_email&amp;default_app_context&#x3D;REDACTED">View=
+ Role</a></div></div></div></td></tr></tbody></table></td></tr></tbody></tabl=
+e></div><!--[if mso | IE]></td><![endif]--> <!--[if mso | IE]><td class=3D"" =
+style=3D"vertical-align:top;width:786px;" ><![endif]--><div class=3D"mj-colum=
+n-per-100 mj-outlook-group-fix" style=3D"font-size: 0px; text-align: left; di=
+rection: ltr; display: inline-block; vertical-align: top; width: 100%; line-h=
+eight: normal;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=
+=3D"presentation" width=3D"100%"><tbody><tr><td style=3D"vertical-align:top;p=
+adding:10px;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D=
+"presentation" style=3D"background-color:#F8F8F8;border:1px solid #d8d8d8;bor=
+der-radius:5px;" width=3D"100%"><tbody><tr><td align=3D"left" class=3D"roleCo=
+lumn" style=3D"font-size: 0px; word-break: break-word; padding: 6px 12px 8px;=
+"><div style=3D"font-family: IBM Plex Sans, Arial; font-size: 13px; text-alig=
+n: left; color: #3a3a3a; line-height: normal;"><table style=3D"width: 100%;
+                  table-layout: fixed;
+                  font-size: 14px;
+                  padding-bottom: 7px;"><tr><td style=3D"text-align: left;
+                      padding-bottom: 10px;
+                      word-wrap: break-word;"><div style=3D"line-height: norm=
+al;"><b style=3D"font-size: 16px">EASTER ISLAND</b> <span style=3D"font-size:=
+ 14px">Streaming Series | SAG-AFTRA</span></div></td></tr></table><mj-raw></m=
+j-raw><div style=3D"font-size: 12px; padding-bottom: 7px; line-height: normal=
+;"><div style=3D"line-height: normal;"><b>Featured Character Faces Age 20&#x2=
+7;s-50s BG on Tuesday 11/3 (SAG-AFTRA Covered Roles)</b></div><div style=3D"p=
+adding-top: 4px; line-height: normal;"> <b>Submissions Due</b> October 30, 20=
+26, 4:00pm </div></div><div style=3D"font-size: 12px; padding-bottom: 6px; li=
+ne-height: normal;"><div style=3D"line-height: normal;"><b>Featured Backgroun=
+d</b> / 18 - 55 / Any Gender</div><div style=3D"padding-top: 4px; line-height=
+: normal;">$231/8hrs or NU </div> <div style=3D"padding-top: 4px; font-style:=
+ italic; line-height: normal;">GWCI is seeking 18 to 58 year old character fa=
+ces to portray featured roles in pre op hospital room:=20
+
+-bearded man and wife, 40&#x27;s=20
+-Transgender BG, all ages
+-70&#x27;s Sympathetic patient
+-50 YO heavy set male for EKG
+
+Currently tent. scheduled to film on TUESDAY 11/3 . This is interior work.=20
+
+Pay rate...</div></div><div style=3D"text-align: center; padding: 12px 0 5px;=
+ line-height: normal;"><div style=3D"max-width: 100%; overflow: hidden; line-=
+height: normal;"><a class=3D"btn btn-responsive" style=3D"background-color: #=
+1A79AF; padding: 6px 16px; text-align: center; border-radius: 4px; word-break=
+: keep-all; display: inline-block; max-width: 100%; box-sizing: border-box; w=
+hite-space: normal; color: #FFF; text-decoration: none;" href=3D"https://app.=
+castingnetworks.com/talent/project/16056364/role/67488632?source&#x3D;savedse=
+arch_email&amp;default_app_context&#x3D;REDACTED">View Role</a></div></div></=
+div></td></tr></tbody></table></td></tr></tbody></table></div><!--[if mso | I=
+E]></td><![endif]--> <!--[if mso | IE]></tr></table><![endif]--></td></tr></t=
+body></table></div><!--[if mso | IE]></td></tr></table><![endif]--></td></tr>=
+<table role=3D"presentation" border=3D"0" cellpadding=3D"0" cellspacing=3D"0"=
+ width=3D"100%" style=3D"margin: 0 auto"><tr><td align=3D"center"><a class=3D=
+"btn btn-responsive" href=3D"https://app.castingnetworks.com/talent/casting-b=
+illboard?savedSearchId&#x3D;REDACTED&amp;default_app_context&#x3D;REDACTED" s=
+tyle=3D"word-break: keep-all; max-width: 200px; width: 100%; white-space: nor=
+mal; padding: 12px 16px; font-size: 14px; background-color: #1a79af; text-ali=
+gn: center; border-radius: 4px; box-sizing: border-box; text-decoration: none=
+; display: inline-block; color: #fff;">See All Results</a></td></tr></table><=
+/tbody></table></div><!--[if mso | IE]></td></tr></table><![endif]--></td></t=
+r></tbody></table></div><!--[if mso | IE]></td></tr></table></td></tr><tr><td=
+ class=3D"noPadding-outlook" width=3D"786px" ><table align=3D"center" border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"noPadding-outlook" role=
+=3D"presentation" style=3D"width:786px;" width=3D"786" ><tr><td style=3D"line=
+-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]--><div cla=
+ss=3D"noPadding" style=3D"margin: 0px auto; max-width: 786px; line-height: no=
+rmal; padding: 0;"><table align=3D"center" border=3D"0" cellpadding=3D"0" cel=
+lspacing=3D"0" role=3D"presentation" style=3D"width:100%;"><tbody><tr><td sty=
+le=3D"direction: ltr; font-size: 0px; text-align: center; padding: 0;" align=
+=3D"center"><!--[if mso | IE]><table role=3D"presentation" border=3D"0" cellp=
+adding=3D"0" cellspacing=3D"0"><tr><td class=3D"" style=3D"vertical-align:top=
+;width:786px;" ><![endif]--><div class=3D"mj-column-per-100 mj-outlook-group-=
+fix" style=3D"font-size: 0px; text-align: left; direction: ltr; display: inli=
+ne-block; vertical-align: top; width: 100%; line-height: normal;"><table bord=
+er=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"v=
+ertical-align:top;" width=3D"100%"><tbody><tr><td align=3D"left" class=3D"foo=
+terNote" style=3D"font-size: 0px; word-break: break-word; padding: 0;"><div s=
+tyle=3D"font-family: IBM Plex Sans, Arial; color: #3a3a3a; line-height: norma=
+l; text-align: center; font-size: 12px; font-weight: 300; padding: 14px 13px;=
+">This email was sent to: <a href=3D"mailto:redacted@gmail.com" style=3D"colo=
+r: #2c9ede; text-decoration: none;">redacted@gmail.com</a>. Please do not res=
+pond directly to this notice.<br><mj-raw></mj-raw><a href=3D"https://app.cast=
+ingnetworks.com/talent/account-settings/notifications" style=3D"color: #2c9ed=
+e; text-decoration: none;">Unsubscribe or Manage Email Settings</a><mj-raw></=
+mj-raw></div></td></tr></tbody></table></div><!--[if mso | IE]></td></tr></ta=
+ble><![endif]--></td></tr></tbody></table></div><!--[if mso | IE]></td></tr><=
+/table></td></tr></table><![endif]--></td></tr></tbody></table></div><!--[if =
+mso | IE]></td></tr></table><table align=3D"center" border=3D"0" cellpadding=
+=3D"0" cellspacing=3D"0" class=3D"" role=3D"presentation" style=3D"width:786p=
+x;" width=3D"786" bgcolor=3D"white" ><tr><td style=3D"line-height:0px;font-si=
+ze:0px;mso-line-height-rule:exactly;"><![endif]--><div style=3D"background: w=
+hite; background-color: white; margin: 0px auto; max-width: 786px; line-heigh=
+t: normal;"><table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacin=
+g=3D"0" role=3D"presentation" style=3D"background:white;background-color:whit=
+e;width:100%;"><tbody><tr><td style=3D"border:1px solid #f8f8f8;direction:ltr=
+;font-size:0px;padding:0px 16px;text-align:center;"><!--[if mso | IE]><table =
+role=3D"presentation" border=3D"0" cellpadding=3D"0" cellspacing=3D"0"><tr><t=
+d class=3D"" style=3D"vertical-align:top;width:752px;" ><![endif]--><div clas=
+s=3D"mj-column-per-100 mj-outlook-group-fix" style=3D"font-size: 0px; text-al=
+ign: left; direction: ltr; display: inline-block; vertical-align: top; width:=
+ 100%; line-height: normal;"><table border=3D"0" cellpadding=3D"0" cellspacin=
+g=3D"0" role=3D"presentation" width=3D"100%"><tbody><tr><td style=3D"vertical=
+-align:top;padding:0px;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D=
+"0" role=3D"presentation" width=3D"100%"><tbody><tr><td align=3D"center" styl=
+e=3D"font-size:0px;padding:0px;word-break:break-word;"><div style=3D"font-fam=
+ily: IBM Plex Sans, Arial; font-size: 13px; text-align: center; color: #3a3a3=
+a; line-height: normal;"><p style=3D"margin: 12px 0px;
+          font-size: 12px;
+          font-weight: 300;
+          color: #868e96;">&copy; 2026 Casting Networks, LLC. All Rights Rese=
+rved. | <a href=3D"https://www.castingnetworks.com/terms" style=3D"color: #2c=
+9ede; text-decoration: none;">Terms of Use</a> | <a href=3D"https://www.casti=
+ngnetworks.com/privacy" style=3D"color: #2c9ede; text-decoration: none;">Priv=
+acy Policy</a></p><p style=3D"margin: 12px 0;
+          font-size: 11px;
+          font-weight: 300;
+          color: #868e96;">Casting Networks, PMB 846660, 8605 Santa Monica Bl=
+vd., West Hollywood, CA 90069, USA</p></div></td></tr><tr><td align=3D"center=
+" style=3D"font-size:0px;padding:0 0 17px;word-break:break-word;"><table bord=
+er=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"b=
+order-collapse:collapse;border-spacing:0px;"><tbody><tr><td style=3D"width:12=
+0px;"><a href=3D"https://castingnetworks.com" target=3D"_blank" style=3D"colo=
+r: #2c9ede; text-decoration: none;"><img height=3D"auto" src=3D"https://cdn.c=
+astingnetworks.com/images/logos/logo147x34.png" style=3D"border:0;display:blo=
+ck;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;" =
+width=3D"120"></a></td></tr></tbody></table></td></tr></tbody></table></td></=
+tr></tbody></table></div><!--[if mso | IE]></td></tr></table><![endif]--></td=
+></tr></tbody></table></div><!--[if mso | IE]></td></tr></table><![endif]--><=
+/div><img src=3D"http://url8953.castingnetworks.com/wf/open?upn=3DREDACTED" a=
+lt=3D"" width=3D"1" height=3D"1" border=3D"0" style=3D"height:1px !important;=
+width:1px !important;border-width:0 !important;margin-top:0 !important;margin=
+-bottom:0 !important;margin-right:0 !important;margin-left:0 !important;paddi=
+ng-top:0 !important;padding-bottom:0 !important;padding-right:0 !important;pa=
+dding-left:0 !important;"/></body></html>

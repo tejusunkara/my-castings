@@ -1,0 +1,36 @@
+# Workspace root. Not a package itself — it just pins the Python version, wires the
+# workspace members together, and holds shared dev tooling (pytest, ruff).
+[project]
+name = "my-castings"
+version = "0.1.0"
+requires-python = ">=3.12,<3.13"
+dependencies = ["my-castings-api", "ingestion-core"]
+
+[tool.uv]
+package = false
+
+[tool.uv.workspace]
+members = ["apps/api", "packages/ingestion_core"]
+
+[tool.uv.sources]
+my-castings-api = { workspace = true }
+ingestion-core = { workspace = true }
+
+[dependency-groups]
+dev = ["pytest>=8.3", "httpx>=0.27", "ruff>=0.6"]
+
+[tool.pytest.ini_options]
+testpaths = ["packages/ingestion_core/tests", "apps/api/tests"]
+# Both members have a tests/ dir; importlib mode keeps their conftest/test modules
+# from colliding on the same module names.
+addopts = "--import-mode=importlib"
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["ingestion_core", "app"]

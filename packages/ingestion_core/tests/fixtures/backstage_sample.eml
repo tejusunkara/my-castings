@@ -1,0 +1,1546 @@
+Return-Path: <redacted+caf_=jobs=mail.allcastings.fyi@gmail.com>
+Received: from mail-pj1-f49.google.com (mail-pj1-f49.google.com
+ [209.85.216.49]) by inbound-smtp.us-east-1.amazonaws.com with SMTP id
+ urvlecg3opf72edfteuv7lgc2fp6uq3t5l0t7r81 for jobs@mail.allcastings.fyi; Thu,
+ 29 Oct 2026 18:13:49 +0000 (UTC)
+X-SES-Spam-Verdict: PASS
+X-SES-Virus-Verdict: PASS
+Received-SPF: pass (spfCheck: domain of _spf.google.com designates
+ 209.85.216.49 as permitted sender) client-ip=209.85.216.49;
+ envelope-from=redacted+caf_=jobs=mail.allcastings.fyi@gmail.com;
+ helo=mail-pj1-f49.google.com;
+Authentication-Results: amazonses.com; spf=pass (spfCheck: domain of
+ _spf.google.com designates 209.85.216.49 as permitted sender)
+ client-ip=209.85.216.49;
+ envelope-from=redacted+caf_=jobs=mail.allcastings.fyi@gmail.com;
+ helo=mail-pj1-f49.google.com; dkim=pass header.i=@send.backstage.com;
+ dkim=pass header.i=@sendgrid.info; dmarc=pass header.from=backstage.com;
+X-SES-RECEIPT: =?utf-8?q?AEFBQUFBQUFBQUFHMWMzaVk5Ym9GbWo1bFhmV1RmbU5EVDJ2b0Q?=
+ =?utf-8?q?3R0pMa0g5ZEZtdGJvODZHU1Q5ZFJwWlFuMTlLUzRBOE1saXdMN0pBdzdwNVBuVXN2?=
+ =?utf-8?q?TGFNYTVkY3U1U3hTOXlGdjRSTmU3c1V2SEZBV2E3OUJFWFlSZUpXVkJJZzNKNHZqN?=
+ =?utf-8?q?EhmNjBXWlhscm40VnllcFBkaEttVkpOaW5Ua3pMalVTNHlyTHFtYU4yWFRiMUZQeU?=
+ =?utf-8?q?oyRE8yZ25hZUdVSFFWM3BmMVp3SzRIQ25pSk9YZU1GYmI5ejVNdlRYNnFKMjhiYnF?=
+ =?utf-8?q?NTWd6NThuSjI4UUxDTjliS0d0TU1xMmpwZVVUNGJtekM3MkpDTGRad054cXF6ME1J?=
+ =?utf-8?q?TlZEeVRYS2hUZnpOeFA4M1czUXFzaVlQM25QR0Qxak1KVjUvWVpQNGlSNHQ5bWZLU?=
+ =?utf-8?q?khMZEx4OGFCY3M0YU1JQXJ4eU5rN2E=3D?=
+X-SES-DKIM-SIGNATURE: a=rsa-sha256; q=dns/txt; =?utf-8?q?b=3DevZ1ttPJlubIQXe?=
+ =?utf-8?q?mrHUxikK3rc06oKa6ffoikviIDyX8vyOvA0bXvxGVAmiu6OPiWc8uW0EHXS584sMe?=
+ =?utf-8?q?Q7cR2I05ipuvkGLfuu8f93thklbdF9m9QIZjkazuTuOeOAwan3BzpGDDA9TerHfbb?=
+ =?utf-8?q?VBTC3Mm2foobRHJ/EHaaXQ6UF0=3D=3B?= c=relaxed/simple;
+ s=224i4yxa5dv7c2xz3womw6peuasteono; d=amazonses.com; t=1793297629; v=1;
+ bh=yoW32TqtHCAmZkNDsgr8Jvl/tOyEQt06EASkgpcxUtk=; =?utf-8?q?h=3DFrom=3ATo=3A?=
+ =?utf-8?q?Cc=3ABcc=3ASubject=3ADate=3AMessage-ID=3AMIME-Version=3AContent-T?=
+ =?utf-8?q?ype=3AX-SES-RECEIPT=3B?=
+Received: by mail-pj1-f49.google.com with SMTP id
+ 98e67ed59e1d1-3ab752f6244so2862411a91.2        for
+ <jobs@mail.allcastings.fyi>; Thu, 29 Oct 2026 11:13:49 -0700 (PDT)
+ARC-Seal: i=2; a=rsa-sha256; t=1793297628; cv=pass;
+        d=google.com; s=arc-20260327;
+        b=qbCXaC1O17mulxi3N33T+/IA17ToM1oKmXvuxSm4wKWPY/EXUDPdz+jmB+PtPaiKT5
+         m1XTkEE05ldy/11X9Gvs7HGf4A+mzfQ3MNI6E18VN0gxczKoeXlQhEc8Xg/faPoQMK8q
+         eIj6r5ZPpyP/Y/p887CSu8Nw0odtUP2USxuf39sT0UDwBN8uZJeNSocTANSX1sJMHoEL
+         2aVP5AdkRiY69OrLuQolk5W8eFNFoMUN8Yh/Y+YkDFiX5IAXO/GYA7KCVJCBL8zSMmhF
+         B2nNaucTEWI6/LSuufpE1pzYZgM2YYsZJkpF9okrWAdV6dduiPnLFtCiYXWE+g+iOBk3
+         j6lg==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327;       
+ h=to:list-unsubscribe-post:list-unsubscribe:subject:message-id        
+ :mime-version:from:date:dkim-signature:dkim-signature:delivered-to;       
+ bh=KR2O6oA2y3JfiY3UXHy5AM2iFcEqKCaNbsAl2MJ6nVM=;       
+ fh=w8oAN6o9K6UNyhVCNfqnDCkY9vCLvntpORgsvmSpXvc=;       
+ b=qf+3++ni0DaJZnTeCEZYqigqpZaTVTk0UUyGEi5lxHsh+wVkM8HVUP9ERBn7ksh8Eu        
+ Q9VOJJvv8PE5be60+0X7di6mr1ptGnz8bCFDGc+BHs8EPzxBqXAEgETfwnrxKKbB/EBi        
+ di+h0dHbd/yjjM8dL8q88uap3IF4HfcqM3+jRjdRJe9u6Swz3BEc6cnvYNqVWHePUKp+        
+ jcMsOuBW7i5qX9PW6pzl9h5PMi6RYliYBDalN0cO21p1ltwyJfI9upuPiRiFbUCpXrGr        
+ liB05KgE+V6egXmAdi1hwXM/7pivv6lGjqaAPjuiuIRURE1g42JEA/wPbzEtoIG4pxST        
+ i14A==;        darn=mail.allcastings.fyi
+ARC-Authentication-Results: i=2; mx.google.com; dkim=pass
+ header.i=@send.backstage.com header.s=s3 header.b=OFk4anXd; dkim=pass
+ header.i=@sendgrid.info header.s=smtpapi header.b=h7Uz77YD; spf=pass
+ (google.com: domain of
+ bounces+1507866-ef9a-redacted=gmail.com@em1818.send.backstage.com designates
+ 159.183.160.197 as permitted sender) =?utf-8?q?smtp=2Emailfrom=3D=22bounces?=
+ =?utf-8?q?+1507866-ef9a-redacted=3Dgmail=2Ecom=40em1818=2Esend=2Ebackstage?=
+ =?utf-8?q?=2Ecom=22=3B?= dmarc=pass (p=REJECT sp=REJECT dis=NONE)
+ header.from=backstage.com
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793297628; x=1793902428;
+        h=to:list-unsubscribe-post:list-unsubscribe:subject:message-id
+         :mime-version:from:date:content-type:dkim-signature:dkim-signature
+         :delivered-to:x-forwarded-for:x-forwarded-to:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=KR2O6oA2y3JfiY3UXHy5AM2iFcEqKCaNbsAl2MJ6nVM=;
+        b=CXi2UuHVNbQSzyQ5ZqzmFHhLTImfYNSISJ+ft2mbp3o0ryNvxNsF6YYIYAej+O2WwV
+         eMnOrl1HqHVIp/znUX2PimQ3BLFWzP/19a/yWRYhEwzs9cH3ZbbmfqnWOoBZKrYIUqFk
+         z/ZalHN73DXwghtVXXoJc0UEtBQfs5E5Ui7J4gtsBRr5II2kL/VLuna9QxiSmUYmtkhX
+         BtwGnbMG9aS6mdYkFc+7wHpsV8zPU6gnsnlEF0XkPKuT09prb9aFjd5JMmnPxoZS6FSe
+         GHkoDDCW0Ap90YVbv6kazP1Ms3Jz1v5ZpQ6vZEKTJE1cdiZWS4pbjav0gEV07vx7+lFB
+         tE9w==
+X-Forwarded-Encrypted: i=2; =?utf-8?q?AKwUvBxxIAZfCnqpHPk3WtgmAYyY66Z/bfdc+d?=
+ =?utf-8?q?695x8h4+0XaQPzQDJD/6rN1ZheDlR6D5aaxJpO=40mail=2Eallcastings=2Efyi?=
+X-Gm-Message-State: AFq9FYLMQPNX++/JEl74S7aj4ZAxU9iqgOabiQWrGhJtLVrUOqyR/Rfl
+	JJXofVzKzS8J1aAm7mybz5K66hI6J2UWcyvWbpH2Y/rhsiVgFSqRdTWTTbPlGncpmmFtPhWil1v
+	47txGFjZbDDhH+sbYk4S7wgv0SfHj1ajZpraCGZp+yvxgLgu/v1Lq+cuod9IY6w==
+X-Received: by 2002:a17:90b:2743:b0:3ab:188b:c5bf with SMTP id
+ 98e67ed59e1d1-3ae57f637e4mr4617246a91.18.1793297628088;        Thu, 29 Oct
+ 2026 11:13:48 -0700 (PDT)
+X-Forwarded-To: jobs@mail.allcastings.fyi
+X-Forwarded-For: redacted@gmail.com jobs@mail.allcastings.fyi
+Delivered-To: redacted@gmail.com
+Received: by 2002:a05:6a21:1f81:b0:3e9:10e:737e with SMTP id rz1csp1182529pzb;
+        Thu, 29 Oct 2026 11:13:45 -0700 (PDT)
+X-Received: by 2002:a05:620a:46a3:b0:93f:2236:a61 with SMTP id
+ af79cd13be357-94408d09937mr972028485a.61.1793297625425;        Thu, 29 Oct
+ 2026 11:13:45 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1793297625; cv=none;
+        d=google.com; s=arc-20260327;
+        b=fuq825FtNB+kOXhcFTXN/xHtCRqJNYIP05+u5/ESzTzxue2uP3BoNWCyv2ujA2HKl6
+         p6hV5nXVh6aUKT0ehojvViVBvwgxiIRBeJRkSi/W0h2znWBwcaUVubSMEVO33pFMsHXx
+         VmwLxCfCjo0wrj9ThDtp2ZLeZLacHRPLVNA3gFXWZ6JBnkVNQPevX/ibLtlACI5z/f9s
+         ViHnHUSbqVSd+L4srGNKfBItHXD+35q2I0BXUWbDxJ2Lepa23XVyNwrF9jQ5/LkmD3hK
+         MBP2XT+M7bDmscVc/GqdbglutF9+Vta9GdSN7ma2DIY0/luU5tpFwxWkFEoIm+jeKkBb
+         7HIQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327;       
+ h=to:list-unsubscribe-post:list-unsubscribe:subject:message-id        
+ :mime-version:from:date:dkim-signature:dkim-signature;       
+ bh=KR2O6oA2y3JfiY3UXHy5AM2iFcEqKCaNbsAl2MJ6nVM=;       
+ fh=22U4dm3YuqGXwhDNN9XRpG8FwIHkAUyITrN9Xf8D7BQ=;       
+ b=BFaXNJ48TKqDqm+1xn/Ce50bPh/EiA03PySz0KUNqR0UdX61AjKig8AV+6iqAihjoR        
+ Zs0bzoxMwpwkacnKP3Ra8qt+FOlv4HIwxqGYwBlzYk8OhBybYahFREgMTH0b/jDTEvTp        
+ bpdL2r7PdPxBTP74HdjhlCHcbZksGNtsUuO7zTKAc8b72xGHQbKdVdwknmA6pGdeUEzZ        
+ kw7GK6K2l8/ohOuBJsGGAqZHC0cObtbkWp47Jh+CIYQEP6QM5IeNOC47G4DUim4sEBIC        
+ qfdFTsvsxNeXaZpp3LMNeAbgQUepve9zCqgJMFkJ86uJOSNqbaCC7PivzEfjFBWx8Vkq        
+ ZftQ==;        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com; dkim=pass
+ header.i=@send.backstage.com header.s=s3 header.b=OFk4anXd; dkim=pass
+ header.i=@sendgrid.info header.s=smtpapi header.b=h7Uz77YD; spf=pass
+ (google.com: domain of
+ bounces+1507866-ef9a-redacted=gmail.com@em1818.send.backstage.com designates
+ 159.183.160.197 as permitted sender) =?utf-8?q?smtp=2Emailfrom=3D=22bounces?=
+ =?utf-8?q?+1507866-ef9a-redacted=3Dgmail=2Ecom=40em1818=2Esend=2Ebackstage?=
+ =?utf-8?q?=2Ecom=22=3B?= dmarc=pass (p=REJECT sp=REJECT dis=NONE)
+ header.from=backstage.com
+Return-Path:
+ <bounces+1507866-ef9a-redacted=gmail.com@em1818.send.backstage.com>
+Received: from wfbtxhcr.outbound-mail.sendgrid.net
+ (wfbtxhcr.outbound-mail.sendgrid.net. [159.183.160.197]) by mx.google.com
+ with ESMTPS id af79cd13be357-944213533a3si5533285a.313.2026.10.29.11.13.44
+ for <redacted@gmail.com> (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256
+ bits=128/128); Thu, 29 Oct 2026 11:13:45 -0700 (PDT)
+Received-SPF: pass (google.com: domain of
+ bounces+1507866-ef9a-redacted=gmail.com@em1818.send.backstage.com designates
+ 159.183.160.197 as permitted sender) client-ip=159.183.160.197;
+Authentication-Results: mx.google.com; dkim=pass header.i=@send.backstage.com
+ header.s=s3 header.b=OFk4anXd; dkim=pass header.i=@sendgrid.info
+ header.s=smtpapi header.b=h7Uz77YD; spf=pass (google.com: domain of
+ bounces+1507866-ef9a-redacted=gmail.com@em1818.send.backstage.com designates
+ 159.183.160.197 as permitted sender) =?utf-8?q?smtp=2Emailfrom=3D=22bounces?=
+ =?utf-8?q?+1507866-ef9a-redacted=3Dgmail=2Ecom=40em1818=2Esend=2Ebackstage?=
+ =?utf-8?q?=2Ecom=22=3B?= dmarc=pass (p=REJECT sp=REJECT dis=NONE)
+ header.from=backstage.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=send.backstage.com;
+	h=content-type:date:from:mime-version:subject:list-unsubscribe:
+	list-unsubscribe-post:to:cc:content-type:date:feedback-id:from:subject:to;
+	s=s3; t=1793297623;
+	bh=KR2O6oA2y3JfiY3UXHy5AM2iFcEqKCaNbsAl2MJ6nVM=;
+	b=OFk4anXdyearVkqszL8N5hYZ3Ebe5QBMzZ51DuZLEkaiz+ZeXlJ5W7ZnJzigdcYJGaxP
+	LPvGAHksZ7HHRtw6ZvLBaotWuz5WhomrOkqSBDnM1DK3cMkoSkO9Q2AzG6ZtjSobXBdjcE
+	I/SI2GtXiAO/V7CADkv3M1fFyBPM3lL7u8HslZi43CJlHzDA+RfoMDfUyJbBjP9rPnTqtA
+	tAme5LMzWMKo021rwB+gFy89fWZC2XZ5/c380I/HG+Xn9uQ7Gu5Pq2lmohQWqf+F783V49
+	fv9IEPXIq+MevGI3UD61x8eLC+gvM0qnaB9UNbo/KPL6mnGCJKtVgaklhfB0o/VA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sendgrid.info;
+	h=content-type:date:from:mime-version:subject:list-unsubscribe:
+	list-unsubscribe-post:to:cc:content-type:date:feedback-id:from:subject:to;
+	s=smtpapi; t=1793297623;
+	bh=KR2O6oA2y3JfiY3UXHy5AM2iFcEqKCaNbsAl2MJ6nVM=;
+	b=h7Uz77YD3sJ0D2QHpG+YWhmP51PHGi0o0TYd/RPovGS5xFBgbAnC7JZ0MTL0vMuEIcKr
+	KAb4+uhlUA951sHoldbAQPajuVlOK+qtLyF2qBA5BKv0iE/wDQHTrTvRoJ3iLzXVLvMstz
+	nSMk79e6EBrupHLHz1KGGGaZ/xRyQnZZY=
+Received: by recvd-5b466d4fcf-6qc27 with SMTP id
+ recvd-5b466d4fcf-6qc27-1-6AE38CD7-A1	2026-10-29 18:13:43.47129224 +0000 UTC
+ m=+2596394.895458568
+Received: from MTUwNzg2Ng (unknown)
+	by geopod-ismtpd-64 (SG) with HTTP
+	id -1LbJoPgScq2z0BN-WaS4Q
+	Thu, 29 Oct 2026 18:13:43.446 +0000 (UTC)
+Content-Type: multipart/alternative;
+ boundary="a676f9952d61b9db83d0893433631633cdfb43ccb34e4d99cd909a0e323b"
+Date: Thu, 29 Oct 2026 18:13:43 +0000 (UTC)
+From: Backstage <noreply@backstage.com>
+Mime-Version: 1.0
+Message-ID: <-1LbJoPgScq2z0BN-WaS4Q@geopod-ismtpd-64>
+Subject: 240 New Roles Available for Job Recommendations - Oct 29
+List-Unsubscribe: <https://example.invalid/unsubscribe>
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
+X-SG-EID:  u001.LwQ+SpcD2GzbM8dPjERrzwtrdKjHRHES0WUdwEHkPi7oSefJxk7a14fUY
+ =?utf-8?q?D8C4SLpNIoem7lcZNxbh2tmR2dAHNPzvEU6fiPY?==?utf-8?q?jWwo+P8AP0Nxh8?=
+ =?utf-8?q?SvMJt32oIMtJkueUAeTFbvHdzRhSezg/+QLUywBcnVdxYL7nC3tNSZijRa8Ezf/8s?=
+ =?utf-8?q?ZaZDMYRuDc1n7xAcldQ/2ImNwoRz+DZtHh6pppxto3/6RiGBETTXhhuULPeItQc06?=
+ =?utf-8?q?YLIS7HJovvpz?=sv77
+X-SG-ID:  u001.SdBcvi+Evd/bQef8eZF3BqFkIcCPQm3IDPGxr2uZ1spT/Ursd7pQTr/2B
+ =?utf-8?q?VtB38Ly0ftZHfmgCEzhhaEWLF9CiZvL150EFNpy?==?utf-8?q?Nht6Mzm5n9+BWi?=
+ =?utf-8?q?At4QbsfAmRaF0yhuZQNRVl3rZ?=cGzpaJR4Y43ad4g==
+To: redacted@gmail.com
+X-Entity-ID: u001.a8E703k1cbPBpuezn0S4dQ==
+
+--a676f9952d61b9db83d0893433631633cdfb43ccb34e4d99cd909a0e323b
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Mime-Version: 1.0
+
+
+Your Backstage Casting Alert search, Job Recommendations, found 240 new rol=
+es in 103 productions.
+
+https://www.backstage.com/casting/?geo=3D-74.00594130000002%2C40.7127837&ra=
+dius=3D250&location=3DNew+York%2C+NY&sort_by=3Drelevance&search_id=3D252354=
+94
+
+: Bedding Brand E-Comm Photoshoot
+https://www.backstage.com/casting/bedding-brand-e-comm-photoshoot-3330161/?=
+&utm_source=3Ddigest&utm_medium=3Demail&utm_campaign=3Dsaved-search&utm_con=
+tent=3Drecommended-jobs
+=3D=3D=3D=3D=3D=3D=3D=3D
+Seeking one model for an e-commerce photoshoot for a bedding brand. This is=
+ a younger Gen Z brand; talent should appear college age/youthful. Experien=
+ce on camera is a must; must be comfortable holding a small dog.
+
+
+- Model in Bedding Brand E-Comm Photoshoot ()
+Gen Z/college age female, fresh look. Shoot will require you to appear rela=
+xed and comfortable on a chair/couch.
+
+https://www.backstage.com/casting/bedding-brand-e-comm-photoshoot-3330161/?=
+role_id=3D5666564&utm_source=3Ddigest&utm_medium=3Demail&utm_campaign=3Dsav=
+ed-search&utm_content=3Drecommended-jobs
+
+
+
+: 'Martha & Muhammad'
+https://www.backstage.com/casting/martha-muhammad-3330010/?&utm_source=3Ddi=
+gest&utm_medium=3Demail&utm_campaign=3Dsaved-search&utm_content=3Drecommend=
+ed-jobs
+=3D=3D=3D=3D=3D=3D=3D=3D
+Casting "Martha & Muhammad," a new film by A24 starring Sharon Stone and Ra=
+my Youseff.
+
+
+- Mosque Goers in 'Martha & Muhammad' ()
+To portray Muslims at a mosque.
+
+https://www.backstage.com/casting/martha-muhammad-3330010/?role_id=3D566635=
+3&utm_source=3Ddigest&utm_medium=3Demail&utm_campaign=3Dsaved-search&utm_co=
+ntent=3Drecommended-jobs
+
+
+
+: 'Our Gracious Host'
+https://www.backstage.com/casting/our-gracious-host-3329944/?&utm_source=3D=
+digest&utm_medium=3Demail&utm_campaign=3Dsaved-search&utm_content=3Drecomme=
+nded-jobs
+=3D=3D=3D=3D=3D=3D=3D=3D
+Casting "Our Gracious Host," a feature film. Logline: While exposing a fail=
+ed Kickstarter, a video essayist discovers the influencer who sold the trut=
+h may have staged the lie, and that her own investigation is becoming the n=
+ext chapter of the story.
+
+
+- Tabletop Gamer in 'Our Gracious Host' ()
+Early 20s-30s, any ethnicity, gender, body type. Nerdy look, funky hair col=
+ors, the type of person who would attend a tabletop gaming convention or pl=
+ay in a D&D campaign.
+
+https://www.backstage.com/casting/our-gracious-host-3329944/?role_id=3D5666=
+242&utm_source=3Ddigest&utm_medium=3Demail&utm_campaign=3Dsaved-search&utm_=
+content=3Drecommended-jobs
+
+
+- Sparrow Huang in 'Our Gracious Host' ()
+Early 30s. A professional illustrator with an artsy vibe (wear your own clo=
+thing). The scene is a few lines of Sparrow being interviewed on a panel at=
+ a convention.
+
+https://www.backstage.com/casting/our-gracious-host-3329944/?role_id=3D5666=
+517&utm_source=3Ddigest&utm_medium=3Demail&utm_campaign=3Dsaved-search&utm_=
+content=3Drecommended-jobs
+
+
+
+: Little Caesars Social 'Hands Free Pizza'
+https://www.backstage.com/casting/little-caesars-social-hands-free-pizza-33=
+27268/?&utm_source=3Ddigest&utm_medium=3Demail&utm_campaign=3Dsaved-search&=
+utm_content=3Drecommended-jobs
+=3D=3D=3D=3D=3D=3D=3D=3D
+Casting a social ad for Little Caesars. Production states: "We=E2=80=99re l=
+ooking for a good deadpan look with comedic chops and a funny resting face.=
+ Able to give us physical comedy without going over the top. Good with smal=
+ler performances and completely serious about this being the best innovatio=
+n in gaming =E2=80=A6
+
+
+- Gavin - Gamer in Little Caesars Social 'Hands Free Pizza' ()
+This is a gamer first and foremost; they spend most of their time in a gami=
+ng chair. Facial hair: Patchy chin strap or mustache in progress.
+
+Wardrobe
+Gamer wear/Casual.
+Oversized graphic or plain t-shirt.
+Oversized hoodie.
+Cargo shorts with pockets full of unknown objects
+Shoes:
+Crocs or slides with socks.
+
+https://www.backstage.com/casting/little-caesars-social-hands-free-pizza-33=
+27268/?role_id=3D5667008&utm_source=3Ddigest&utm_medium=3Demail&utm_campaig=
+n=3Dsaved-search&utm_content=3Drecommended-jobs
+
+
+
+: Water Filter Brand Shoot
+https://www.backstage.com/casting/water-filter-brand-shoot-3330714/?&utm_so=
+urce=3Ddigest&utm_medium=3Demail&utm_campaign=3Dsaved-search&utm_content=3D=
+recommended-jobs
+=3D=3D=3D=3D=3D=3D=3D=3D
+Casting and seeking crew for video b-roll (using an ice machine), photo, an=
+d concepted commercial capture for a water filter brand. Some aspects of th=
+is production will include AI-generated backgrounds.
+
+
+- Chloe in Water Filter Brand Shoot ()
+Late 20s office worker.
+
+https://www.backstage.com/casting/water-filter-brand-shoot-3330714/?role_id=
+=3D5667328&utm_source=3Ddigest&utm_medium=3Demail&utm_campaign=3Dsaved-sear=
+ch&utm_content=3Drecommended-jobs
+
+
+- Construction Worker in Water Filter Brand Shoot ()
+
+
+https://www.backstage.com/casting/water-filter-brand-shoot-3330714/?role_id=
+=3D5667331&utm_source=3Ddigest&utm_medium=3Demail&utm_campaign=3Dsaved-sear=
+ch&utm_content=3Drecommended-jobs
+
+
+- Warehouse Worker (Staff) in Water Filter Brand Shoot ()
+
+
+https://www.backstage.com/casting/water-filter-brand-shoot-3330714/?role_id=
+=3D5667334&utm_source=3Ddigest&utm_medium=3Demail&utm_campaign=3Dsaved-sear=
+ch&utm_content=3Drecommended-jobs
+
+
+
+=3D=3D=3D=3D=3D=3D=3D=3D
+
+and 232 more!
+
+Thank you,
+
+The Backstage Casting Department
+https://www.backstage.com/casting
+
+
+--a676f9952d61b9db83d0893433631633cdfb43ccb34e4d99cd909a0e323b
+Mime-Version: 1.0
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+<!doctype html><html lang=3D"und" dir=3D"auto" xmlns=3D"http://www.w3.org/199=
+9/xhtml" xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-mic=
+rosoft-com:office:office"><head><title>Backstage</title><!--[if !mso]><!--><m=
+eta http-equiv=3D"X-UA-Compatible" content=3D"IE=3Dedge"><!--<![endif]--><met=
+a http-equiv=3D"Content-Type" content=3D"text/html; charset=3DUTF-8"><meta na=
+me=3D"viewport" content=3D"width=3Ddevice-width, initial-scale=3D1"><style ty=
+pe=3D"text/css">
+      #outlook a { padding:0; }
+      body { margin:0;padding:0;-webkit-text-size-adjust:100%;-ms-text-size-a=
+djust:100%; }
+      table, td { border-collapse:collapse;mso-table-lspace:0pt;mso-table-rsp=
+ace:0pt; }
+      img { border:0;height:auto;line-height:100%; outline:none;text-decorati=
+on:none;-ms-interpolation-mode:bicubic; }
+      p { display:block;margin:13px 0; }
+    </style><!--[if mso]>
+    <noscript>
+    <xml>
+    <o:OfficeDocumentSettings>
+      <o:AllowPNG/>
+      <o:PixelsPerInch>96</o:PixelsPerInch>
+    </o:OfficeDocumentSettings>
+    </xml>
+    </noscript>
+    <![endif]--><!--[if lte mso 11]>
+    <style type=3D"text/css">
+      .mj-outlook-group-fix { width:100% !important; }
+    </style>
+    <![endif]--><!--[if !mso]><!--><link href=3D"https://fonts.googleapis.com=
+/css?family=3DRoboto:300,400,500,700" rel=3D"stylesheet" type=3D"text/css"><s=
+tyle type=3D"text/css">
+          @import url(https://fonts.googleapis.com/css?family=3DRoboto:300,40=
+0,500,700);
+        </style><!--<![endif]--><style type=3D"text/css">
+      @media only screen and (min-width:375px) {
+        .mj-column-per-100 { width:100% !important; max-width: 100%; }
+      }
+    </style><style media=3D"screen and (min-width:375px)">
+      .moz-text-html .mj-column-per-100 { width:100% !important; max-width: 1=
+00%; }
+    </style><style type=3D"text/css">
+
+    @media only screen and (max-width:374px) {
+      table.mj-full-width-mobile { width: 100% !important; }
+      td.mj-full-width-mobile { width: auto !important; }
+    }
+ =20
+    </style></head><body class=3D"email-body" style=3D"padding: 0 15px; word-=
+spacing: normal; background-color: #f2f1ec;"> <div aria-label=3D"Backstage" a=
+ria-roledescription=3D"email" role=3D"article" lang=3D"und" dir=3D"auto" styl=
+e=3D"word-spacing:normal;background-color:#f2f1ec;">  <!--[if mso | IE]><tabl=
+e align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"=
+" role=3D"presentation" style=3D"width:600px;" width=3D"600" ><tr><td style=
+=3D"line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->=
+ <div style=3D"margin:0px auto;max-width:600px;"> <table align=3D"center" bor=
+der=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"=
+width:100%;"> <tbody> <tr> <td style=3D"direction:ltr;font-size:0px;padding:5=
+0px 0 20px;text-align:center;"> <!--[if mso | IE]><table role=3D"presentation=
+" border=3D"0" cellpadding=3D"0" cellspacing=3D"0"><tr><td class=3D"" style=
+=3D"vertical-align:top;width:600px;" ><![endif]--> <div class=3D"mj-column-pe=
+r-100 mj-outlook-group-fix" style=3D"font-size:0px;text-align:left;direction:=
+ltr;display:inline-block;vertical-align:top;width:100%;"> <table border=3D"0"=
+ cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"vertical-=
+align:top;" width=3D"100%"> <tbody> <tr> <td align=3D"center" style=3D"font-s=
+ize:0px;padding:0;word-break:break-word;"> <table border=3D"0" cellpadding=3D=
+"0" cellspacing=3D"0" role=3D"presentation" style=3D"border-collapse:collapse=
+;border-spacing:0px;"> <tbody> <tr> <td style=3D"width:180px;"> <a href=3D"ht=
+tps://go.backstage.com/ls/click?upn=3DREDACTED27" target=3D"_blank" style=3D"=
+text-decoration: none;"> <img alt=3D"Backstage" src=3D"https://d3uscstcbhvk7k=
+.cloudfront.net/static/images/email/backstage-wordmark-black.b6e66f43d189.png=
+" style=3D"border:0;display:block;outline:none;text-decoration:none;height:au=
+to;width:100%;font-size:13px;" width=3D"180" height=3D"auto"> </a> </td> </tr=
+> </tbody> </table> </td> </tr> </tbody> </table> </div> <!--[if mso | IE]></=
+td></tr></table><![endif]--> </td> </tr> </tbody> </table> </div> <!--[if mso=
+ | IE]></td></tr></table><![endif]-->  <!--[if mso | IE]><table align=3D"cent=
+er" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"" role=3D"prese=
+ntation" style=3D"width:600px;" width=3D"600" ><tr><td style=3D"line-height:0=
+px;font-size:0px;mso-line-height-rule:exactly;"><![endif]--> <div style=3D"ma=
+rgin:0px auto;max-width:600px;"> <table align=3D"center" border=3D"0" cellpad=
+ding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"width:100%;"> <tb=
+ody> <tr> <td style=3D"direction:ltr;font-size:0px;padding:0 0 5px;text-align=
+:center;"> <!--[if mso | IE]><table role=3D"presentation" border=3D"0" cellpa=
+dding=3D"0" cellspacing=3D"0"><tr><td class=3D"" style=3D"vertical-align:top;=
+width:600px;" ><![endif]--> <div class=3D"mj-column-per-100 mj-outlook-group-=
+fix" style=3D"font-size:0px;text-align:left;direction:ltr;display:inline-bloc=
+k;vertical-align:top;width:100%;"> <table border=3D"0" cellpadding=3D"0" cell=
+spacing=3D"0" role=3D"presentation" style=3D"vertical-align:top;" width=3D"10=
+0%"> <tbody> <tr> <td align=3D"center" class=3D"main-headline-text" style=3D"=
+font-size:0px;padding:10px 20px;padding-bottom:8px;word-break:break-word;"> <=
+div style=3D"font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto=
+, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI S=
+ymbol; line-height: 1; text-align: center; color: #000000; font-size: 22px;">=
+ <strong style=3D"font-weight: 600;">240 new job recommendations</strong> </d=
+iv> </td> </tr> <tr> <td align=3D"center" class=3D"main-headline-text" style=
+=3D"font-size:0px;padding:0;word-break:break-word;"> <div style=3D"font-famil=
+y: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, san=
+s-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol; line-height: 1; =
+text-align: center; color: #000000; font-size: 22px;"></div> </td> </tr> </tb=
+ody> </table> </div> <!--[if mso | IE]></td></tr></table><![endif]--> </td> <=
+/tr> </tbody> </table> </div> <!--[if mso | IE]></td></tr></table><![endif]--=
+>  <!--[if mso | IE]><table align=3D"center" border=3D"0" cellpadding=3D"0" c=
+ellspacing=3D"0" class=3D"" role=3D"presentation" style=3D"width:600px;" widt=
+h=3D"600" ><tr><td style=3D"line-height:0px;font-size:0px;mso-line-height-rul=
+e:exactly;"><![endif]--> <div style=3D"margin:0px auto;max-width:600px;"> <ta=
+ble align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D=
+"presentation" style=3D"width:100%;"> <tbody> <tr> <td style=3D"direction:ltr=
+;font-size:0px;padding:0 0 10px;text-align:center;"> <!--[if mso | IE]><table=
+ role=3D"presentation" border=3D"0" cellpadding=3D"0" cellspacing=3D"0"><tr><=
+![endif]-->  <!--[if mso | IE]><td class=3D"" style=3D"vertical-align:top;wid=
+th:600px;" ><![endif]--> <div class=3D"mj-column-per-100 mj-outlook-group-fix=
+" style=3D"font-size:0px;text-align:left;direction:ltr;display:inline-block;v=
+ertical-align:top;width:100%;"> <table border=3D"0" cellpadding=3D"0" cellspa=
+cing=3D"0" role=3D"presentation" style=3D"vertical-align:top;" width=3D"100%"=
+> <tbody> <tr> <td align=3D"center" style=3D"font-size:0px;padding:10px 20px;=
+word-break:break-word;"> <div style=3D"font-family:-apple-system, BlinkMacSys=
+temFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, S=
+egoe UI Emoji, Segoe UI Symbol;font-size:10px;line-height:1.6;text-align:cent=
+er;color:#000000;"><mj-raw></mj-raw> <a universal=3D"true" href=3D"https://go=
+.backstage.com/uni/ls/click?upn=3DREDACTED28" title=3D"Change how often your =
+receive this email" style=3D"text-decoration: none; color: #677af6;"> Change =
+email frequency </a></div> </td> </tr> </tbody> </table> </div> <!--[if mso |=
+ IE]></td><![endif]-->  <!--[if mso | IE]></tr></table><![endif]--> </td> </t=
+r> </tbody> </table> </div> <!--[if mso | IE]></td></tr></table><![endif]--> =
+<table style=3D"border-spacing: 0; border-collapse: collapse; vertical-align:=
+ top; text-align: center; width: 100%; max-width: 600px; position: relative; =
+margin: 0 auto; padding: 0px;"> <tr style=3D"vertical-align: top; text-align:=
+ center; padding: 0;" align=3D"center"> <td style=3D"word-break: break-word; =
+-webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: co=
+llapse !important; vertical-align: top; text-align: center; position: relativ=
+e; margin: 0; padding: 0;" align=3D"center" valign=3D"top"> <table style=3D"b=
+order-spacing: 0; border-collapse: collapse; vertical-align: top; text-align:=
+ center; width: 550px; margin: 0 auto; padding: 0;"> <tr style=3D"vertical-al=
+ign: top; text-align: center; padding: 0;" align=3D"center"> <td align=3D"cen=
+ter" style=3D"word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: au=
+to; hyphens: auto; border-collapse: collapse !important; vertical-align: top;=
+ margin: 0; padding: 0;" valign=3D"top"> <a href=3D"https://go.backstage.com/=
+ls/click?upn=3DREDACTED29" style=3D"display: none; text-decoration: none;">Ve=
+rify data</a> <a href=3D"https://go.backstage.com/ls/click?upn=3DREDACTED30" =
+target=3D"_blank" track=3D"off" style=3D"text-decoration: none;"> <img conten=
+teditable=3D"false" src=3D"https://ads.adm.offers.backstage.com/pub/getbanner=
+/type/BAN_WIDE2/esp/bca/no_cache/REDACTED?contact=3Dredacted@gmail.com&collap=
+sable=3D1" style=3D"height: auto; outline: none; text-decoration: none; -ms-i=
+nterpolation-mode: bicubic; width: auto; max-width: 100%; clear: both; displa=
+y: block;"> </a> </td> </tr> </table> </td> </tr> </table> <!--[if mso | IE]>=
+<table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" clas=
+s=3D"section_job-card-outlook" role=3D"presentation" style=3D"width:600px;" w=
+idth=3D"600" bgcolor=3D"#ffffff" ><tr><td style=3D"line-height:0px;font-size:=
+0px;mso-line-height-rule:exactly;"><![endif]--> <div class=3D"section_job-car=
+d" style=3D"background:#ffffff;background-color:#ffffff;margin:0px auto;max-w=
+idth:600px;border-radius:10px;overflow:hidden;"> <table align=3D"center" bord=
+er=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"b=
+ackground:#ffffff;background-color:#ffffff;width:100%;border-collapse:separat=
+e;"> <tbody> <tr> <td style=3D"border-radius:10px;direction:ltr;font-size:0px=
+;padding:15px;text-align:center;"> <!--[if mso | IE]><table role=3D"presentat=
+ion" border=3D"0" cellpadding=3D"0" cellspacing=3D"0"><![endif]-->  <!--[if m=
+so | IE]><tr><td class=3D"" width=3D"600px" ><table align=3D"center" border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"" role=3D"presentation" s=
+tyle=3D"width:570px;" width=3D"570" ><tr><td style=3D"line-height:0px;font-si=
+ze:0px;mso-line-height-rule:exactly;"><![endif]--> <div style=3D"margin:0px a=
+uto;max-width:570px;"> <table align=3D"center" border=3D"0" cellpadding=3D"0"=
+ cellspacing=3D"0" role=3D"presentation" style=3D"width:100%;"> <tbody> <tr> =
+<td style=3D"direction:ltr;font-size:0px;padding:0;text-align:left;"> <!--[if=
+ mso | IE]><table role=3D"presentation" border=3D"0" cellpadding=3D"0" cellsp=
+acing=3D"0"><tr><td class=3D"" style=3D"vertical-align:top;width:570px;" ><![=
+endif]--> <div class=3D"mj-column-per-100 mj-outlook-group-fix" style=3D"font=
+-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:t=
+op;width:100%;"> <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=
+=3D"presentation" style=3D"vertical-align:top;" width=3D"100%"> <tbody> <tr> =
+<td align=3D"left" class=3D"job-tag_group" style=3D"font-size:0px;padding:5px=
+ 0;word-break:break-word;"> <div style=3D"font-family:-apple-system, BlinkMac=
+SystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji=
+, Segoe UI Emoji, Segoe UI Symbol;font-size:13px;line-height:1;text-align:lef=
+t;color:#000000;">   <span class=3D"job-tag" style=3D"display: inline-block; =
+background-color: #000; border-radius: 10px; color: #fff; font-size: 11px; ma=
+rgin: 0 2px 5px 0; padding: 2px 6px; text-transform: uppercase;">Photography =
+/ Stills</span>   <span class=3D"job-tag paid" style=3D"display: inline-block=
+; border-radius: 10px; color: #fff; font-size: 11px; margin: 0 2px 5px 0; pad=
+ding: 2px 6px; text-transform: uppercase; background-color: #19c08b;">$ Paid<=
+/span>    <span class=3D"job-tag union" style=3D"display: inline-block; backg=
+round-color: #000; border-radius: 10px; color: #fff; font-size: 11px; margin:=
+ 0 2px 5px 0; padding: 2px 6px; text-transform: uppercase;">Nonunion</span>  =
+</div> </td> </tr> </tbody> </table> </div> <!--[if mso | IE]></td><![endif]-=
+->  <!--[if mso | IE]></tr></table><![endif]--> </td> </tr> </tbody> </table>=
+ </div> <!--[if mso | IE]></td></tr></table></td></tr><![endif]-->  <!--[if m=
+so | IE]><tr><td class=3D"" width=3D"600px" ><table align=3D"center" border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"" role=3D"presentation" s=
+tyle=3D"width:570px;" width=3D"570" ><tr><td style=3D"line-height:0px;font-si=
+ze:0px;mso-line-height-rule:exactly;"><![endif]--> <div style=3D"margin:0px a=
+uto;max-width:570px;"> <table align=3D"center" border=3D"0" cellpadding=3D"0"=
+ cellspacing=3D"0" role=3D"presentation" style=3D"width:100%;"> <tbody> <tr> =
+<td style=3D"direction:ltr;font-size:0px;padding:5px 0 10px;text-align:left;"=
+> <!--[if mso | IE]><table role=3D"presentation" border=3D"0" cellpadding=3D"=
+0" cellspacing=3D"0"><tr><td class=3D"" style=3D"vertical-align:top;width:570=
+px;" ><![endif]--> <div class=3D"mj-column-per-100 mj-outlook-group-fix" styl=
+e=3D"font-size:0px;text-align:left;direction:ltr;display:inline-block;vertica=
+l-align:top;width:100%;"> <table border=3D"0" cellpadding=3D"0" cellspacing=
+=3D"0" role=3D"presentation" style=3D"vertical-align:top;" width=3D"100%"> <t=
+body> <tr> <td align=3D"left" class=3D"job-card_body" style=3D"font-size:0px;=
+padding:0;word-break:break-word;"> <div style=3D"font-family:-apple-system, B=
+linkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Colo=
+r Emoji, Segoe UI Emoji, Segoe UI Symbol;font-size:13px;line-height:1;text-al=
+ign:left;color:#000000;"><p style=3D"line-height: 1.5; margin-bottom: 10px; c=
+olor: #7e7d7b; font-size: 10px; margin: 0 0 10px;"><em>Posted 1=C2=A0day, 20=
+=C2=A0hours ago</em></p> <h2 style=3D"margin: 0 0 8px;"> <a universal=3D"true=
+" href=3D"https://go.backstage.com/uni/ls/click?upn=3DREDACTED31" style=3D"te=
+xt-decoration: none; color: #677af6;">Bedding Brand E-Comm Photoshoot</a> </h=
+2> <p style=3D"font-size: 12px; line-height: 1.5; margin-top: 0; margin-botto=
+m: 5px;">  Seeking one model for an e-commerce photoshoot for a bedding brand=
+. This is a younger Gen Z brand; talent should appear college age/youthful. E=
+xperience on camera is a must; must be comfortable holding a small dog.   </p=
+> <p style=3D"font-size: 12px; line-height: 1.5; margin-top: 0; margin-bottom=
+: 5px;"> <strong>Seeking talent from:</strong>   New York, NY  </p> </div> </=
+td> </tr> </tbody> </table> </div> <!--[if mso | IE]></td></tr></table><![end=
+if]--> </td> </tr> </tbody> </table> </div> <!--[if mso | IE]></td></tr></tab=
+le></td></tr><![endif]-->  <!--[if mso | IE]><tr><td class=3D"" width=3D"600p=
+x" ><table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" =
+class=3D"" role=3D"presentation" style=3D"width:570px;" width=3D"570" bgcolor=
+=3D"#f2f1ec" ><tr><td style=3D"line-height:0px;font-size:0px;mso-line-height-=
+rule:exactly;"><![endif]--> <div style=3D"background:#f2f1ec;background-color=
+:#f2f1ec;margin:0px auto;max-width:570px;border-radius:5px;overflow:hidden;">=
+ <table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" rol=
+e=3D"presentation" style=3D"background:#f2f1ec;background-color:#f2f1ec;width=
+:100%;border-collapse:separate;"> <tbody> <tr> <td style=3D"border-radius:5px=
+;direction:ltr;font-size:0px;padding:15px;text-align:left;"> <!--[if mso | IE=
+]><table role=3D"presentation" border=3D"0" cellpadding=3D"0" cellspacing=3D"=
+0"><tr><td class=3D"" style=3D"vertical-align:top;width:540px;" ><![endif]-->=
+ <div class=3D"mj-column-per-100 mj-outlook-group-fix" style=3D"font-size:0px=
+;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:=
+100%;"> <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"prese=
+ntation" style=3D"vertical-align:top;" width=3D"100%"> <tbody> <tr> <td align=
+=3D"left" style=3D"font-size:0px;padding:0;word-break:break-word;"> <div styl=
+e=3D"font-family:-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helveti=
+ca, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;fon=
+t-size:13px;line-height:1;text-align:left;color:#000000;"><h4 style=3D"margin=
+: 0; font-size: 14px;">Model</h4></div> </td> </tr> <tr> <td align=3D"left" s=
+tyle=3D"font-size:0px;padding:0;word-break:break-word;"> <div style=3D"font-f=
+amily:-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, =
+sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;font-size:13px=
+;line-height:1;text-align:left;color:#000000;"><ul style=3D"font-size: 14px; =
+line-height: 1.4; padding: 0 12px 0; margin-bottom: 15px;">  <li>  Models,   =
+Female,    18-24   </li>   <li> Estimated pay amount: $850 for 9 hours of wor=
+k </li>  </ul> </div> </td> </tr> <tr> <td align=3D"left" style=3D"font-size:=
+0px;padding:0;word-break:break-word;"> <div style=3D"font-family:-apple-syste=
+m, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple =
+Color Emoji, Segoe UI Emoji, Segoe UI Symbol;font-size:13px;line-height:1;tex=
+t-align:left;color:#000000;"><div> <a universal=3D"true" href=3D"https://go.b=
+ackstage.com/uni/ls/click?upn=3DREDACTED32" target=3D"_blank" title=3D"Apply =
+to this role" class=3D"primary-cta" style=3D"display: inline-block; border: n=
+one; font-size: 12px; font-weight: 600; line-height: 1.2; text-align: center;=
+ min-width: 40px; border-radius: 6px; padding: 8px 12px; background-color: #6=
+77af6; text-decoration: none; color: #fff;">Apply</a> </div></div> </td> </tr=
+> </tbody> </table> </div> <!--[if mso | IE]></td></tr></table><![endif]--> <=
+/td> </tr> </tbody> </table> </div> <!--[if mso | IE]></td></tr></table></td>=
+</tr><![endif]-->  <!--[if mso | IE]></table><![endif]--> </td> </tr> </tbody=
+> </table> </div> <!--[if mso | IE]></td></tr></table><![endif]-->  <!--[if m=
+so | IE]><table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=
+=3D"0" class=3D"" role=3D"presentation" style=3D"width:600px;" width=3D"600" =
+><tr><td style=3D"line-height:0px;font-size:0px;mso-line-height-rule:exactly;=
+"><![endif]--> <div style=3D"margin:0px auto;max-width:600px;"> <table align=
+=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presenta=
+tion" style=3D"width:100%;"> <tbody> <tr> <td style=3D"direction:ltr;font-siz=
+e:0px;padding:0;text-align:center;"> <!--[if mso | IE]><table role=3D"present=
+ation" border=3D"0" cellpadding=3D"0" cellspacing=3D"0"><tr><td class=3D"" st=
+yle=3D"vertical-align:top;width:600px;" ><![endif]--> <div class=3D"mj-column=
+-per-100 mj-outlook-group-fix" style=3D"font-size:0px;text-align:left;directi=
+on:ltr;display:inline-block;vertical-align:top;width:100%;"> <table border=3D=
+"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"vertic=
+al-align:top;" width=3D"100%"> <tbody> <tr> <td style=3D"font-size:0px;word-b=
+reak:break-word;"> <div style=3D"height:20px;line-height:20px;">&#8202;</div>=
+ </td> </tr> </tbody> </table> </div> <!--[if mso | IE]></td></tr></table><![=
+endif]--> </td> </tr> </tbody> </table> </div> <!--[if mso | IE]></td></tr></=
+table><![endif]-->  <!--[if mso | IE]><table align=3D"center" border=3D"0" ce=
+llpadding=3D"0" cellspacing=3D"0" class=3D"section_job-card-outlook" role=3D"=
+presentation" style=3D"width:600px;" width=3D"600" bgcolor=3D"#ffffff" ><tr><=
+td style=3D"line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![e=
+ndif]--> <div class=3D"section_job-card" style=3D"background:#ffffff;backgrou=
+nd-color:#ffffff;margin:0px auto;max-width:600px;border-radius:10px;overflow:=
+hidden;"> <table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=
+=3D"0" role=3D"presentation" style=3D"background:#ffffff;background-color:#ff=
+ffff;width:100%;border-collapse:separate;"> <tbody> <tr> <td style=3D"border-=
+radius:10px;direction:ltr;font-size:0px;padding:15px;text-align:center;"> <!-=
+-[if mso | IE]><table role=3D"presentation" border=3D"0" cellpadding=3D"0" ce=
+llspacing=3D"0"><![endif]-->  <!--[if mso | IE]><tr><td class=3D"" width=3D"6=
+00px" ><table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"=
+0" class=3D"" role=3D"presentation" style=3D"width:570px;" width=3D"570" ><tr=
+><td style=3D"line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><!=
+[endif]--> <div style=3D"margin:0px auto;max-width:570px;"> <table align=3D"c=
+enter" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation"=
+ style=3D"width:100%;"> <tbody> <tr> <td style=3D"direction:ltr;font-size:0px=
+;padding:0;text-align:left;"> <!--[if mso | IE]><table role=3D"presentation" =
+border=3D"0" cellpadding=3D"0" cellspacing=3D"0"><tr><td class=3D"" style=3D"=
+vertical-align:top;width:570px;" ><![endif]--> <div class=3D"mj-column-per-10=
+0 mj-outlook-group-fix" style=3D"font-size:0px;text-align:left;direction:ltr;=
+display:inline-block;vertical-align:top;width:100%;"> <table border=3D"0" cel=
+lpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"vertical-alig=
+n:top;" width=3D"100%"> <tbody> <tr> <td align=3D"left" class=3D"job-tag_grou=
+p" style=3D"font-size:0px;padding:5px 0;word-break:break-word;"> <div style=
+=3D"font-family:-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetic=
+a, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;font=
+-size:13px;line-height:1;text-align:left;color:#000000;">   <span class=3D"jo=
+b-tag" style=3D"display: inline-block; background-color: #000; border-radius:=
+ 10px; color: #fff; font-size: 11px; margin: 0 2px 5px 0; padding: 2px 6px; t=
+ext-transform: uppercase;">Feature Film</span>   <span class=3D"job-tag paid"=
+ style=3D"display: inline-block; border-radius: 10px; color: #fff; font-size:=
+ 11px; margin: 0 2px 5px 0; padding: 2px 6px; text-transform: uppercase; back=
+ground-color: #19c08b;">$ Paid</span>    <span class=3D"job-tag union" style=
+=3D"display: inline-block; background-color: #000; border-radius: 10px; color=
+: #fff; font-size: 11px; margin: 0 2px 5px 0; padding: 2px 6px; text-transfor=
+m: uppercase;">Union</span>  </div> </td> </tr> </tbody> </table> </div> <!--=
+[if mso | IE]></td><![endif]-->  <!--[if mso | IE]></tr></table><![endif]--> =
+</td> </tr> </tbody> </table> </div> <!--[if mso | IE]></td></tr></table></td=
+></tr><![endif]-->  <!--[if mso | IE]><tr><td class=3D"" width=3D"600px" ><ta=
+ble align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=
+=3D"" role=3D"presentation" style=3D"width:570px;" width=3D"570" ><tr><td sty=
+le=3D"line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-=
+-> <div style=3D"margin:0px auto;max-width:570px;"> <table align=3D"center" b=
+order=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=
+=3D"width:100%;"> <tbody> <tr> <td style=3D"direction:ltr;font-size:0px;paddi=
+ng:5px 0 10px;text-align:left;"> <!--[if mso | IE]><table role=3D"presentatio=
+n" border=3D"0" cellpadding=3D"0" cellspacing=3D"0"><tr><td class=3D"" style=
+=3D"vertical-align:top;width:570px;" ><![endif]--> <div class=3D"mj-column-pe=
+r-100 mj-outlook-group-fix" style=3D"font-size:0px;text-align:left;direction:=
+ltr;display:inline-block;vertical-align:top;width:100%;"> <table border=3D"0"=
+ cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"vertical-=
+align:top;" width=3D"100%"> <tbody> <tr> <td align=3D"left" class=3D"job-card=
+_body" style=3D"font-size:0px;padding:0;word-break:break-word;"> <div style=
+=3D"font-family:-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetic=
+a, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;font=
+-size:13px;line-height:1;text-align:left;color:#000000;"><p style=3D"line-hei=
+ght: 1.5; margin-bottom: 10px; color: #7e7d7b; font-size: 10px; margin: 0 0 1=
+0px;"><em>Posted 1=C2=A0day, 23=C2=A0hours ago</em></p> <h2 style=3D"margin: =
+0 0 8px;"> <a universal=3D"true" href=3D"https://go.backstage.com/uni/ls/clic=
+k?upn=3DREDACTED33" style=3D"text-decoration: none; color: #677af6;">&#x27;Ma=
+rtha &amp; Muhammad&#x27;</a> </h2> <p style=3D"font-size: 12px; line-height:=
+ 1.5; margin-top: 0; margin-bottom: 5px;">  Casting &quot;Martha &amp; Muhamm=
+ad,&quot; a new film by A24 starring Sharon Stone and Ramy Youseff.   </p> <p=
+ style=3D"font-size: 12px; line-height: 1.5; margin-top: 0; margin-bottom: 5p=
+x;"> <strong>Seeking talent from:</strong>   New York City, NY  </p> </div> <=
+/td> </tr> </tbody> </table> </div> <!--[if mso | IE]></td></tr></table><![en=
+dif]--> </td> </tr> </tbody> </table> </div> <!--[if mso | IE]></td></tr></ta=
+ble></td></tr><![endif]-->  <!--[if mso | IE]><tr><td class=3D"" width=3D"600=
+px" ><table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0"=
+ class=3D"" role=3D"presentation" style=3D"width:570px;" width=3D"570" bgcolo=
+r=3D"#f2f1ec" ><tr><td style=3D"line-height:0px;font-size:0px;mso-line-height=
+-rule:exactly;"><![endif]--> <div style=3D"background:#f2f1ec;background-colo=
+r:#f2f1ec;margin:0px auto;max-width:570px;border-radius:5px;overflow:hidden;"=
+> <table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" ro=
+le=3D"presentation" style=3D"background:#f2f1ec;background-color:#f2f1ec;widt=
+h:100%;border-collapse:separate;"> <tbody> <tr> <td style=3D"border-radius:5p=
+x;direction:ltr;font-size:0px;padding:15px;text-align:left;"> <!--[if mso | I=
+E]><table role=3D"presentation" border=3D"0" cellpadding=3D"0" cellspacing=3D=
+"0"><tr><td class=3D"" style=3D"vertical-align:top;width:540px;" ><![endif]--=
+> <div class=3D"mj-column-per-100 mj-outlook-group-fix" style=3D"font-size:0p=
+x;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width=
+:100%;"> <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"pres=
+entation" style=3D"vertical-align:top;" width=3D"100%"> <tbody> <tr> <td alig=
+n=3D"left" style=3D"font-size:0px;padding:0;word-break:break-word;"> <div sty=
+le=3D"font-family:-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvet=
+ica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;fo=
+nt-size:13px;line-height:1;text-align:left;color:#000000;"><h4 style=3D"margi=
+n: 0; font-size: 14px;">Mosque Goers</h4></div> </td> </tr> <tr> <td align=3D=
+"left" style=3D"font-size:0px;padding:0;word-break:break-word;"> <div style=
+=3D"font-family:-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetic=
+a, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;font=
+-size:13px;line-height:1;text-align:left;color:#000000;"><ul style=3D"font-si=
+ze: 14px; line-height: 1.4; padding: 0 12px 0; margin-bottom: 15px;">  <li>  =
+Background / Extra,   All Genders,    18-80   </li>   <li> Estimated pay amou=
+nt: $400 for 1 days of work </li>  </ul> </div> </td> </tr> <tr> <td align=3D=
+"left" style=3D"font-size:0px;padding:0;word-break:break-word;"> <div style=
+=3D"font-family:-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetic=
+a, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;font=
+-size:13px;line-height:1;text-align:left;color:#000000;"><div> <a universal=
+=3D"true" href=3D"https://go.backstage.com/uni/ls/click?upn=3DREDACTED34" tar=
+get=3D"_blank" title=3D"Apply to this role" class=3D"primary-cta" style=3D"di=
+splay: inline-block; border: none; font-size: 12px; font-weight: 600; line-he=
+ight: 1.2; text-align: center; min-width: 40px; border-radius: 6px; padding: =
+8px 12px; background-color: #677af6; text-decoration: none; color: #fff;">App=
+ly</a> </div></div> </td> </tr> </tbody> </table> </div> <!--[if mso | IE]></=
+td></tr></table><![endif]--> </td> </tr> </tbody> </table> </div> <!--[if mso=
+ | IE]></td></tr></table></td></tr><![endif]-->  <!--[if mso | IE]></table><!=
+[endif]--> </td> </tr> </tbody> </table> </div> <!--[if mso | IE]></td></tr><=
+/table><![endif]-->  <!--[if mso | IE]><table align=3D"center" border=3D"0" c=
+ellpadding=3D"0" cellspacing=3D"0" class=3D"" role=3D"presentation" style=3D"=
+width:600px;" width=3D"600" ><tr><td style=3D"line-height:0px;font-size:0px;m=
+so-line-height-rule:exactly;"><![endif]--> <div style=3D"margin:0px auto;max-=
+width:600px;"> <table align=3D"center" border=3D"0" cellpadding=3D"0" cellspa=
+cing=3D"0" role=3D"presentation" style=3D"width:100%;"> <tbody> <tr> <td styl=
+e=3D"direction:ltr;font-size:0px;padding:0;text-align:center;"> <!--[if mso |=
+ IE]><table role=3D"presentation" border=3D"0" cellpadding=3D"0" cellspacing=
+=3D"0"><tr><td class=3D"" style=3D"vertical-align:top;width:600px;" ><![endif=
+]--> <div class=3D"mj-column-per-100 mj-outlook-group-fix" style=3D"font-size=
+:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;wi=
+dth:100%;"> <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"p=
+resentation" style=3D"vertical-align:top;" width=3D"100%"> <tbody> <tr> <td s=
+tyle=3D"font-size:0px;word-break:break-word;"> <div style=3D"height:20px;line=
+-height:20px;">&#8202;</div> </td> </tr> </tbody> </table> </div> <!--[if mso=
+ | IE]></td></tr></table><![endif]--> </td> </tr> </tbody> </table> </div> <!=
+--[if mso | IE]></td></tr></table><![endif]-->  <!--[if mso | IE]><table alig=
+n=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"sectio=
+n_job-card-outlook" role=3D"presentation" style=3D"width:600px;" width=3D"600=
+" bgcolor=3D"#ffffff" ><tr><td style=3D"line-height:0px;font-size:0px;mso-lin=
+e-height-rule:exactly;"><![endif]--> <div class=3D"section_job-card" style=3D=
+"background:#ffffff;background-color:#ffffff;margin:0px auto;max-width:600px;=
+border-radius:10px;overflow:hidden;"> <table align=3D"center" border=3D"0" ce=
+llpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"background:#=
+ffffff;background-color:#ffffff;width:100%;border-collapse:separate;"> <tbody=
+> <tr> <td style=3D"border-radius:10px;direction:ltr;font-size:0px;padding:15=
+px;text-align:center;"> <!--[if mso | IE]><table role=3D"presentation" border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0"><![endif]-->  <!--[if mso | IE]><t=
+r><td class=3D"" width=3D"600px" ><table align=3D"center" border=3D"0" cellpa=
+dding=3D"0" cellspacing=3D"0" class=3D"" role=3D"presentation" style=3D"width=
+:570px;" width=3D"570" ><tr><td style=3D"line-height:0px;font-size:0px;mso-li=
+ne-height-rule:exactly;"><![endif]--> <div style=3D"margin:0px auto;max-width=
+:570px;"> <table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=
+=3D"0" role=3D"presentation" style=3D"width:100%;"> <tbody> <tr> <td style=3D=
+"direction:ltr;font-size:0px;padding:0;text-align:left;"> <!--[if mso | IE]><=
+table role=3D"presentation" border=3D"0" cellpadding=3D"0" cellspacing=3D"0">=
+<tr><td class=3D"" style=3D"vertical-align:top;width:570px;" ><![endif]--> <d=
+iv class=3D"mj-column-per-100 mj-outlook-group-fix" style=3D"font-size:0px;te=
+xt-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100=
+%;"> <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presenta=
+tion" style=3D"vertical-align:top;" width=3D"100%"> <tbody> <tr> <td align=3D=
+"left" class=3D"job-tag_group" style=3D"font-size:0px;padding:5px 0;word-brea=
+k:break-word;"> <div style=3D"font-family:-apple-system, BlinkMacSystemFont, =
+Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI E=
+moji, Segoe UI Symbol;font-size:13px;line-height:1;text-align:left;color:#000=
+000;">   <span class=3D"job-tag" style=3D"display: inline-block; background-c=
+olor: #000; border-radius: 10px; color: #fff; font-size: 11px; margin: 0 2px =
+5px 0; padding: 2px 6px; text-transform: uppercase;">Feature Film</span>   <s=
+pan class=3D"job-tag paid" style=3D"display: inline-block; border-radius: 10p=
+x; color: #fff; font-size: 11px; margin: 0 2px 5px 0; padding: 2px 6px; text-=
+transform: uppercase; background-color: #19c08b;">$ Paid</span>    <span clas=
+s=3D"job-tag union" style=3D"display: inline-block; background-color: #000; b=
+order-radius: 10px; color: #fff; font-size: 11px; margin: 0 2px 5px 0; paddin=
+g: 2px 6px; text-transform: uppercase;">Nonunion</span>  </div> </td> </tr> <=
+/tbody> </table> </div> <!--[if mso | IE]></td><![endif]-->  <!--[if mso | IE=
+]></tr></table><![endif]--> </td> </tr> </tbody> </table> </div> <!--[if mso =
+| IE]></td></tr></table></td></tr><![endif]-->  <!--[if mso | IE]><tr><td cla=
+ss=3D"" width=3D"600px" ><table align=3D"center" border=3D"0" cellpadding=3D"=
+0" cellspacing=3D"0" class=3D"" role=3D"presentation" style=3D"width:570px;" =
+width=3D"570" ><tr><td style=3D"line-height:0px;font-size:0px;mso-line-height=
+-rule:exactly;"><![endif]--> <div style=3D"margin:0px auto;max-width:570px;">=
+ <table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" rol=
+e=3D"presentation" style=3D"width:100%;"> <tbody> <tr> <td style=3D"direction=
+:ltr;font-size:0px;padding:5px 0 10px;text-align:left;"> <!--[if mso | IE]><t=
+able role=3D"presentation" border=3D"0" cellpadding=3D"0" cellspacing=3D"0"><=
+tr><td class=3D"" style=3D"vertical-align:top;width:570px;" ><![endif]--> <di=
+v class=3D"mj-column-per-100 mj-outlook-group-fix" style=3D"font-size:0px;tex=
+t-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%=
+;"> <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentat=
+ion" style=3D"vertical-align:top;" width=3D"100%"> <tbody> <tr> <td align=3D"=
+left" class=3D"job-card_body" style=3D"font-size:0px;padding:0;word-break:bre=
+ak-word;"> <div style=3D"font-family:-apple-system, BlinkMacSystemFont, Segoe=
+ UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji,=
+ Segoe UI Symbol;font-size:13px;line-height:1;text-align:left;color:#000000;"=
+><p style=3D"line-height: 1.5; margin-bottom: 10px; color: #7e7d7b; font-size=
+: 10px; margin: 0 0 10px;"><em>Posted 1=C2=A0day, 21=C2=A0hours ago</em></p> =
+<h2 style=3D"margin: 0 0 8px;"> <a universal=3D"true" href=3D"https://go.back=
+stage.com/uni/ls/click?upn=3DREDACTED35" style=3D"text-decoration: none; colo=
+r: #677af6;">&#x27;Our Gracious Host&#x27;</a> </h2> <p style=3D"font-size: 1=
+2px; line-height: 1.5; margin-top: 0; margin-bottom: 5px;">  Casting &quot;Ou=
+r Gracious Host,&quot; a feature film. Logline: While exposing a failed Kicks=
+tarter, a video essayist discovers the influencer who sold the truth may have=
+ staged the lie, and that her own investigation is becoming the next chapter =
+of the story.   </p> <p style=3D"font-size: 12px; line-height: 1.5; margin-to=
+p: 0; margin-bottom: 5px;"> <strong>Seeking talent from:</strong>   New York =
+City, NY  </p> </div> </td> </tr> </tbody> </table> </div> <!--[if mso | IE]>=
+</td></tr></table><![endif]--> </td> </tr> </tbody> </table> </div> <!--[if m=
+so | IE]></td></tr></table></td></tr><![endif]-->  <!--[if mso | IE]><tr><td =
+class=3D"" width=3D"600px" ><table align=3D"center" border=3D"0" cellpadding=
+=3D"0" cellspacing=3D"0" class=3D"" role=3D"presentation" style=3D"width:570p=
+x;" width=3D"570" bgcolor=3D"#f2f1ec" ><tr><td style=3D"line-height:0px;font-=
+size:0px;mso-line-height-rule:exactly;"><![endif]--> <div style=3D"background=
+:#f2f1ec;background-color:#f2f1ec;margin:0px auto;max-width:570px;border-radi=
+us:5px;overflow:hidden;"> <table align=3D"center" border=3D"0" cellpadding=3D=
+"0" cellspacing=3D"0" role=3D"presentation" style=3D"background:#f2f1ec;backg=
+round-color:#f2f1ec;width:100%;border-collapse:separate;"> <tbody> <tr> <td s=
+tyle=3D"border-radius:5px;direction:ltr;font-size:0px;padding:15px;text-align=
+:left;"> <!--[if mso | IE]><table role=3D"presentation" border=3D"0" cellpadd=
+ing=3D"0" cellspacing=3D"0"><tr><td class=3D"" style=3D"vertical-align:top;wi=
+dth:540px;" ><![endif]--> <div class=3D"mj-column-per-100 mj-outlook-group-fi=
+x" style=3D"font-size:0px;text-align:left;direction:ltr;display:inline-block;=
+vertical-align:top;width:100%;"> <table border=3D"0" cellpadding=3D"0" cellsp=
+acing=3D"0" role=3D"presentation" style=3D"vertical-align:top;" width=3D"100%=
+"> <tbody> <tr> <td align=3D"left" style=3D"font-size:0px;padding:0;word-brea=
+k:break-word;"> <div style=3D"font-family:-apple-system, BlinkMacSystemFont, =
+Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI E=
+moji, Segoe UI Symbol;font-size:13px;line-height:1;text-align:left;color:#000=
+000;"><h4 style=3D"margin: 0; font-size: 14px;">Tabletop Gamer</h4></div> </t=
+d> </tr> <tr> <td align=3D"left" style=3D"font-size:0px;padding:0;word-break:=
+break-word;"> <div style=3D"font-family:-apple-system, BlinkMacSystemFont, Se=
+goe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emo=
+ji, Segoe UI Symbol;font-size:13px;line-height:1;text-align:left;color:#00000=
+0;"><ul style=3D"font-size: 14px; line-height: 1.4; padding: 0 12px 0; margin=
+-bottom: 15px;">  <li>  Background / Extra,     18-50   </li>   <li> Estimate=
+d pay amount: $100 for 3 hours of work </li>  </ul> </div> </td> </tr> <tr> <=
+td align=3D"left" style=3D"font-size:0px;padding:0;word-break:break-word;"> <=
+div style=3D"font-family:-apple-system, BlinkMacSystemFont, Segoe UI, Roboto,=
+ Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Sy=
+mbol;font-size:13px;line-height:1;text-align:left;color:#000000;"><div> <a un=
+iversal=3D"true" href=3D"https://go.backstage.com/uni/ls/click?upn=3DREDACTED=
+36" target=3D"_blank" title=3D"Apply to this role" class=3D"primary-cta" styl=
+e=3D"display: inline-block; border: none; font-size: 12px; font-weight: 600; =
+line-height: 1.2; text-align: center; min-width: 40px; border-radius: 6px; pa=
+dding: 8px 12px; background-color: #677af6; text-decoration: none; color: #ff=
+f;">Apply</a> </div></div> </td> </tr> </tbody> </table> </div> <!--[if mso |=
+ IE]></td></tr></table><![endif]--> </td> </tr> </tbody> </table> </div> <!--=
+[if mso | IE]></td></tr></table></td></tr><![endif]-->  <!--[if mso | IE]><tr=
+><td class=3D"" width=3D"600px" ><table align=3D"center" border=3D"0" cellpad=
+ding=3D"0" cellspacing=3D"0" class=3D"" role=3D"presentation" style=3D"width:=
+570px;" width=3D"570" ><tr><td style=3D"line-height:0px;font-size:0px;mso-lin=
+e-height-rule:exactly;"><![endif]--> <div style=3D"margin:0px auto;max-width:=
+570px;"> <table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=
+=3D"0" role=3D"presentation" style=3D"width:100%;"> <tbody> <tr> <td style=3D=
+"direction:ltr;font-size:0px;padding:0;text-align:center;"> <!--[if mso | IE]=
+><table role=3D"presentation" border=3D"0" cellpadding=3D"0" cellspacing=3D"0=
+"><tr><td class=3D"" style=3D"vertical-align:top;width:570px;" ><![endif]--> =
+<div class=3D"mj-column-per-100 mj-outlook-group-fix" style=3D"font-size:0px;=
+text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:1=
+00%;"> <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presen=
+tation" style=3D"vertical-align:top;" width=3D"100%"> <tbody> <tr> <td style=
+=3D"font-size:0px;word-break:break-word;"> <div style=3D"height:15px;line-hei=
+ght:15px;">&#8202;</div> </td> </tr> </tbody> </table> </div> <!--[if mso | I=
+E]></td></tr></table><![endif]--> </td> </tr> </tbody> </table> </div> <!--[i=
+f mso | IE]></td></tr></table></td></tr><![endif]-->  <!--[if mso | IE]><tr><=
+td class=3D"" width=3D"600px" ><table align=3D"center" border=3D"0" cellpaddi=
+ng=3D"0" cellspacing=3D"0" class=3D"" role=3D"presentation" style=3D"width:57=
+0px;" width=3D"570" bgcolor=3D"#f2f1ec" ><tr><td style=3D"line-height:0px;fon=
+t-size:0px;mso-line-height-rule:exactly;"><![endif]--> <div style=3D"backgrou=
+nd:#f2f1ec;background-color:#f2f1ec;margin:0px auto;max-width:570px;border-ra=
+dius:5px;overflow:hidden;"> <table align=3D"center" border=3D"0" cellpadding=
+=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"background:#f2f1ec;ba=
+ckground-color:#f2f1ec;width:100%;border-collapse:separate;"> <tbody> <tr> <t=
+d style=3D"border-radius:5px;direction:ltr;font-size:0px;padding:15px;text-al=
+ign:left;"> <!--[if mso | IE]><table role=3D"presentation" border=3D"0" cellp=
+adding=3D"0" cellspacing=3D"0"><tr><td class=3D"" style=3D"vertical-align:top=
+;width:540px;" ><![endif]--> <div class=3D"mj-column-per-100 mj-outlook-group=
+-fix" style=3D"font-size:0px;text-align:left;direction:ltr;display:inline-blo=
+ck;vertical-align:top;width:100%;"> <table border=3D"0" cellpadding=3D"0" cel=
+lspacing=3D"0" role=3D"presentation" style=3D"vertical-align:top;" width=3D"1=
+00%"> <tbody> <tr> <td align=3D"left" style=3D"font-size:0px;padding:0;word-b=
+reak:break-word;"> <div style=3D"font-family:-apple-system, BlinkMacSystemFon=
+t, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe U=
+I Emoji, Segoe UI Symbol;font-size:13px;line-height:1;text-align:left;color:#=
+000000;"><h4 style=3D"margin: 0; font-size: 14px;">Sparrow Huang</h4></div> <=
+/td> </tr> <tr> <td align=3D"left" style=3D"font-size:0px;padding:0;word-brea=
+k:break-word;"> <div style=3D"font-family:-apple-system, BlinkMacSystemFont, =
+Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI E=
+moji, Segoe UI Symbol;font-size:13px;line-height:1;text-align:left;color:#000=
+000;"><ul style=3D"font-size: 14px; line-height: 1.4; padding: 0 12px 0; marg=
+in-bottom: 15px;">  <li>  Day Player,   Female, Trans Female,    25-35   </li=
+>   <li> Estimated pay amount: $257 for 4 hours of work </li>  </ul> </div> <=
+/td> </tr> <tr> <td align=3D"left" style=3D"font-size:0px;padding:0;word-brea=
+k:break-word;"> <div style=3D"font-family:-apple-system, BlinkMacSystemFont, =
+Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI E=
+moji, Segoe UI Symbol;font-size:13px;line-height:1;text-align:left;color:#000=
+000;"><div> <a universal=3D"true" href=3D"https://go.backstage.com/uni/ls/cli=
+ck?upn=3DREDACTED37" target=3D"_blank" title=3D"Apply to this role" class=3D"=
+primary-cta" style=3D"display: inline-block; border: none; font-size: 12px; f=
+ont-weight: 600; line-height: 1.2; text-align: center; min-width: 40px; borde=
+r-radius: 6px; padding: 8px 12px; background-color: #677af6; text-decoration:=
+ none; color: #fff;">Apply</a> </div></div> </td> </tr> </tbody> </table> </d=
+iv> <!--[if mso | IE]></td></tr></table><![endif]--> </td> </tr> </tbody> </t=
+able> </div> <!--[if mso | IE]></td></tr></table></td></tr><![endif]-->  <!--=
+[if mso | IE]></table><![endif]--> </td> </tr> </tbody> </table> </div> <!--[=
+if mso | IE]></td></tr></table><![endif]-->  <!--[if mso | IE]><table align=
+=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"" role=
+=3D"presentation" style=3D"width:600px;" width=3D"600" ><tr><td style=3D"line=
+-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]--> <div st=
+yle=3D"margin:0px auto;max-width:600px;"> <table align=3D"center" border=3D"0=
+" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"width:10=
+0%;"> <tbody> <tr> <td style=3D"direction:ltr;font-size:0px;padding:0;text-al=
+ign:center;"> <!--[if mso | IE]><table role=3D"presentation" border=3D"0" cel=
+lpadding=3D"0" cellspacing=3D"0"><tr><td class=3D"" style=3D"vertical-align:t=
+op;width:600px;" ><![endif]--> <div class=3D"mj-column-per-100 mj-outlook-gro=
+up-fix" style=3D"font-size:0px;text-align:left;direction:ltr;display:inline-b=
+lock;vertical-align:top;width:100%;"> <table border=3D"0" cellpadding=3D"0" c=
+ellspacing=3D"0" role=3D"presentation" style=3D"vertical-align:top;" width=3D=
+"100%"> <tbody> <tr> <td style=3D"font-size:0px;word-break:break-word;"> <div=
+ style=3D"height:20px;line-height:20px;">&#8202;</div> </td> </tr> </tbody> <=
+/table> </div> <!--[if mso | IE]></td></tr></table><![endif]--> </td> </tr> <=
+/tbody> </table> </div> <!--[if mso | IE]></td></tr></table><![endif]-->  <!-=
+-[if mso | IE]><table align=3D"center" border=3D"0" cellpadding=3D"0" cellspa=
+cing=3D"0" class=3D"section_job-card-outlook" role=3D"presentation" style=3D"=
+width:600px;" width=3D"600" bgcolor=3D"#ffffff" ><tr><td style=3D"line-height=
+:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]--> <div class=3D"=
+section_job-card" style=3D"background:#ffffff;background-color:#ffffff;margin=
+:0px auto;max-width:600px;border-radius:10px;overflow:hidden;"> <table align=
+=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presenta=
+tion" style=3D"background:#ffffff;background-color:#ffffff;width:100%;border-=
+collapse:separate;"> <tbody> <tr> <td style=3D"border-radius:10px;direction:l=
+tr;font-size:0px;padding:15px;text-align:center;"> <!--[if mso | IE]><table r=
+ole=3D"presentation" border=3D"0" cellpadding=3D"0" cellspacing=3D"0"><![endi=
+f]-->  <!--[if mso | IE]><tr><td class=3D"" width=3D"600px" ><table align=3D"=
+center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"" role=3D"p=
+resentation" style=3D"width:570px;" width=3D"570" ><tr><td style=3D"line-heig=
+ht:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]--> <div style=
+=3D"margin:0px auto;max-width:570px;"> <table align=3D"center" border=3D"0" c=
+ellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"width:100%;=
+"> <tbody> <tr> <td style=3D"direction:ltr;font-size:0px;padding:0;text-align=
+:left;"> <!--[if mso | IE]><table role=3D"presentation" border=3D"0" cellpadd=
+ing=3D"0" cellspacing=3D"0"><tr><td class=3D"" style=3D"vertical-align:top;wi=
+dth:570px;" ><![endif]--> <div class=3D"mj-column-per-100 mj-outlook-group-fi=
+x" style=3D"font-size:0px;text-align:left;direction:ltr;display:inline-block;=
+vertical-align:top;width:100%;"> <table border=3D"0" cellpadding=3D"0" cellsp=
+acing=3D"0" role=3D"presentation" style=3D"vertical-align:top;" width=3D"100%=
+"> <tbody> <tr> <td align=3D"left" class=3D"job-tag_group" style=3D"font-size=
+:0px;padding:5px 0;word-break:break-word;"> <div style=3D"font-family:-apple-=
+system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, A=
+pple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;font-size:13px;line-height:=
+1;text-align:left;color:#000000;">   <span class=3D"job-tag" style=3D"display=
+: inline-block; background-color: #000; border-radius: 10px; color: #fff; fon=
+t-size: 11px; margin: 0 2px 5px 0; padding: 2px 6px; text-transform: uppercas=
+e;">Online Commercial / Video Ad</span>   <span class=3D"job-tag paid" style=
+=3D"display: inline-block; border-radius: 10px; color: #fff; font-size: 11px;=
+ margin: 0 2px 5px 0; padding: 2px 6px; text-transform: uppercase; background=
+-color: #19c08b;">$ Paid</span>    <span class=3D"job-tag union" style=3D"dis=
+play: inline-block; background-color: #000; border-radius: 10px; color: #fff;=
+ font-size: 11px; margin: 0 2px 5px 0; padding: 2px 6px; text-transform: uppe=
+rcase;">Nonunion</span>  </div> </td> </tr> </tbody> </table> </div> <!--[if =
+mso | IE]></td><![endif]-->  <!--[if mso | IE]></tr></table><![endif]--> </td=
+> </tr> </tbody> </table> </div> <!--[if mso | IE]></td></tr></table></td></t=
+r><![endif]-->  <!--[if mso | IE]><tr><td class=3D"" width=3D"600px" ><table =
+align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"" =
+role=3D"presentation" style=3D"width:570px;" width=3D"570" ><tr><td style=3D"=
+line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]--> <di=
+v style=3D"margin:0px auto;max-width:570px;"> <table align=3D"center" border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"wid=
+th:100%;"> <tbody> <tr> <td style=3D"direction:ltr;font-size:0px;padding:5px =
+0 10px;text-align:left;"> <!--[if mso | IE]><table role=3D"presentation" bord=
+er=3D"0" cellpadding=3D"0" cellspacing=3D"0"><tr><td class=3D"" style=3D"vert=
+ical-align:top;width:570px;" ><![endif]--> <div class=3D"mj-column-per-100 mj=
+-outlook-group-fix" style=3D"font-size:0px;text-align:left;direction:ltr;disp=
+lay:inline-block;vertical-align:top;width:100%;"> <table border=3D"0" cellpad=
+ding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"vertical-align:to=
+p;" width=3D"100%"> <tbody> <tr> <td align=3D"left" class=3D"job-card_body" s=
+tyle=3D"font-size:0px;padding:0;word-break:break-word;"> <div style=3D"font-f=
+amily:-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, =
+sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;font-size:13px=
+;line-height:1;text-align:left;color:#000000;"><p style=3D"line-height: 1.5; =
+margin-bottom: 10px; color: #7e7d7b; font-size: 10px; margin: 0 0 10px;"><em>=
+Posted 1=C2=A0day, 1=C2=A0hour ago</em></p> <h2 style=3D"margin: 0 0 8px;"> <=
+a universal=3D"true" href=3D"https://go.backstage.com/uni/ls/click?upn=3DREDA=
+CTED38" style=3D"text-decoration: none; color: #677af6;">Little Caesars Socia=
+l &#x27;Hands Free Pizza&#x27;</a> </h2> <p style=3D"font-size: 12px; line-he=
+ight: 1.5; margin-top: 0; margin-bottom: 5px;">  Casting a social ad for Litt=
+le Caesars. Production states: &quot;We=E2=80=99re looking for a good deadpan=
+ look with comedic chops and a funny resting face. Able to give us physical c=
+omedy without going over the top. Good with smaller performances and complete=
+ly serious about this being the best innovation in gaming =E2=80=A6  <a unive=
+rsal=3D"true" href=3D"https://go.backstage.com/uni/ls/click?upn=3DREDACTED39"=
+ style=3D"text-decoration: none; color: #677af6;">More</a>   </p> <p style=3D=
+"font-size: 12px; line-height: 1.5; margin-top: 0; margin-bottom: 5px;"> <str=
+ong>Seeking talent from:</strong>   New York City, NY  </p> </div> </td> </tr=
+> </tbody> </table> </div> <!--[if mso | IE]></td></tr></table><![endif]--> <=
+/td> </tr> </tbody> </table> </div> <!--[if mso | IE]></td></tr></table></td>=
+</tr><![endif]-->  <!--[if mso | IE]><tr><td class=3D"" width=3D"600px" ><tab=
+le align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D=
+"" role=3D"presentation" style=3D"width:570px;" width=3D"570" bgcolor=3D"#f2f=
+1ec" ><tr><td style=3D"line-height:0px;font-size:0px;mso-line-height-rule:exa=
+ctly;"><![endif]--> <div style=3D"background:#f2f1ec;background-color:#f2f1ec=
+;margin:0px auto;max-width:570px;border-radius:5px;overflow:hidden;"> <table =
+align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"pre=
+sentation" style=3D"background:#f2f1ec;background-color:#f2f1ec;width:100%;bo=
+rder-collapse:separate;"> <tbody> <tr> <td style=3D"border-radius:5px;directi=
+on:ltr;font-size:0px;padding:15px;text-align:left;"> <!--[if mso | IE]><table=
+ role=3D"presentation" border=3D"0" cellpadding=3D"0" cellspacing=3D"0"><tr><=
+td class=3D"" style=3D"vertical-align:top;width:540px;" ><![endif]--> <div cl=
+ass=3D"mj-column-per-100 mj-outlook-group-fix" style=3D"font-size:0px;text-al=
+ign:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;"> =
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation"=
+ style=3D"vertical-align:top;" width=3D"100%"> <tbody> <tr> <td align=3D"left=
+" style=3D"font-size:0px;padding:0;word-break:break-word;"> <div style=3D"fon=
+t-family:-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Aria=
+l, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;font-size:1=
+3px;line-height:1;text-align:left;color:#000000;"><h4 style=3D"margin: 0; fon=
+t-size: 14px;">Gavin - Gamer</h4></div> </td> </tr> <tr> <td align=3D"left" s=
+tyle=3D"font-size:0px;padding:0;word-break:break-word;"> <div style=3D"font-f=
+amily:-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, =
+sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;font-size:13px=
+;line-height:1;text-align:left;color:#000000;"><ul style=3D"font-size: 14px; =
+line-height: 1.4; padding: 0 12px 0; margin-bottom: 15px;">  <li>  Lead,   Ma=
+le,    20-34   </li>   <li> Estimated pay amount: $500 for 10 hours of work <=
+/li>  </ul> </div> </td> </tr> <tr> <td align=3D"left" style=3D"font-size:0px=
+;padding:0;word-break:break-word;"> <div style=3D"font-family:-apple-system, =
+BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Col=
+or Emoji, Segoe UI Emoji, Segoe UI Symbol;font-size:13px;line-height:1;text-a=
+lign:left;color:#000000;"><div> <a universal=3D"true" href=3D"https://go.back=
+stage.com/uni/ls/click?upn=3DREDACTED40" target=3D"_blank" title=3D"Apply to =
+this role" class=3D"primary-cta" style=3D"display: inline-block; border: none=
+; font-size: 12px; font-weight: 600; line-height: 1.2; text-align: center; mi=
+n-width: 40px; border-radius: 6px; padding: 8px 12px; background-color: #677a=
+f6; text-decoration: none; color: #fff;">Apply</a> </div></div> </td> </tr> <=
+/tbody> </table> </div> <!--[if mso | IE]></td></tr></table><![endif]--> </td=
+> </tr> </tbody> </table> </div> <!--[if mso | IE]></td></tr></table></td></t=
+r><![endif]-->  <!--[if mso | IE]></table><![endif]--> </td> </tr> </tbody> <=
+/table> </div> <!--[if mso | IE]></td></tr></table><![endif]-->  <!--[if mso =
+| IE]><table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0=
+" class=3D"" role=3D"presentation" style=3D"width:600px;" width=3D"600" ><tr>=
+<td style=3D"line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![=
+endif]--> <div style=3D"margin:0px auto;max-width:600px;"> <table align=3D"ce=
+nter" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" =
+style=3D"width:100%;"> <tbody> <tr> <td style=3D"direction:ltr;font-size:0px;=
+padding:0;text-align:center;"> <!--[if mso | IE]><table role=3D"presentation"=
+ border=3D"0" cellpadding=3D"0" cellspacing=3D"0"><tr><td class=3D"" style=3D=
+"vertical-align:top;width:600px;" ><![endif]--> <div class=3D"mj-column-per-1=
+00 mj-outlook-group-fix" style=3D"font-size:0px;text-align:left;direction:ltr=
+;display:inline-block;vertical-align:top;width:100%;"> <table border=3D"0" ce=
+llpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"vertical-ali=
+gn:top;" width=3D"100%"> <tbody> <tr> <td style=3D"font-size:0px;word-break:b=
+reak-word;"> <div style=3D"height:20px;line-height:20px;">&#8202;</div> </td>=
+ </tr> </tbody> </table> </div> <!--[if mso | IE]></td></tr></table><![endif]=
+--> </td> </tr> </tbody> </table> </div> <!--[if mso | IE]></td></tr></table>=
+<![endif]-->  <!--[if mso | IE]><table align=3D"center" border=3D"0" cellpadd=
+ing=3D"0" cellspacing=3D"0" class=3D"section_job-card-outlook" role=3D"presen=
+tation" style=3D"width:600px;" width=3D"600" bgcolor=3D"#ffffff" ><tr><td sty=
+le=3D"line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-=
+-> <div class=3D"section_job-card" style=3D"background:#ffffff;background-col=
+or:#ffffff;margin:0px auto;max-width:600px;border-radius:10px;overflow:hidden=
+;"> <table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" =
+role=3D"presentation" style=3D"background:#ffffff;background-color:#ffffff;wi=
+dth:100%;border-collapse:separate;"> <tbody> <tr> <td style=3D"border-radius:=
+10px;direction:ltr;font-size:0px;padding:15px;text-align:center;"> <!--[if ms=
+o | IE]><table role=3D"presentation" border=3D"0" cellpadding=3D"0" cellspaci=
+ng=3D"0"><![endif]-->  <!--[if mso | IE]><tr><td class=3D"" width=3D"600px" >=
+<table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" clas=
+s=3D"" role=3D"presentation" style=3D"width:570px;" width=3D"570" ><tr><td st=
+yle=3D"line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]=
+--> <div style=3D"margin:0px auto;max-width:570px;"> <table align=3D"center" =
+border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=
+=3D"width:100%;"> <tbody> <tr> <td style=3D"direction:ltr;font-size:0px;paddi=
+ng:0;text-align:left;"> <!--[if mso | IE]><table role=3D"presentation" border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0"><tr><td class=3D"" style=3D"vertic=
+al-align:top;width:570px;" ><![endif]--> <div class=3D"mj-column-per-100 mj-o=
+utlook-group-fix" style=3D"font-size:0px;text-align:left;direction:ltr;displa=
+y:inline-block;vertical-align:top;width:100%;"> <table border=3D"0" cellpaddi=
+ng=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"vertical-align:top;=
+" width=3D"100%"> <tbody> <tr> <td align=3D"left" class=3D"job-tag_group" sty=
+le=3D"font-size:0px;padding:5px 0;word-break:break-word;"> <div style=3D"font=
+-family:-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial=
+, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;font-size:13=
+px;line-height:1;text-align:left;color:#000000;">   <span class=3D"job-tag" s=
+tyle=3D"display: inline-block; background-color: #000; border-radius: 10px; c=
+olor: #fff; font-size: 11px; margin: 0 2px 5px 0; padding: 2px 6px; text-tran=
+sform: uppercase;">Online Commercial / Video Ad</span>   <span class=3D"job-t=
+ag paid" style=3D"display: inline-block; border-radius: 10px; color: #fff; fo=
+nt-size: 11px; margin: 0 2px 5px 0; padding: 2px 6px; text-transform: upperca=
+se; background-color: #19c08b;">$ Paid</span>    <span class=3D"job-tag union=
+" style=3D"display: inline-block; background-color: #000; border-radius: 10px=
+; color: #fff; font-size: 11px; margin: 0 2px 5px 0; padding: 2px 6px; text-t=
+ransform: uppercase;">Nonunion</span>  </div> </td> </tr> </tbody> </table> <=
+/div> <!--[if mso | IE]></td><![endif]-->  <!--[if mso | IE]></tr></table><![=
+endif]--> </td> </tr> </tbody> </table> </div> <!--[if mso | IE]></td></tr></=
+table></td></tr><![endif]-->  <!--[if mso | IE]><tr><td class=3D"" width=3D"6=
+00px" ><table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"=
+0" class=3D"" role=3D"presentation" style=3D"width:570px;" width=3D"570" ><tr=
+><td style=3D"line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><!=
+[endif]--> <div style=3D"margin:0px auto;max-width:570px;"> <table align=3D"c=
+enter" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation"=
+ style=3D"width:100%;"> <tbody> <tr> <td style=3D"direction:ltr;font-size:0px=
+;padding:5px 0 10px;text-align:left;"> <!--[if mso | IE]><table role=3D"prese=
+ntation" border=3D"0" cellpadding=3D"0" cellspacing=3D"0"><tr><td class=3D"" =
+style=3D"vertical-align:top;width:570px;" ><![endif]--> <div class=3D"mj-colu=
+mn-per-100 mj-outlook-group-fix" style=3D"font-size:0px;text-align:left;direc=
+tion:ltr;display:inline-block;vertical-align:top;width:100%;"> <table border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"ver=
+tical-align:top;" width=3D"100%"> <tbody> <tr> <td align=3D"left" class=3D"jo=
+b-card_body" style=3D"font-size:0px;padding:0;word-break:break-word;"> <div s=
+tyle=3D"font-family:-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helv=
+etica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;=
+font-size:13px;line-height:1;text-align:left;color:#000000;"><p style=3D"line=
+-height: 1.5; margin-bottom: 10px; color: #7e7d7b; font-size: 10px; margin: 0=
+ 0 10px;"><em>Posted 22=C2=A0hours ago</em></p> <h2 style=3D"margin: 0 0 8px;=
+"> <a universal=3D"true" href=3D"https://go.backstage.com/uni/ls/click?upn=3D=
+REDACTED41" style=3D"text-decoration: none; color: #677af6;">Water Filter Bra=
+nd Shoot</a> </h2> <p style=3D"font-size: 12px; line-height: 1.5; margin-top:=
+ 0; margin-bottom: 5px;">  Casting and seeking crew for video b-roll (using a=
+n ice machine), photo, and concepted commercial capture for a water filter br=
+and. Some aspects of this production will include AI-generated backgrounds.  =
+ </p> <p style=3D"font-size: 12px; line-height: 1.5; margin-top: 0; margin-bo=
+ttom: 5px;"> <strong>Seeking talent from:</strong>   Leola, PA; Philadelphia,=
+ PA; Baltimore, MD  </p> </div> </td> </tr> </tbody> </table> </div> <!--[if =
+mso | IE]></td></tr></table><![endif]--> </td> </tr> </tbody> </table> </div>=
+ <!--[if mso | IE]></td></tr></table></td></tr><![endif]-->  <!--[if mso | IE=
+]><tr><td class=3D"" width=3D"600px" ><table align=3D"center" border=3D"0" ce=
+llpadding=3D"0" cellspacing=3D"0" class=3D"" role=3D"presentation" style=3D"w=
+idth:570px;" width=3D"570" bgcolor=3D"#f2f1ec" ><tr><td style=3D"line-height:=
+0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]--> <div style=3D"b=
+ackground:#f2f1ec;background-color:#f2f1ec;margin:0px auto;max-width:570px;bo=
+rder-radius:5px;overflow:hidden;"> <table align=3D"center" border=3D"0" cellp=
+adding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"background:#f2f=
+1ec;background-color:#f2f1ec;width:100%;border-collapse:separate;"> <tbody> <=
+tr> <td style=3D"border-radius:5px;direction:ltr;font-size:0px;padding:15px;t=
+ext-align:left;"> <!--[if mso | IE]><table role=3D"presentation" border=3D"0"=
+ cellpadding=3D"0" cellspacing=3D"0"><tr><td class=3D"" style=3D"vertical-ali=
+gn:top;width:540px;" ><![endif]--> <div class=3D"mj-column-per-100 mj-outlook=
+-group-fix" style=3D"font-size:0px;text-align:left;direction:ltr;display:inli=
+ne-block;vertical-align:top;width:100%;"> <table border=3D"0" cellpadding=3D"=
+0" cellspacing=3D"0" role=3D"presentation" style=3D"vertical-align:top;" widt=
+h=3D"100%"> <tbody> <tr> <td align=3D"left" style=3D"font-size:0px;padding:0;=
+word-break:break-word;"> <div style=3D"font-family:-apple-system, BlinkMacSys=
+temFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, S=
+egoe UI Emoji, Segoe UI Symbol;font-size:13px;line-height:1;text-align:left;c=
+olor:#000000;"><h4 style=3D"margin: 0; font-size: 14px;">Chloe</h4></div> </t=
+d> </tr> <tr> <td align=3D"left" style=3D"font-size:0px;padding:0;word-break:=
+break-word;"> <div style=3D"font-family:-apple-system, BlinkMacSystemFont, Se=
+goe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emo=
+ji, Segoe UI Symbol;font-size:13px;line-height:1;text-align:left;color:#00000=
+0;"><ul style=3D"font-size: 14px; line-height: 1.4; padding: 0 12px 0; margin=
+-bottom: 15px;">  <li>  Lead,   Female,    25-35   </li>   <li> Estimated pay=
+ amount: $2000 for 1 days of work </li>  </ul> </div> </td> </tr> <tr> <td al=
+ign=3D"left" style=3D"font-size:0px;padding:0;word-break:break-word;"> <div s=
+tyle=3D"font-family:-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helv=
+etica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;=
+font-size:13px;line-height:1;text-align:left;color:#000000;"><div> <a univers=
+al=3D"true" href=3D"https://go.backstage.com/uni/ls/click?upn=3DREDACTED42" t=
+arget=3D"_blank" title=3D"Apply to this role" class=3D"primary-cta" style=3D"=
+display: inline-block; border: none; font-size: 12px; font-weight: 600; line-=
+height: 1.2; text-align: center; min-width: 40px; border-radius: 6px; padding=
+: 8px 12px; background-color: #677af6; text-decoration: none; color: #fff;">A=
+pply</a> </div></div> </td> </tr> </tbody> </table> </div> <!--[if mso | IE]>=
+</td></tr></table><![endif]--> </td> </tr> </tbody> </table> </div> <!--[if m=
+so | IE]></td></tr></table></td></tr><![endif]-->  <!--[if mso | IE]><tr><td =
+class=3D"" width=3D"600px" ><table align=3D"center" border=3D"0" cellpadding=
+=3D"0" cellspacing=3D"0" class=3D"" role=3D"presentation" style=3D"width:570p=
+x;" width=3D"570" ><tr><td style=3D"line-height:0px;font-size:0px;mso-line-he=
+ight-rule:exactly;"><![endif]--> <div style=3D"margin:0px auto;max-width:570p=
+x;"> <table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0"=
+ role=3D"presentation" style=3D"width:100%;"> <tbody> <tr> <td style=3D"direc=
+tion:ltr;font-size:0px;padding:0;text-align:center;"> <!--[if mso | IE]><tabl=
+e role=3D"presentation" border=3D"0" cellpadding=3D"0" cellspacing=3D"0"><tr>=
+<td class=3D"" style=3D"vertical-align:top;width:570px;" ><![endif]--> <div c=
+lass=3D"mj-column-per-100 mj-outlook-group-fix" style=3D"font-size:0px;text-a=
+lign:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">=
+ <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation=
+" style=3D"vertical-align:top;" width=3D"100%"> <tbody> <tr> <td style=3D"fon=
+t-size:0px;word-break:break-word;"> <div style=3D"height:15px;line-height:15p=
+x;">&#8202;</div> </td> </tr> </tbody> </table> </div> <!--[if mso | IE]></td=
+></tr></table><![endif]--> </td> </tr> </tbody> </table> </div> <!--[if mso |=
+ IE]></td></tr></table></td></tr><![endif]-->  <!--[if mso | IE]><tr><td clas=
+s=3D"" width=3D"600px" ><table align=3D"center" border=3D"0" cellpadding=3D"0=
+" cellspacing=3D"0" class=3D"" role=3D"presentation" style=3D"width:570px;" w=
+idth=3D"570" bgcolor=3D"#f2f1ec" ><tr><td style=3D"line-height:0px;font-size:=
+0px;mso-line-height-rule:exactly;"><![endif]--> <div style=3D"background:#f2f=
+1ec;background-color:#f2f1ec;margin:0px auto;max-width:570px;border-radius:5p=
+x;overflow:hidden;"> <table align=3D"center" border=3D"0" cellpadding=3D"0" c=
+ellspacing=3D"0" role=3D"presentation" style=3D"background:#f2f1ec;background=
+-color:#f2f1ec;width:100%;border-collapse:separate;"> <tbody> <tr> <td style=
+=3D"border-radius:5px;direction:ltr;font-size:0px;padding:15px;text-align:lef=
+t;"> <!--[if mso | IE]><table role=3D"presentation" border=3D"0" cellpadding=
+=3D"0" cellspacing=3D"0"><tr><td class=3D"" style=3D"vertical-align:top;width=
+:540px;" ><![endif]--> <div class=3D"mj-column-per-100 mj-outlook-group-fix" =
+style=3D"font-size:0px;text-align:left;direction:ltr;display:inline-block;ver=
+tical-align:top;width:100%;"> <table border=3D"0" cellpadding=3D"0" cellspaci=
+ng=3D"0" role=3D"presentation" style=3D"vertical-align:top;" width=3D"100%"> =
+<tbody> <tr> <td align=3D"left" style=3D"font-size:0px;padding:0;word-break:b=
+reak-word;"> <div style=3D"font-family:-apple-system, BlinkMacSystemFont, Seg=
+oe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoj=
+i, Segoe UI Symbol;font-size:13px;line-height:1;text-align:left;color:#000000=
+;"><h4 style=3D"margin: 0; font-size: 14px;">Construction Worker</h4></div> <=
+/td> </tr> <tr> <td align=3D"left" style=3D"font-size:0px;padding:0;word-brea=
+k:break-word;"> <div style=3D"font-family:-apple-system, BlinkMacSystemFont, =
+Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI E=
+moji, Segoe UI Symbol;font-size:13px;line-height:1;text-align:left;color:#000=
+000;"><ul style=3D"font-size: 14px; line-height: 1.4; padding: 0 12px 0; marg=
+in-bottom: 15px;">  <li>  Real People,     25-65   </li>   <li> Estimated pay=
+ amount: $600 for 1 days of work </li>  </ul> </div> </td> </tr> <tr> <td ali=
+gn=3D"left" style=3D"font-size:0px;padding:0;word-break:break-word;"> <div st=
+yle=3D"font-family:-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helve=
+tica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;f=
+ont-size:13px;line-height:1;text-align:left;color:#000000;"><div> <a universa=
+l=3D"true" href=3D"https://go.backstage.com/uni/ls/click?upn=3DREDACTED43" ta=
+rget=3D"_blank" title=3D"Apply to this role" class=3D"primary-cta" style=3D"d=
+isplay: inline-block; border: none; font-size: 12px; font-weight: 600; line-h=
+eight: 1.2; text-align: center; min-width: 40px; border-radius: 6px; padding:=
+ 8px 12px; background-color: #677af6; text-decoration: none; color: #fff;">Ap=
+ply</a> </div></div> </td> </tr> </tbody> </table> </div> <!--[if mso | IE]><=
+/td></tr></table><![endif]--> </td> </tr> </tbody> </table> </div> <!--[if ms=
+o | IE]></td></tr></table></td></tr><![endif]-->  <!--[if mso | IE]><tr><td c=
+lass=3D"" width=3D"600px" ><table align=3D"center" border=3D"0" cellpadding=
+=3D"0" cellspacing=3D"0" class=3D"" role=3D"presentation" style=3D"width:570p=
+x;" width=3D"570" ><tr><td style=3D"line-height:0px;font-size:0px;mso-line-he=
+ight-rule:exactly;"><![endif]--> <div style=3D"margin:0px auto;max-width:570p=
+x;"> <table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0"=
+ role=3D"presentation" style=3D"width:100%;"> <tbody> <tr> <td style=3D"direc=
+tion:ltr;font-size:0px;padding:0;text-align:center;"> <!--[if mso | IE]><tabl=
+e role=3D"presentation" border=3D"0" cellpadding=3D"0" cellspacing=3D"0"><tr>=
+<td class=3D"" style=3D"vertical-align:top;width:570px;" ><![endif]--> <div c=
+lass=3D"mj-column-per-100 mj-outlook-group-fix" style=3D"font-size:0px;text-a=
+lign:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">=
+ <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation=
+" style=3D"vertical-align:top;" width=3D"100%"> <tbody> <tr> <td style=3D"fon=
+t-size:0px;word-break:break-word;"> <div style=3D"height:15px;line-height:15p=
+x;">&#8202;</div> </td> </tr> </tbody> </table> </div> <!--[if mso | IE]></td=
+></tr></table><![endif]--> </td> </tr> </tbody> </table> </div> <!--[if mso |=
+ IE]></td></tr></table></td></tr><![endif]-->  <!--[if mso | IE]><tr><td clas=
+s=3D"" width=3D"600px" ><table align=3D"center" border=3D"0" cellpadding=3D"0=
+" cellspacing=3D"0" class=3D"" role=3D"presentation" style=3D"width:570px;" w=
+idth=3D"570" bgcolor=3D"#f2f1ec" ><tr><td style=3D"line-height:0px;font-size:=
+0px;mso-line-height-rule:exactly;"><![endif]--> <div style=3D"background:#f2f=
+1ec;background-color:#f2f1ec;margin:0px auto;max-width:570px;border-radius:5p=
+x;overflow:hidden;"> <table align=3D"center" border=3D"0" cellpadding=3D"0" c=
+ellspacing=3D"0" role=3D"presentation" style=3D"background:#f2f1ec;background=
+-color:#f2f1ec;width:100%;border-collapse:separate;"> <tbody> <tr> <td style=
+=3D"border-radius:5px;direction:ltr;font-size:0px;padding:15px;text-align:lef=
+t;"> <!--[if mso | IE]><table role=3D"presentation" border=3D"0" cellpadding=
+=3D"0" cellspacing=3D"0"><tr><td class=3D"" style=3D"vertical-align:top;width=
+:540px;" ><![endif]--> <div class=3D"mj-column-per-100 mj-outlook-group-fix" =
+style=3D"font-size:0px;text-align:left;direction:ltr;display:inline-block;ver=
+tical-align:top;width:100%;"> <table border=3D"0" cellpadding=3D"0" cellspaci=
+ng=3D"0" role=3D"presentation" style=3D"vertical-align:top;" width=3D"100%"> =
+<tbody> <tr> <td align=3D"left" style=3D"font-size:0px;padding:0;word-break:b=
+reak-word;"> <div style=3D"font-family:-apple-system, BlinkMacSystemFont, Seg=
+oe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoj=
+i, Segoe UI Symbol;font-size:13px;line-height:1;text-align:left;color:#000000=
+;"><h4 style=3D"margin: 0; font-size: 14px;">Warehouse Worker (Staff)</h4></d=
+iv> </td> </tr> <tr> <td align=3D"left" style=3D"font-size:0px;padding:0;word=
+-break:break-word;"> <div style=3D"font-family:-apple-system, BlinkMacSystemF=
+ont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe=
+ UI Emoji, Segoe UI Symbol;font-size:13px;line-height:1;text-align:left;color=
+:#000000;"><ul style=3D"font-size: 14px; line-height: 1.4; padding: 0 12px 0;=
+ margin-bottom: 15px;">  <li>  Real People,     25-65   </li>   <li> Estimate=
+d pay amount: $600 for 1 days of work </li>  </ul> </div> </td> </tr> <tr> <t=
+d align=3D"left" style=3D"font-size:0px;padding:0;word-break:break-word;"> <d=
+iv style=3D"font-family:-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, =
+Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Sym=
+bol;font-size:13px;line-height:1;text-align:left;color:#000000;"><div> <a uni=
+versal=3D"true" href=3D"https://go.backstage.com/uni/ls/click?upn=3DREDACTED4=
+4" target=3D"_blank" title=3D"Apply to this role" class=3D"primary-cta" style=
+=3D"display: inline-block; border: none; font-size: 12px; font-weight: 600; l=
+ine-height: 1.2; text-align: center; min-width: 40px; border-radius: 6px; pad=
+ding: 8px 12px; background-color: #677af6; text-decoration: none; color: #fff=
+;">Apply</a> </div></div> </td> </tr> </tbody> </table> </div> <!--[if mso | =
+IE]></td></tr></table><![endif]--> </td> </tr> </tbody> </table> </div> <!--[=
+if mso | IE]></td></tr></table></td></tr><![endif]-->  <!--[if mso | IE]></ta=
+ble><![endif]--> </td> </tr> </tbody> </table> </div> <!--[if mso | IE]></td>=
+</tr></table><![endif]-->  <!--[if mso | IE]><table align=3D"center" border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"" role=3D"presentation" s=
+tyle=3D"width:600px;" width=3D"600" ><tr><td style=3D"line-height:0px;font-si=
+ze:0px;mso-line-height-rule:exactly;"><![endif]--> <div style=3D"margin:0px a=
+uto;max-width:600px;"> <table align=3D"center" border=3D"0" cellpadding=3D"0"=
+ cellspacing=3D"0" role=3D"presentation" style=3D"width:100%;"> <tbody> <tr> =
+<td style=3D"direction:ltr;font-size:0px;padding:20px 0;text-align:center;"> =
+<!--[if mso | IE]><table role=3D"presentation" border=3D"0" cellpadding=3D"0"=
+ cellspacing=3D"0"><tr><![endif]-->  <!--[if mso | IE]><td class=3D"" style=
+=3D"vertical-align:top;width:600px;" ><![endif]--> <div class=3D"mj-column-pe=
+r-100 mj-outlook-group-fix" style=3D"font-size:0px;text-align:left;direction:=
+ltr;display:inline-block;vertical-align:top;width:100%;"> <table border=3D"0"=
+ cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"vertical-=
+align:top;" width=3D"100%"> <tbody> <tr> <td align=3D"center" class=3D"job-ca=
+rd_cta" style=3D"font-size:0px;padding:10px 25px;word-break:break-word;"> <ta=
+ble border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" st=
+yle=3D"border-collapse:separate;line-height:100%;"> <tbody> <tr> <td align=3D=
+"center" bgcolor=3D"transparent" role=3D"presentation" style=3D"border:none;b=
+order-radius:3px;cursor:auto;mso-padding-alt:10px 25px;background:transparent=
+;" valign=3D"middle"> <p style=3D"margin-bottom: 10px; display: inline-block;=
+ background: transparent; color: #ffffff; font-family: -apple-system, BlinkMa=
+cSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoj=
+i, Segoe UI Emoji, Segoe UI Symbol; font-size: 13px; font-weight: normal; lin=
+e-height: 120%; margin: 0; text-decoration: none; text-transform: none; paddi=
+ng: 10px 25px; mso-padding-alt: 0px; border-radius: 3px;"> <a universal=3D"tr=
+ue" href=3D"https://go.backstage.com/uni/ls/click?upn=3DREDACTED45" class=3D"=
+primary-cta" style=3D"display: inline-block; border: none; font-size: 12px; f=
+ont-weight: 600; line-height: 1.2; text-align: center; min-width: 40px; borde=
+r-radius: 6px; padding: 8px 12px; background-color: #677af6; text-decoration:=
+ none; color: #fff;"> View All Matching Jobs <img src=3D"https://d3uscstcbhvk=
+7k.cloudfront.net/static/images/email/icon-chevron-right.169c24667b42.png" wi=
+dth=3D"6px" style=3D"position: relative; top:1px; padding-left: 10px;"> </a> =
+</p> </td> </tr> </tbody> </table> </td> </tr> </tbody> </table> </div> <!--[=
+if mso | IE]></td><![endif]-->  <!--[if mso | IE]></tr></table><![endif]--> <=
+/td> </tr> </tbody> </table> </div> <!--[if mso | IE]></td></tr></table><![en=
+dif]-->  <!--[if mso | IE]><table align=3D"center" border=3D"0" cellpadding=
+=3D"0" cellspacing=3D"0" class=3D"section__join-banner-outlook" role=3D"prese=
+ntation" style=3D"width:600px;" width=3D"600" bgcolor=3D"#146960" ><tr><td st=
+yle=3D"line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]=
+--> <div class=3D"section__join-banner" style=3D"background:#146960;backgroun=
+d-color:#146960;margin:0px auto;max-width:600px;border-radius:10px;overflow:h=
+idden;"> <table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=
+=3D"0" role=3D"presentation" style=3D"background:#146960;background-color:#14=
+6960;width:100%;border-collapse:separate;"> <tbody> <tr> <td style=3D"border-=
+radius:10px;direction:ltr;font-size:0px;padding:20px;text-align:center;"> <!-=
+-[if mso | IE]><table role=3D"presentation" border=3D"0" cellpadding=3D"0" ce=
+llspacing=3D"0"><tr><td class=3D"" style=3D"vertical-align:top;width:560px;" =
+><![endif]--> <div class=3D"mj-column-per-100 mj-outlook-group-fix" style=3D"=
+font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-ali=
+gn:top;width:100%;"> <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" =
+role=3D"presentation" style=3D"vertical-align:top;" width=3D"100%"> <tbody> <=
+tr> <td align=3D"center" class=3D"join-banner_text" style=3D"font-size: 0px; =
+padding: 0 15px; word-break: break-word; text-align: center;"> <div style=3D"=
+font-family:-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, A=
+rial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;font-siz=
+e:13px;line-height:1.4;text-align:center;color:white;"><h2 style=3D"margin: 0=
+ 0 8px;">Get $40 for every friend you refer!</h2> <p style=3D"margin-bottom: =
+10px; font-size: 14px; line-height: 1.5; margin: 0;">Share Backstage with you=
+r friends and get a $40 Amazon Gift Card when they sign up</p></div> </td> </=
+tr> <tr> <td align=3D"center" class=3D"join-banner_cta" style=3D"font-size:0p=
+x;padding:15px 0 0 0;word-break:break-word;"> <table border=3D"0" cellpadding=
+=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"border-collapse:separ=
+ate;line-height:100%;"> <tbody> <tr> <td align=3D"center" bgcolor=3D"transpar=
+ent" role=3D"presentation" style=3D"border:none;border-radius:3px;cursor:auto=
+;mso-padding-alt:10px 25px;background:transparent;" valign=3D"middle"> <p sty=
+le=3D"margin-bottom: 10px; display: inline-block; background: transparent; co=
+lor: #ffffff; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Robot=
+o, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI =
+Symbol; font-size: 13px; font-weight: normal; line-height: 120%; margin: 0; t=
+ext-decoration: none; text-transform: none; padding: 10px 25px; mso-padding-a=
+lt: 0px; border-radius: 3px;"> <a class=3D"secondary-cta" universal=3D"true" =
+href=3D"https://go.backstage.com/uni/ls/click?upn=3DREDACTED46" style=3D"disp=
+lay: inline-block; background-color: #000; border: 1px solid #000; font-size:=
+ 12px; font-weight: 600; line-height: 1.2; text-align: center; min-width: 40p=
+x; border-radius: 6px; padding: 8px 12px; text-decoration: none; color: #fff;=
+">Share offer</a> </p> </td> </tr> </tbody> </table> </td> </tr> </tbody> </t=
+able> </div> <!--[if mso | IE]></td></tr></table><![endif]--> </td> </tr> </t=
+body> </table> </div> <!--[if mso | IE]></td></tr></table><![endif]-->  <!--[=
+if mso | IE]><table align=3D"center" border=3D"0" cellpadding=3D"0" cellspaci=
+ng=3D"0" class=3D"" role=3D"presentation" style=3D"width:600px;" width=3D"600=
+" ><tr><td style=3D"line-height:0px;font-size:0px;mso-line-height-rule:exactl=
+y;"><![endif]--> <div style=3D"margin:0px auto;max-width:600px;"> <table alig=
+n=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"present=
+ation" style=3D"width:100%;"> <tbody> <tr> <td style=3D"direction:ltr;font-si=
+ze:0px;padding:20px 0 40px;text-align:center;"> <!--[if mso | IE]><table role=
+=3D"presentation" border=3D"0" cellpadding=3D"0" cellspacing=3D"0"><tr><td cl=
+ass=3D"" style=3D"vertical-align:top;width:600px;" ><![endif]--> <div class=
+=3D"mj-column-per-100 mj-outlook-group-fix" style=3D"font-size:0px;text-align=
+:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;"> <ta=
+ble border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" st=
+yle=3D"vertical-align:top;" width=3D"100%"> <tbody> <tr> <td align=3D"center"=
+ style=3D"font-size:0px;padding:0 0 5px 0;word-break:break-word;"> <div style=
+=3D"font-family:-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetic=
+a, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;font=
+-size:10px;line-height:1.5;text-align:center;color:#000000;">Trusted by</div>=
+ </td> </tr>  <tr> <td align=3D"center" style=3D"font-size:0px;padding:0;word=
+-break:break-word;"> <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" =
+role=3D"presentation" style=3D"border-collapse:collapse;border-spacing:0px;">=
+ <tbody> <tr> <td style=3D"width:600px;"> <img alt=3D"Trusted by these leadin=
+g brands" src=3D"https://d3uscstcbhvk7k.cloudfront.net/static/images/email/br=
+and-logos.60ae8bf19c68.png" style=3D"border:0;display:block;outline:none;text=
+-decoration:none;height:auto;width:100%;font-size:13px;" width=3D"600" height=
+=3D"auto"> </td> </tr> </tbody> </table> </td> </tr>  </tbody> </table> </div=
+> <!--[if mso | IE]></td></tr></table><![endif]--> </td> </tr> </tbody> </tab=
+le> </div> <!--[if mso | IE]></td></tr></table><![endif]-->  <!--[if mso | IE=
+]><table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" cl=
+ass=3D"" role=3D"presentation" style=3D"width:600px;" width=3D"600" ><tr><td =
+style=3D"line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endi=
+f]--> <div style=3D"margin:0px auto;max-width:600px;"> <table align=3D"center=
+" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" styl=
+e=3D"width:100%;"> <tbody> <tr> <td style=3D"direction:ltr;font-size:0px;padd=
+ing:30px 0 10px;text-align:center;"> <!--[if mso | IE]><table role=3D"present=
+ation" border=3D"0" cellpadding=3D"0" cellspacing=3D"0"><tr><td class=3D"" st=
+yle=3D"vertical-align:top;width:600px;" ><![endif]--> <div class=3D"mj-column=
+-per-100 mj-outlook-group-fix" style=3D"font-size:0px;text-align:left;directi=
+on:ltr;display:inline-block;vertical-align:top;width:100%;"> <table border=3D=
+"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"vertic=
+al-align:top;" width=3D"100%"> <tbody> <tr> <td align=3D"center" style=3D"fon=
+t-size:0px;padding:0 15px;word-break:break-word;"> <div style=3D"font-family:=
+-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-s=
+erif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;font-size:10px;line-=
+height:1.5;text-align:center;color:#000000;"><p style=3D"line-height: 1.5; ma=
+rgin-bottom: 10px; color: #7e7d7b;">You're receiving this email because you'r=
+e subscribed to Backstage, and have a saved search set to send you notificati=
+ons at <strong style=3D"color: #677af6 !important;">redacted@gmail.com</stron=
+g>. If you use the Backstage iOS app, unsubscribing from this email will not =
+affect any push notifications you have set for this saved search.</p></div> <=
+/td> </tr> </tbody> </table> </div> <!--[if mso | IE]></td></tr></table><![en=
+dif]--> </td> </tr> </tbody> </table> </div> <!--[if mso | IE]></td></tr></ta=
+ble><![endif]-->  <!--[if mso | IE]><table align=3D"center" border=3D"0" cell=
+padding=3D"0" cellspacing=3D"0" class=3D"" role=3D"presentation" style=3D"wid=
+th:600px;" width=3D"600" ><tr><td style=3D"line-height:0px;font-size:0px;mso-=
+line-height-rule:exactly;"><![endif]--> <div style=3D"margin:0px auto;max-wid=
+th:600px;"> <table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacin=
+g=3D"0" role=3D"presentation" style=3D"width:100%;"> <tbody> <tr> <td style=
+=3D"direction:ltr;font-size:0px;padding:0;text-align:center;"> <!--[if mso | =
+IE]><table role=3D"presentation" border=3D"0" cellpadding=3D"0" cellspacing=
+=3D"0"><tr><td class=3D"" style=3D"vertical-align:top;width:600px;" ><![endif=
+]--> <div class=3D"mj-column-per-100 mj-outlook-group-fix" style=3D"font-size=
+:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;wi=
+dth:100%;"> <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"p=
+resentation" style=3D"vertical-align:top;" width=3D"100%"> <tbody> <tr> <td a=
+lign=3D"center" style=3D"font-size:0px;padding:0;word-break:break-word;"> <di=
+v style=3D"font-family:-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, H=
+elvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symb=
+ol;font-size:10px;line-height:1.5;text-align:center;color:#000000;"><mj-raw><=
+/mj-raw> <p style=3D"line-height: 1.5; margin-bottom: 10px;"> <strong> Receiv=
+ing too many or not enough? <br> <a universal=3D"true" href=3D"https://go.bac=
+kstage.com/uni/ls/click?upn=3DREDACTED47" target=3D"_blank" title=3D"Change h=
+ow often you recieve these emails" style=3D"text-decoration: none; color: #67=
+7af6;">Change the frequency</a> </strong> </p><p style=3D"line-height: 1.5; m=
+argin-bottom: 10px;"> </p><p style=3D"line-height: 1.5; margin-bottom: 10px; =
+color: #7e7d7b;">Or to stop completely, <a href=3D"https://go.backstage.com/l=
+s/click?upn=3DREDACTED48" target=3D"_blank" title=3D"Change how often you rec=
+ieve these emails" style=3D"text-decoration: none; color: #677af6;">unsubscri=
+be</a>. <mj-raw></mj-raw></p></div> </td> </tr> </tbody> </table> </div> <!--=
+[if mso | IE]></td></tr></table><![endif]--> </td> </tr> </tbody> </table> </=
+div> <!--[if mso | IE]></td></tr></table><![endif]-->  <!--[if mso | IE]><tab=
+le align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D=
+"" role=3D"presentation" style=3D"width:600px;" width=3D"600" ><tr><td style=
+=3D"line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->=
+ <div style=3D"margin:0px auto;max-width:600px;"> <table align=3D"center" bor=
+der=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"=
+width:100%;"> <tbody> <tr> <td style=3D"direction:ltr;font-size:0px;padding:2=
+0px;text-align:center;"> <!--[if mso | IE]><table role=3D"presentation" borde=
+r=3D"0" cellpadding=3D"0" cellspacing=3D"0"><tr><td class=3D"" style=3D"verti=
+cal-align:top;width:560px;" ><![endif]--> <div class=3D"mj-column-per-100 mj-=
+outlook-group-fix" style=3D"font-size:0px;text-align:left;direction:ltr;displ=
+ay:inline-block;vertical-align:top;width:100%;"> <table border=3D"0" cellpadd=
+ing=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"vertical-align:top=
+;" width=3D"100%"> <tbody> <tr> <td align=3D"center" style=3D"font-size:0px;p=
+adding:0;word-break:break-word;"> <!--[if mso | IE]><table align=3D"center" b=
+order=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" ><tr><t=
+d><![endif]--> <table align=3D"center" border=3D"0" cellpadding=3D"0" cellspa=
+cing=3D"0" role=3D"presentation" style=3D"float:none;display:inline-table;"> =
+<tbody> <tr> <td style=3D"padding:4px;vertical-align:middle;"> <table border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"bac=
+kground:#3b5998;border-radius:3px;width:20px;"> <tbody> <tr> <td style=3D"fon=
+t-size:0;height:20px;vertical-align:middle;width:20px;"> <a href=3D"https://g=
+o.backstage.com/ls/click?upn=3DREDACTED49" target=3D"_blank" style=3D"text-de=
+coration: none;"> <img alt src=3D"https://www.mailjet.com/images/theme/v1/ico=
+ns/ico-social/facebook.png" style=3D"border:0;border-radius:3px;display:block=
+;" width=3D"20"> </a> </td> </tr> </tbody> </table> </td> </tr> </tbody> </ta=
+ble> <!--[if mso | IE]></td><td><![endif]--> <table align=3D"center" border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"flo=
+at:none;display:inline-table;"> <tbody> <tr> <td style=3D"padding:4px;vertica=
+l-align:middle;"> <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" rol=
+e=3D"presentation" style=3D"background:#55acee;border-radius:3px;width:20px;"=
+> <tbody> <tr> <td style=3D"font-size:0;height:20px;vertical-align:middle;wid=
+th:20px;"> <a href=3D"https://go.backstage.com/ls/click?upn=3DREDACTED50" tar=
+get=3D"_blank" style=3D"text-decoration: none;"> <img alt src=3D"https://www.=
+mailjet.com/images/theme/v1/icons/ico-social/twitter.png" style=3D"border:0;b=
+order-radius:3px;display:block;" width=3D"20"> </a> </td> </tr> </tbody> </ta=
+ble> </td> </tr> </tbody> </table> <!--[if mso | IE]></td><td><![endif]--> <t=
+able align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=
+=3D"presentation" style=3D"float:none;display:inline-table;"> <tbody> <tr> <t=
+d style=3D"padding:4px;vertical-align:middle;"> <table border=3D"0" cellpaddi=
+ng=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"background:#3f729b;=
+border-radius:3px;width:20px;"> <tbody> <tr> <td style=3D"font-size:0;height:=
+20px;vertical-align:middle;width:20px;"> <a href=3D"https://go.backstage.com/=
+ls/click?upn=3DREDACTED51" target=3D"_blank" style=3D"text-decoration: none;"=
+> <img alt src=3D"https://www.mailjet.com/images/theme/v1/icons/ico-social/in=
+stagram.png" style=3D"border:0;border-radius:3px;display:block;" width=3D"20"=
+> </a> </td> </tr> </tbody> </table> </td> </tr> </tbody> </table> <!--[if ms=
+o | IE]></td></tr></table><![endif]--> </td> </tr> </tbody> </table> </div> <=
+!--[if mso | IE]></td></tr></table><![endif]--> </td> </tr> </tbody> </table>=
+ </div> <!--[if mso | IE]></td></tr></table><![endif]-->  <!--[if mso | IE]><=
+table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=
+=3D"section__company-logo-outlook" role=3D"presentation" style=3D"width:600px=
+;" width=3D"600" ><tr><td style=3D"line-height:0px;font-size:0px;mso-line-hei=
+ght-rule:exactly;"><![endif]--> <div class=3D"section__company-logo" style=3D=
+"margin:0px auto;max-width:600px;"> <table align=3D"center" border=3D"0" cell=
+padding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"width:100%;"> =
+<tbody> <tr> <td style=3D"direction:ltr;font-size:0px;padding:10px 0 20px;tex=
+t-align:center;"> <!--[if mso | IE]><table role=3D"presentation" border=3D"0"=
+ cellpadding=3D"0" cellspacing=3D"0"><tr><td class=3D"" style=3D"vertical-ali=
+gn:top;width:600px;" ><![endif]--> <div class=3D"mj-column-per-100 mj-outlook=
+-group-fix" style=3D"font-size:0px;text-align:left;direction:ltr;display:inli=
+ne-block;vertical-align:top;width:100%;"> <table border=3D"0" cellpadding=3D"=
+0" cellspacing=3D"0" role=3D"presentation" style=3D"vertical-align:top;" widt=
+h=3D"100%"> <tbody> <tr> <td align=3D"center" style=3D"font-size:0px;padding:=
+0;word-break:break-word;"> <table border=3D"0" cellpadding=3D"0" cellspacing=
+=3D"0" role=3D"presentation" style=3D"border-collapse:collapse;border-spacing=
+:0px;"> <tbody> <tr> <td style=3D"width:80px;"> <a href=3D"https://go.backsta=
+ge.com/ls/click?upn=3DREDACTED52" target=3D"_blank" style=3D"text-decoration:=
+ none;"> <img alt=3D"Backstage" src=3D"https://d3uscstcbhvk7k.cloudfront.net/=
+static/images/email/backstage-wordmark-black.b6e66f43d189.png" style=3D"borde=
+r:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;fo=
+nt-size:13px;" width=3D"80" height=3D"auto"> </a> </td> </tr> </tbody> </tabl=
+e> </td> </tr> <tr> <td align=3D"center" style=3D"font-size:0px;padding:10px;=
+word-break:break-word;"> <div style=3D"font-family:-apple-system, BlinkMacSys=
+temFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, S=
+egoe UI Emoji, Segoe UI Symbol;font-size:10px;line-height:1.5;text-align:cent=
+er;color:#000000;"><em>The most trusted name in casting since 1960.</em></div=
+> </td> </tr> </tbody> </table> </div> <!--[if mso | IE]></td></tr></table><!=
+[endif]--> </td> </tr> </tbody> </table> </div> <!--[if mso | IE]></td></tr><=
+/table><![endif]-->  <!--[if mso | IE]><table align=3D"center" border=3D"0" c=
+ellpadding=3D"0" cellspacing=3D"0" class=3D"" role=3D"presentation" style=3D"=
+width:600px;" width=3D"600" ><tr><td style=3D"line-height:0px;font-size:0px;m=
+so-line-height-rule:exactly;"><![endif]--> <div style=3D"margin:0px auto;max-=
+width:600px;"> <table align=3D"center" border=3D"0" cellpadding=3D"0" cellspa=
+cing=3D"0" role=3D"presentation" style=3D"width:100%;"> <tbody> <tr> <td styl=
+e=3D"direction:ltr;font-size:0px;padding:0;text-align:center;"> <!--[if mso |=
+ IE]><table role=3D"presentation" border=3D"0" cellpadding=3D"0" cellspacing=
+=3D"0"><tr><td class=3D"" style=3D"vertical-align:top;width:600px;" ><![endif=
+]--> <div class=3D"mj-column-per-100 mj-outlook-group-fix" style=3D"font-size=
+:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;wi=
+dth:100%;"> <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"p=
+resentation" style=3D"vertical-align:top;" width=3D"100%"> <tbody> <tr> <td s=
+tyle=3D"font-size:0px;word-break:break-word;"> <div style=3D"height:20px;line=
+-height:20px;">&#8202;</div> </td> </tr> </tbody> </table> </div> <!--[if mso=
+ | IE]></td></tr></table><![endif]--> </td> </tr> </tbody> </table> </div> <!=
+--[if mso | IE]></td></tr></table><![endif]--> </div> <img src=3D"https://go.=
+backstage.com/wf/open?upn=3DREDACTED" alt=3D"" width=3D"1" height=3D"1" borde=
+r=3D"0" style=3D"height:1px !important;width:1px !important;border-width:0 !i=
+mportant;margin-top:0 !important;margin-bottom:0 !important;margin-right:0 !i=
+mportant;margin-left:0 !important;padding-top:0 !important;padding-bottom:0 !=
+important;padding-right:0 !important;padding-left:0 !important;"/></body></ht=
+ml>
+
+--a676f9952d61b9db83d0893433631633cdfb43ccb34e4d99cd909a0e323b--

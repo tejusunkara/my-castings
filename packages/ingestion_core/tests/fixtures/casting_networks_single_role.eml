@@ -1,0 +1,429 @@
+Return-Path: <redacted+caf_=jobs=mail.allcastings.fyi@gmail.com>
+Received: from mail-pf1-f182.google.com (mail-pf1-f182.google.com
+ [209.85.210.182]) by inbound-smtp.us-east-1.amazonaws.com with SMTP id
+ p79do9jvkpddqelnoj4nmkmv2fp6vbk7f375oog1 for jobs@mail.allcastings.fyi; Sun,
+ 18 Oct 2026 12:00:57 +0000 (UTC)
+X-SES-Spam-Verdict: PASS
+X-SES-Virus-Verdict: PASS
+Received-SPF: pass (spfCheck: domain of _spf.google.com designates
+ 209.85.210.182 as permitted sender) client-ip=209.85.210.182;
+ envelope-from=redacted+caf_=jobs=mail.allcastings.fyi@gmail.com;
+ helo=mail-pf1-f182.google.com;
+Authentication-Results: amazonses.com; spf=pass (spfCheck: domain of
+ _spf.google.com designates 209.85.210.182 as permitted sender)
+ client-ip=209.85.210.182;
+ envelope-from=redacted+caf_=jobs=mail.allcastings.fyi@gmail.com;
+ helo=mail-pf1-f182.google.com; dkim=pass header.i=@sendgrid.info; dkim=pass
+ header.i=@castingnetworks.com; dmarc=pass header.from=castingnetworks.com;
+X-SES-RECEIPT: =?utf-8?q?AEFBQUFBQUFBQUFHVjdGakxkZTI1QTB6WVNtRVBtZkJPb2JRN2p?=
+ =?utf-8?q?NUUl1anV1aDcxQUxqUmtObVphQWRWS1lJdVpIQ2tFZ01SSnhlYWw0WnBhZTNsVzVN?=
+ =?utf-8?q?MERNSXJsMzEySDBlNW5Ncy8rVC9TZnQ1UFdyUnpTTzN0Um16bXJlNEhXbzUxbnVGb?=
+ =?utf-8?q?k9qT2tScnU3NXZQK0hZREJPeVB1VUVtQ2Npem1lMWR3OEU1bEF4bW5TeEowWGJBVG?=
+ =?utf-8?q?o4dEVDb2JGUWlVMXB2VUpZRFcvZVlZTnhzK2YxUVR1S2ZmcFhLTkJxY3YzK0hxcFl?=
+ =?utf-8?q?PbXlEOGVJSEN6YnJPdHZ1WFlzQU92Vm8wNWVOWjBSVEFtZXRVMzhXWEhsZXdlWFh6?=
+ =?utf-8?q?T2ZsQ092cG5VZ3N1QXVhVlMwc04zNXBiUmx4eE9oSjdCWEU5WFhUd1pRc0pRbHR4Y?=
+ =?utf-8?q?1NQK3RXRFZYNkFpbUUyUGhQWitJMW8=3D?=
+X-SES-DKIM-SIGNATURE: a=rsa-sha256; q=dns/txt; =?utf-8?q?b=3DLXWXCjoKwsQmF5j?=
+ =?utf-8?q?BgKLg9NRxD1qpFeY/ZnPMPrh526MCEgY3X38oXEgJkySVx3o0mRmKt6+X/sMCcTIV?=
+ =?utf-8?q?BbcwLHXp0xoSw+WONF/QLfXi/xTx0w2/RIm2FKQrDMC9gwaBODCp9kUb/MvGXeaAo?=
+ =?utf-8?q?zm0aXsGEWuFIlI/cKKp5ys5llY=3D=3B?= c=relaxed/simple;
+ s=224i4yxa5dv7c2xz3womw6peuasteono; d=amazonses.com; t=1792324858; v=1;
+ bh=06JpvQiejR+FTQxBBiNs0g+6jm+AUU71n0f/OdLGgLE=; =?utf-8?q?h=3DFrom=3ATo=3A?=
+ =?utf-8?q?Cc=3ABcc=3ASubject=3ADate=3AMessage-ID=3AMIME-Version=3AContent-T?=
+ =?utf-8?q?ype=3AX-SES-RECEIPT=3B?=
+Received: by mail-pf1-f182.google.com with SMTP id
+ d2e1a72fcca58-8a05da1cc1fso189728b3a.2        for
+ <jobs@mail.allcastings.fyi>; Sun, 18 Oct 2026 05:00:57 -0700 (PDT)
+ARC-Seal: i=2; a=rsa-sha256; t=1792324857; cv=pass;
+        d=google.com; s=arc-20260327;
+        b=qB+XnZ+ZLTOM9XVstIfrw85d/Qfmc077EZuDuou4ATvb940HPHqt1oMCr6/aSfDFcU
+         673C3GWUepwtVwqfvW4gKXBC7dmHrpfWb39NDX5D93Sw3zfmcFU/mrp9V/5Wo9LlaZMA
+         9azUyMRisgHQJj+QQVRc2hXoOxpw4VZP5HBSLmR9fa10yRut4aLeK+qYYdzNOZzkUgiz
+         ybWNYch1kfltODuyK36xKjfQDpYx9Jt6h4AtpQrGgRe6kkLV4ghkKJmh5fNMQUMRv0M2
+         fDUCLmEVqW0IkUnh1c6T6z5OW/xGgiGelkFZl0bfWyigeCIjLSqFqQ4lcS0KcDzG5EsW
+         +xmw==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327;       
+ h=to:reply-to:mime-version:date:content-transfer-encoding:subject        
+ :from:list-unsubscribe-post:list-unsubscribe:dkim-signature        
+ :dkim-signature:message-id:delivered-to;       
+ bh=cbkK9IOZtoSta6/RtyVU3nik0Oz2n1rMtXcfxFoVd5g=;       
+ fh=gHyfh9Np42xa7Z56B8TC4H3rEOcR178flSEivGCBx3w=;       
+ b=QyEHTeHkh3nBfFy4VwsmpDkRUngyIQTrGlP0ZvXc1tx5R92NcW5kHBrF6moNnBKWc6        
+ DO2TcbukBTrlnYL3UIMkFRa1QNdZqPME4ZuW1T5TpkMQIFjt6lVCz7sD1OFGRkshCbcL        
+ F89VzYzxq5Vh+7Ei23aSiyaqPpsQijeAK3BTYf9L11tnuBMNqQvFQGwAWhxaqwyPXNJ+        
+ tIzMkRfMf0PLPkFxwlhoL/cin71jfiTb4xsQzFXDQeFJeXpEb4wYw/6YleoRlSw6pmwt        
+ OrcjNUcEpEYmsPutNB9g64I+xZoT1ozDMn4Me5BIK/xratzdA5uj3kY5ytkPbmu2YaAe        
+ zOZQ==;        darn=mail.allcastings.fyi
+ARC-Authentication-Results: i=2; mx.google.com; dkim=pass
+ header.i=@castingnetworks.com header.s=prd header.b=OJCsVHtw; dkim=pass
+ header.i=@sendgrid.info header.s=smtpapi header.b=TwPrLtx7; spf=pass
+ (google.com: domain of
+ bounces+25908042-c72a-redacted=gmail.com@em5607.castingnetworks.com
+ designates 159.183.203.31 as permitted sender) =?utf-8?q?smtp=2Emailfrom=3D?=
+ =?utf-8?q?=22bounces+25908042-c72a-redacted=3Dgmail=2Ecom=40em5607=2Ecastin?=
+ =?utf-8?q?gnetworks=2Ecom=22=3B?= dmarc=pass (p=QUARANTINE sp=QUARANTINE
+ dis=NONE) header.from=castingnetworks.com
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792324857; x=1792929657;
+        h=to:reply-to:mime-version:date:content-transfer-encoding:subject
+         :from:list-unsubscribe-post:list-unsubscribe:content-type
+         :dkim-signature:dkim-signature:message-id:delivered-to
+         :x-forwarded-for:x-forwarded-to:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=cbkK9IOZtoSta6/RtyVU3nik0Oz2n1rMtXcfxFoVd5g=;
+        b=vbExjYgYh3BEOtkg0MB1Mxg4BdymlaVqI1ft9A9P57L5p+FnHIIWqB028ubM/K+0E3
+         xDmsf7tWfZ3sC3tWh3lF5wgrUKmZu/rJDfVPGwcZ+EBI6nP2WasTqpWKGEfke80cNShJ
+         gGwbOMZ3FaVUETO7VyGwJUM0nHe1394yzRsAfaHqU/k6JuH1jusVNSWS67+K0ROSUNca
+         8Mr7L02WTLnb9vtBOKBAFGDQKqiMuRqcBOeotSsFqBBp478E/fsMDhOvAXctcLkhiQtN
+         XSvbpMnjuLMAAP9uW6R5dy4fBb0yiEiZfiiLBTh6QzOquWm35rqin819V1/NR4co7Sxh
+         Ojag==
+X-Forwarded-Encrypted: i=2; =?utf-8?q?AKwUvBzt3gR5y45BhYmt0seuHBdxWWjwasSZzF?=
+ =?utf-8?q?p2lXFBMSxJ9aRf0hng+9xNiTZN8ORU8BXj57Yv=40mail=2Eallcastings=2Efyi?=
+X-Gm-Message-State: AFq9FYLzpCMAhJTiAOu8ofzRXqFyuurs9u59jNXtzCbKIrAVzV9FSFhW
+	WjqPYrSnDZ/B38jEXJmcOc9CeKeQg5ehNK4WYgsKI9f8IRBpCD654vNqJ2/OTXg7xnroVlQREay
+	7lmiMYJQ6r+8fjgEtrdypzgIA7TT+MBvpPEk99sPv84mlUX4LXzNUJlUo/Db2uA==
+X-Received: by 2002:a17:90b:4acb:b0:3a0:7261:d58e with SMTP id
+ 98e67ed59e1d1-3aceefc4eddmr4243294a91.22.1792324856454;        Sun, 18 Oct
+ 2026 05:00:56 -0700 (PDT)
+X-Forwarded-To: jobs@mail.allcastings.fyi
+X-Forwarded-For: redacted@gmail.com jobs@mail.allcastings.fyi
+Delivered-To: redacted@gmail.com
+Received: by 2002:a05:6a20:a111:b0:3e1:f344:3b65 with SMTP id
+ q17csp4374538pzk;        Sun, 18 Oct 2026 05:00:55 -0700 (PDT)
+X-Received: by 2002:a05:6a00:3c91:b0:88e:38f8:de85 with SMTP id
+ d2e1a72fcca58-8a04cd2eb9fmr3723501b3a.59.1792324855262;        Sun, 18 Oct
+ 2026 05:00:55 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792324855; cv=none;
+        d=google.com; s=arc-20260327;
+        b=WCOLsvHOs7PBU4j2Fd4NN87f4IzOPrVKnFo+o7eL+Z0lXD7foHC2L5FK/zomTPIRrh
+         lV5EvGIQ2ZHZoxbE4lj6qpbztOurUl5uu//pwZSKGrcwJy90rLIW7DWHkzyeoNfBEK8L
+         qnKYQ0iEE4ekvHkTsVDNu0cWkvuqhPpW5Ghu5NF8Wtf04rAU2/Rfq2oK85fDBLbVUurS
+         EMUffHvJvztDMfW6rwBIklNC5kJIwQJC2C18xRE4HrxNp/5qvXmTPZ5O2SeQ+lcYPlo4
+         XxHYfjbaqz47wLsHsqfopUnd6ZGioagX6Ysrw8ulZWVnLZROoxFhdvO6F2XfJ4HKRzbj
+         odqA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327;       
+ h=to:reply-to:mime-version:date:content-transfer-encoding:subject        
+ :from:list-unsubscribe-post:list-unsubscribe:dkim-signature        
+ :dkim-signature:message-id;       
+ bh=cbkK9IOZtoSta6/RtyVU3nik0Oz2n1rMtXcfxFoVd5g=;       
+ fh=22U4dm3YuqGXwhDNN9XRpG8FwIHkAUyITrN9Xf8D7BQ=;       
+ b=fLXPcJaFSq4lDiuZzn0RyYbgTy00Io/dtN2u/8FOcBYg5dK9b9C9gEMLRR6Gd5t3oo        
+ VL1vglFon/Sjjb2E8+/lGnN0aZqj4TH3GhprFD3jz3of3fvCdSqdDMTddRpT/AGG+6sq        
+ ADkdI5XlPqnUmX0cR48gwTZoefmBzNCdvFS0yEPB+Uqazvn+2xc8Q42/lBso+1Wh3Kmj        
+ hIS0A/AmslXMeT0KgCnmK66URkVRRDPdN1jEL9Y4KrYmyu9kiihKRSDbzo0RhDgfIAEx        
+ 30j1WNcdpWZWlju46/aY1PBRoFnwtLnFZhL1JC55v3UJOKzqSN/eToh9DZ7qZnBIzMvJ        
+ eGqQ==;        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com; dkim=pass
+ header.i=@castingnetworks.com header.s=prd header.b=OJCsVHtw; dkim=pass
+ header.i=@sendgrid.info header.s=smtpapi header.b=TwPrLtx7; spf=pass
+ (google.com: domain of
+ bounces+25908042-c72a-redacted=gmail.com@em5607.castingnetworks.com
+ designates 159.183.203.31 as permitted sender) =?utf-8?q?smtp=2Emailfrom=3D?=
+ =?utf-8?q?=22bounces+25908042-c72a-redacted=3Dgmail=2Ecom=40em5607=2Ecastin?=
+ =?utf-8?q?gnetworks=2Ecom=22=3B?= dmarc=pass (p=QUARANTINE sp=QUARANTINE
+ dis=NONE) header.from=castingnetworks.com
+Return-Path:
+ <bounces+25908042-c72a-redacted=gmail.com@em5607.castingnetworks.com>
+Received: from o2.ptr9678.castingnetworks.com (o2.ptr9678.castingnetworks.com.
+ [159.183.203.31]) by mx.google.com with ESMTPS id
+ d2e1a72fcca58-89f338d7c3csi15256094b3a.73.2026.10.18.05.00.54 for
+ <redacted@gmail.com> (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256
+ bits=128/128); Sun, 18 Oct 2026 05:00:55 -0700 (PDT)
+Received-SPF: pass (google.com: domain of
+ bounces+25908042-c72a-redacted=gmail.com@em5607.castingnetworks.com
+ designates 159.183.203.31 as permitted sender) client-ip=159.183.203.31;
+Authentication-Results: mx.google.com; dkim=pass header.i=@castingnetworks.com
+ header.s=prd header.b=OJCsVHtw; dkim=pass header.i=@sendgrid.info
+ header.s=smtpapi header.b=TwPrLtx7; spf=pass (google.com: domain of
+ bounces+25908042-c72a-redacted=gmail.com@em5607.castingnetworks.com
+ designates 159.183.203.31 as permitted sender) =?utf-8?q?smtp=2Emailfrom=3D?=
+ =?utf-8?q?=22bounces+25908042-c72a-redacted=3Dgmail=2Ecom=40em5607=2Ecastin?=
+ =?utf-8?q?gnetworks=2Ecom=22=3B?= dmarc=pass (p=QUARANTINE sp=QUARANTINE
+ dis=NONE) header.from=castingnetworks.com
+Message-ID: <6ad4b4f7.d9d10028.36b516.5a9fSMTPIN_ADDED_BROKEN@mx.google.com>
+X-Google-Original-Message-ID:
+ <00000000-0000-0000-0000-000000000000-1792238400-1792324800>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=castingnetworks.com;
+	h=content-type:list-unsubscribe:list-unsubscribe-post:from:subject:	
+ =?utf-8?q?content-transfer-encoding=3Adate=3Amime-version=3Areply-to=3Ato?=
+ =?utf-8?q?=3Acc=3Acontent-type=3Adate=3Afeedback-id=3Afrom=3A?=	subject:to;
+	s=prd; t=1792324854;	bh=cbkK9IOZtoSta6/RtyVU3nik0Oz2n1rMtXcfxFoVd5g=;
+	b=OJCsVHtw+02HUO20jNKT3SF8x+kvP4hRo5QW45XuYBM/lqGHqBYgUSdj+ugVnewudfMv
+	By2Wsy1XKes1YB4bTDiE7OxgQPmYstAqRGO0xywnDAduzDqCZq04pOXr5EAwAb1hhRBgkv
+	fHiSrN+Zla3uxREa9Z1Dq1ibZQ3VKYw4u43oBdiu2bRyPSs8qznVvxBJqGJiZrJmsfxwv1
+	wECUbyoXiBR+n61E9H+etxZqC/YCJ93ZLTglsibjUk7KOifnrXexHuM9nwdDpdsAXJWC0x
+	7VDDavVNfjZiWxmI9KiMpXCD77dDonLaYqHIWmT+ONDZC6+ufoaITtDCw8g7nj+g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sendgrid.info;
+	h=content-type:list-unsubscribe:list-unsubscribe-post:from:subject:	
+ =?utf-8?q?content-transfer-encoding=3Adate=3Amime-version=3Areply-to=3Ato?=
+ =?utf-8?q?=3Acc=3Acontent-type=3Adate=3Afeedback-id=3Afrom=3A?=	subject:to;
+	s=smtpapi; t=1792324854;	bh=cbkK9IOZtoSta6/RtyVU3nik0Oz2n1rMtXcfxFoVd5g=;
+	b=TwPrLtx77GtwoWVBefCp87Rrw6KwwDoRZ0Y4ce41xQjjMXXag1CzeVqowIrw3zaa4YdV
+	P8zrpJpAY31M5t3KnTxzc0gaIDqBeDyRU4MNKDFGvx6sSX6BcPvoPibR0XLE0FDIEf46tC
+	nYpAByDDjntUafoIm1KQ0qeDjgOpx8xXs=
+Received: by recvd-7497f4c48b-pqtlr with SMTP id
+ recvd-7497f4c48b-pqtlr-1-6AD4B4F6-1A	2026-10-18 12:00:54.063248865 +0000 UTC
+ m=+1623618.294069524
+Received: from [127.0.0.1] (unknown) by geopod-ismtpd-18 (SG) with ESMTP id
+ PBcdI3h2SUCJQOL9Ea2Mfw for <redacted@gmail.com>; Sun, 18 Oct 2026
+ 12:00:53.839 +0000 (UTC)
+List-Unsubscribe: <https://example.invalid/unsubscribe>
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
+From: Casting Networks <notifications@castingnetworks.com>
+Subject: 1 new roles today - King Street - Your Saved Search
+Date: Sun, 18 Oct 2026 12:00:54 +0000 (UTC)
+MIME-Version: 1.0
+Reply-To: notifications@castingnetworks.com
+X-SG-EID:  u001.ufTEFlYqiN7aVNI4luE4247vQIb83zxJ6+E5PA51t6p0jWHM+2hBeIhjV
+ =?utf-8?q?BAeZAIXqPc2PFOupKNNoOeUkGS7lAgASrTsTWkO?==?utf-8?q?Nn04/ef6p/RlKy?=
+ =?utf-8?q?8goKPC9xWHwrNv5her9bL1VMAkJKPf3ZV/JlRuE8GZO2ayVEiQ4YI7iW8erp1wRS4?=
+ =?utf-8?q?z6ZSzs6hO8ZjZp8zhYLK0cJcQz48WSwwyxLRPNUVTAwx3RKudPUinFvcVB2SWLuEM?=
+ =?utf-8?q?5R74xFMPlgbQ?=M6nmAbJpbG+3+sUXeMe9gSscaA==
+X-SG-ID:  u001.SdBcvi+Evd/bQef8eZF3BifrnqRUVzjXr7vTvoqQIkTvHZwKnKJinzojZ
+ =?utf-8?q?aHVr/VZlkX09q4MRHBAEA88gv4j1YJhYzRFKYJd?=ZsB7fziEJ50=
+To: redacted@gmail.com
+X-Entity-ID: u001.80QMTBb3uKPLGWnuDw6VyA==
+Content-Type: text/html; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+
+<!doctype html><html xmlns=3D"http://www.w3.org/1999/xhtml" xmlns:v=3D"urn:sc=
+hemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-microsoft-com:office:office">=
+<head><title></title><!--[if !mso]><!--><meta http-equiv=3D"X-UA-Compatible" =
+content=3D"IE=3Dedge"><!--<![endif]--><meta http-equiv=3D"Content-Type" conte=
+nt=3D"text/html; charset=3DUTF-8"><meta name=3D"viewport" content=3D"width=3D=
+device-width,initial-scale=3D1"><style type=3D"text/css">#outlook a { padding=
+:0; }
+      body { margin:0;padding:0;-webkit-text-size-adjust:100%;-ms-text-size-a=
+djust:100%; }
+      table, td { border-collapse:collapse;mso-table-lspace:0pt;mso-table-rsp=
+ace:0pt; }
+      img { border:0;height:auto;line-height:100%; outline:none;text-decorati=
+on:none;-ms-interpolation-mode:bicubic; }
+      p { display:block;margin:13px 0; }</style><!--[if mso]>
+    <noscript>
+    <xml>
+    <o:OfficeDocumentSettings>
+      <o:AllowPNG/>
+      <o:PixelsPerInch>96</o:PixelsPerInch>
+    </o:OfficeDocumentSettings>
+    </xml>
+    </noscript>
+    <![endif]--><!--[if lte mso 11]>
+    <style type=3D"text/css">
+      .mj-outlook-group-fix { width:100% !important; }
+    </style>
+    <![endif]--><!--[if !mso]><!--><link href=3D"https://fonts.googleapis.com=
+/css2?family=3DIBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,=
+600;1,700&display=3Dswap" rel=3D"stylesheet" type=3D"text/css"><style type=3D=
+"text/css">@import url(https://fonts.googleapis.com/css2?family=3DIBM+Plex+Sa=
+ns:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=3Dswap);=
+</style><!--<![endif]--><style type=3D"text/css">@media only screen and (min-=
+width:480px) {
+        .mj-column-per-100 { width:100% !important; max-width: 100%; }
+      }</style><style media=3D"screen and (min-width:480px)">.moz-text-html .=
+mj-column-per-100 { width:100% !important; max-width: 100%; }</style><style t=
+ype=3D"text/css">@media only screen and (max-width:480px) {
+      table.mj-full-width-mobile { width: 100% !important; }
+      td.mj-full-width-mobile { width: auto !important; }
+    }</style><style type=3D"text/css">@media only screen and (max-width:480px=
+) { .wrapper { flex-direction:
+    column; } .btn-responsive { width: 100%; } .div-btn-responsive { margin-t=
+op:
+    12px; margin-bottom: 4px; } } @media only screen and (max-width: 480px) {
+    .desktop-only { display: none !important; } .mobile-only { display: block
+    !important; } } @media only screen and (min-width: 480px) { .desktop-only=
+ {
+    display: block !important; } .mobile-only { display: none !important; } }=
+</style></head><body style=3D"word-spacing:normal;"><div style=3D"line-height=
+: normal;"><!--[if mso | IE]><table align=3D"center" border=3D"0" cellpadding=
+=3D"0" cellspacing=3D"0" class=3D"layoutWrapper-outlook" role=3D"presentation=
+" style=3D"width:786px;" width=3D"786" bgcolor=3D"#f9f9f9" ><tr><td style=3D"=
+line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]--><div=
+ class=3D"layoutWrapper" style=3D"background: #f9f9f9; background-color: #f9f=
+9f9; margin: 0px auto; max-width: 786px; line-height: normal;"><table align=
+=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presenta=
+tion" style=3D"background:#f9f9f9;background-color:#f9f9f9;width:100%;"><tbod=
+y><tr><td style=3D"direction: ltr; font-size: 0px; text-align: center; paddin=
+g: 0 32px;" align=3D"center"><!--[if mso | IE]><table role=3D"presentation" b=
+order=3D"0" cellpadding=3D"0" cellspacing=3D"0"><tr><td class=3D"" width=3D"7=
+86px" ><table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"=
+0" class=3D"" role=3D"presentation" style=3D"width:786px;" width=3D"786" ><tr=
+><td style=3D"line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><!=
+[endif]--><div style=3D"margin: 0px auto; max-width: 786px; line-height: norm=
+al;"><table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0"=
+ role=3D"presentation" style=3D"width:100%;"><tbody><tr><td style=3D"directio=
+n:ltr;font-size:0px;padding:18px 0;text-align:center;"><!--[if mso | IE]><tab=
+le role=3D"presentation" border=3D"0" cellpadding=3D"0" cellspacing=3D"0"><tr=
+><td class=3D"" style=3D"vertical-align:top;width:786px;" ><![endif]--><div c=
+lass=3D"mj-column-per-100 mj-outlook-group-fix" style=3D"font-size: 0px; text=
+-align: left; direction: ltr; display: inline-block; vertical-align: top; wid=
+th: 100%; line-height: normal;"><table border=3D"0" cellpadding=3D"0" cellspa=
+cing=3D"0" role=3D"presentation" width=3D"100%"><tbody><tr><td style=3D"verti=
+cal-align:top;padding:0px;"><table border=3D"0" cellpadding=3D"0" cellspacing=
+=3D"0" role=3D"presentation" width=3D"100%"><tbody><tr><td align=3D"center" s=
+tyle=3D"font-size:0px;padding:0px;word-break:break-word;"><table border=3D"0"=
+ cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"border-co=
+llapse:collapse;border-spacing:0px;"><tbody><tr><td style=3D"width:160px;"><i=
+mg height=3D"auto" src=3D"https://cdn.castingnetworks.com/images/logos/logo29=
+4x68.png" style=3D"border:0;display:block;outline:none;text-decoration:none;h=
+eight:auto;width:100%;font-size:13px;" width=3D"160"></td></tr></tbody></tabl=
+e></td></tr></tbody></table></td></tr></tbody></table></div><!--[if mso | IE]=
+></td></tr></table><![endif]--></td></tr></tbody></table></div><!--[if mso | =
+IE]></td></tr></table></td></tr><tr><td class=3D"innerBody-outlook" width=3D"=
+786px" ><table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D=
+"0" class=3D"innerBody-outlook" role=3D"presentation" style=3D"width:786px;" =
+width=3D"786" ><tr><td style=3D"line-height:0px;font-size:0px;mso-line-height=
+-rule:exactly;"><![endif]--><div class=3D"innerBody" style=3D"border: solid 1=
+px #d8d8d8; background-color: #ffffff; margin: 0px auto; max-width: 786px; li=
+ne-height: normal; padding: 24px;"><table align=3D"center" border=3D"0" cellp=
+adding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"width:100%;"><t=
+body><tr><td style=3D"direction:ltr;font-size:0px;padding:0;text-align:center=
+;"><!--[if mso | IE]><table role=3D"presentation" border=3D"0" cellpadding=3D=
+"0" cellspacing=3D"0"><tr><td class=3D"" style=3D"vertical-align:top;width:78=
+6px;" ><![endif]--><div class=3D"mj-column-per-100 mj-outlook-group-fix" styl=
+e=3D"font-size: 0px; text-align: left; direction: ltr; display: inline-block;=
+ vertical-align: top; width: 100%; line-height: normal;"><table border=3D"0" =
+cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"vertical-a=
+lign:top;" width=3D"100%"><tbody><tr><td align=3D"left" style=3D"font-size:0p=
+x;padding:0 0 14px;word-break:break-word;"><div style=3D"font-family: IBM Ple=
+x Sans, Arial; font-size: 24px; font-weight: 500; text-align: left; color: #3=
+a3a3a; line-height: normal;">  <span>1 new role today - "King Street - Your S=
+aved Search"</span>  </div></td></tr><tr><td align=3D"left" style=3D"font-siz=
+e:0px;padding:0 0 10px;word-break:break-word;"><div style=3D"font-family: IBM=
+ Plex Sans, Arial; font-size: 14px; text-align: left; color: #3a3a3a; line-he=
+ight: normal;">  <span>1 new role matching your "King Street - Your Saved Sea=
+rch" filter was published.</span>  </div></td></tr><tr><td style=3D"font-size=
+:0px;padding:0px;word-break:break-word;"><!--[if mso | IE]><table align=3D"ce=
+nter" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"" role=3D"pre=
+sentation" style=3D"width:786px;" width=3D"786" ><tr><td style=3D"line-height=
+:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]--><div style=3D"m=
+argin: 0px auto; max-width: 786px; line-height: normal;"><table align=3D"cent=
+er" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" st=
+yle=3D"width:100%;"><tbody><tr><td style=3D"direction:ltr;font-size:0px;paddi=
+ng:0px;text-align:left;"><!--[if mso | IE]><table role=3D"presentation" borde=
+r=3D"0" cellpadding=3D"0" cellspacing=3D"0"><tr><![endif]--> <!--[if mso | IE=
+]><td class=3D"" style=3D"vertical-align:top;width:786px;" ><![endif]--><div =
+class=3D"mj-column-per-100 mj-outlook-group-fix" style=3D"font-size: 0px; tex=
+t-align: left; direction: ltr; display: inline-block; vertical-align: top; wi=
+dth: 100%; line-height: normal;"><table border=3D"0" cellpadding=3D"0" cellsp=
+acing=3D"0" role=3D"presentation" width=3D"100%"><tbody><tr><td style=3D"vert=
+ical-align:top;padding:10px;"><table border=3D"0" cellpadding=3D"0" cellspaci=
+ng=3D"0" role=3D"presentation" style=3D"background-color:#F8F8F8;border:1px s=
+olid #d8d8d8;border-radius:5px;" width=3D"100%"><tbody><tr><td align=3D"left"=
+ class=3D"roleColumn" style=3D"font-size: 0px; word-break: break-word; paddin=
+g: 6px 12px 8px;"><div style=3D"font-family: IBM Plex Sans, Arial; font-size:=
+ 13px; text-align: left; color: #3a3a3a; line-height: normal;"><table style=
+=3D"width: 100%;
+                  table-layout: fixed;
+                  font-size: 14px;
+                  padding-bottom: 7px;"><tr><td style=3D"text-align: left;
+                      padding-bottom: 10px;
+                      word-wrap: break-word;"><div style=3D"line-height: norm=
+al;"><b style=3D"font-size: 16px">King Street</b> <span style=3D"font-size: 1=
+4px">Television Series | SAG-AFTRA</span></div></td></tr></table><mj-raw></mj=
+-raw><div style=3D"font-size: 12px; padding-bottom: 7px; line-height: normal;=
+"><div style=3D"line-height: normal;"><b>NU to portray Upscale Hotel Guests -=
+ FIT WED 10/21 &amp; WORK WED 10/28</b></div><div style=3D"padding-top: 4px; =
+line-height: normal;"> <b>Submissions Due</b> October 16, 2026, 7:30pm </div>=
+</div><div style=3D"font-size: 12px; padding-bottom: 6px; line-height: normal=
+;"><div style=3D"line-height: normal;"><b>Background</b> / 19 - 99 / Any Gend=
+er</div><div style=3D"padding-top: 4px; line-height: normal;">187/10</div> <d=
+iv style=3D"padding-top: 4px; font-style: italic; line-height: normal;">NU to=
+ portray Upscale Hotel Guests - FIT WED 10/21 &amp; WORK WED 10/28. Filming i=
+nteriors and exteriors in Manhattan, NY. </div></div><div style=3D"text-align=
+: center; padding: 12px 0 5px; line-height: normal;"><div style=3D"max-width:=
+ 100%; overflow: hidden; line-height: normal;"><a class=3D"btn btn-responsive=
+" style=3D"background-color: #1A79AF; padding: 6px 16px; text-align: center; =
+border-radius: 4px; word-break: keep-all; display: inline-block; max-width: 1=
+00%; box-sizing: border-box; white-space: normal; color: #FFF; text-decoratio=
+n: none;" href=3D"https://app.castingnetworks.com/talent/project/16054208/rol=
+e/67483887?source&#x3D;savedsearch_email&amp;default_app_context&#x3D;REDACTE=
+D">View Role</a></div></div></div></td></tr></tbody></table></td></tr></tbody=
+></table></div><!--[if mso | IE]></td><![endif]--> <!--[if mso | IE]></tr></t=
+able><![endif]--></td></tr></tbody></table></div><!--[if mso | IE]></td></tr>=
+</table><![endif]--></td></tr><table role=3D"presentation" border=3D"0" cellp=
+adding=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"margin: 0 auto"><tr><t=
+d align=3D"center"><a class=3D"btn btn-responsive" href=3D"https://app.castin=
+gnetworks.com/talent/casting-billboard?savedSearchId&#x3D;REDACTED&amp;defaul=
+t_app_context&#x3D;REDACTED" style=3D"word-break: keep-all; max-width: 200px;=
+ width: 100%; white-space: normal; padding: 12px 16px; font-size: 14px; backg=
+round-color: #1a79af; text-align: center; border-radius: 4px; box-sizing: bor=
+der-box; text-decoration: none; display: inline-block; color: #fff;">See All =
+Results</a></td></tr></table></tbody></table></div><!--[if mso | IE]></td></t=
+r></table><![endif]--></td></tr></tbody></table></div><!--[if mso | IE]></td>=
+</tr></table></td></tr><tr><td class=3D"noPadding-outlook" width=3D"786px" ><=
+table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=
+=3D"noPadding-outlook" role=3D"presentation" style=3D"width:786px;" width=3D"=
+786" ><tr><td style=3D"line-height:0px;font-size:0px;mso-line-height-rule:exa=
+ctly;"><![endif]--><div class=3D"noPadding" style=3D"margin: 0px auto; max-wi=
+dth: 786px; line-height: normal; padding: 0;"><table align=3D"center" border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"wid=
+th:100%;"><tbody><tr><td style=3D"direction: ltr; font-size: 0px; text-align:=
+ center; padding: 0;" align=3D"center"><!--[if mso | IE]><table role=3D"prese=
+ntation" border=3D"0" cellpadding=3D"0" cellspacing=3D"0"><tr><td class=3D"" =
+style=3D"vertical-align:top;width:786px;" ><![endif]--><div class=3D"mj-colum=
+n-per-100 mj-outlook-group-fix" style=3D"font-size: 0px; text-align: left; di=
+rection: ltr; display: inline-block; vertical-align: top; width: 100%; line-h=
+eight: normal;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=
+=3D"presentation" style=3D"vertical-align:top;" width=3D"100%"><tbody><tr><td=
+ align=3D"left" class=3D"footerNote" style=3D"font-size: 0px; word-break: bre=
+ak-word; padding: 0;"><div style=3D"font-family: IBM Plex Sans, Arial; color:=
+ #3a3a3a; line-height: normal; text-align: center; font-size: 12px; font-weig=
+ht: 300; padding: 14px 13px;">This email was sent to: <a href=3D"mailto:redac=
+ted@gmail.com" style=3D"color: #2c9ede; text-decoration: none;">redacted@gmai=
+l.com</a>. Please do not respond directly to this notice.<br><mj-raw></mj-raw=
+><a href=3D"https://app.castingnetworks.com/talent/account-settings/notificat=
+ions" style=3D"color: #2c9ede; text-decoration: none;">Unsubscribe or Manage =
+Email Settings</a><mj-raw></mj-raw></div></td></tr></tbody></table></div><!--=
+[if mso | IE]></td></tr></table><![endif]--></td></tr></tbody></table></div><=
+!--[if mso | IE]></td></tr></table></td></tr></table><![endif]--></td></tr></=
+tbody></table></div><!--[if mso | IE]></td></tr></table><table align=3D"cente=
+r" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"" role=3D"presen=
+tation" style=3D"width:786px;" width=3D"786" bgcolor=3D"white" ><tr><td style=
+=3D"line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->=
+<div style=3D"background: white; background-color: white; margin: 0px auto; m=
+ax-width: 786px; line-height: normal;"><table align=3D"center" border=3D"0" c=
+ellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"background:=
+white;background-color:white;width:100%;"><tbody><tr><td style=3D"border:1px =
+solid #f8f8f8;direction:ltr;font-size:0px;padding:0px 16px;text-align:center;=
+"><!--[if mso | IE]><table role=3D"presentation" border=3D"0" cellpadding=3D"=
+0" cellspacing=3D"0"><tr><td class=3D"" style=3D"vertical-align:top;width:752=
+px;" ><![endif]--><div class=3D"mj-column-per-100 mj-outlook-group-fix" style=
+=3D"font-size: 0px; text-align: left; direction: ltr; display: inline-block; =
+vertical-align: top; width: 100%; line-height: normal;"><table border=3D"0" c=
+ellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" width=3D"100%"><tbod=
+y><tr><td style=3D"vertical-align:top;padding:0px;"><table border=3D"0" cellp=
+adding=3D"0" cellspacing=3D"0" role=3D"presentation" width=3D"100%"><tbody><t=
+r><td align=3D"center" style=3D"font-size:0px;padding:0px;word-break:break-wo=
+rd;"><div style=3D"font-family: IBM Plex Sans, Arial; font-size: 13px; text-a=
+lign: center; color: #3a3a3a; line-height: normal;"><p style=3D"margin: 12px =
+0px;
+          font-size: 12px;
+          font-weight: 300;
+          color: #868e96;">&copy; 2026 Casting Networks, LLC. All Rights Rese=
+rved. | <a href=3D"https://www.castingnetworks.com/terms" style=3D"color: #2c=
+9ede; text-decoration: none;">Terms of Use</a> | <a href=3D"https://www.casti=
+ngnetworks.com/privacy" style=3D"color: #2c9ede; text-decoration: none;">Priv=
+acy Policy</a></p><p style=3D"margin: 12px 0;
+          font-size: 11px;
+          font-weight: 300;
+          color: #868e96;">Casting Networks, PMB 846660, 8605 Santa Monica Bl=
+vd., West Hollywood, CA 90069, USA</p></div></td></tr><tr><td align=3D"center=
+" style=3D"font-size:0px;padding:0 0 17px;word-break:break-word;"><table bord=
+er=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"b=
+order-collapse:collapse;border-spacing:0px;"><tbody><tr><td style=3D"width:12=
+0px;"><a href=3D"https://castingnetworks.com" target=3D"_blank" style=3D"colo=
+r: #2c9ede; text-decoration: none;"><img height=3D"auto" src=3D"https://cdn.c=
+astingnetworks.com/images/logos/logo147x34.png" style=3D"border:0;display:blo=
+ck;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;" =
+width=3D"120"></a></td></tr></tbody></table></td></tr></tbody></table></td></=
+tr></tbody></table></div><!--[if mso | IE]></td></tr></table><![endif]--></td=
+></tr></tbody></table></div><!--[if mso | IE]></td></tr></table><![endif]--><=
+/div><img src=3D"http://url8953.castingnetworks.com/wf/open?upn=3DREDACTED" a=
+lt=3D"" width=3D"1" height=3D"1" border=3D"0" style=3D"height:1px !important;=
+width:1px !important;border-width:0 !important;margin-top:0 !important;margin=
+-bottom:0 !important;margin-right:0 !important;margin-left:0 !important;paddi=
+ng-top:0 !important;padding-bottom:0 !important;padding-right:0 !important;pa=
+dding-left:0 !important;"/></body></html>
