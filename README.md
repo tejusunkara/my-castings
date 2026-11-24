@@ -122,6 +122,11 @@ my-castings/
 ├── pyproject.toml              uv workspace root: members, shared dev tools, pytest/ruff config
 ├── docker-compose.yml          local Postgres (dev db + my_castings_test)
 ├── docker/postgres-init.sql    creates the test database
+├── infra/                      AWS CDK app (Python): every AWS resource as code
+│   ├── app.py                  entry point; stacks pinned to us-east-1, cdk-nag checks
+│   ├── my_castings_infra/      one module per stack (guardrails_stack.py: cost budget)
+│   ├── tests/                  CDK assertion tests
+│   └── package.json            pins the CDK CLI (`npx cdk ...`)
 │
 ├── packages/ingestion_core/    pure-Python parsing, no DB or AWS; shared by API and Lambda
 │   ├── ingestion_core/
@@ -228,6 +233,26 @@ Run from the repository root unless noted.
 
 The seed and the sweep are idempotent. Re-running them reprocesses emails in place and
 never duplicates matches or overwrites a profile you've edited.
+
+### AWS infrastructure (CDK)
+
+One-time setup: `cd infra && npm install`, and put the budget alert address in your
+user-level CDK settings (kept out of the repo):
+
+```json
+// ~/.cdk.json
+{ "context": { "budget_alert_email": "you@example.com" } }
+```
+
+| Task | Command (from `infra/`) |
+|---|---|
+| Synthesize templates and run cdk-nag | `npx cdk synth --strict` |
+| Preview a change | `npx cdk diff <Stack>` |
+| Deploy | `npx cdk deploy <Stack>` (always after reading the diff) |
+| Infra tests | `uv run pytest infra/tests` (from the repo root) |
+
+Deployed so far: `Guardrails` (a $100/month cost budget emailing at 50/80/100% of actual
+spend and 100% forecast; termination protection on).
 
 ## Design notes
 

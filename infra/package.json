@@ -1,0 +1,8 @@
+{
+  "name": "my-castings-infra",
+  "private": true,
+  "description": "Pins the CDK CLI version; run it with `npx cdk ...` from infra/.",
+  "devDependencies": {
+    "aws-cdk": "2.1148.0"
+  }
+}
