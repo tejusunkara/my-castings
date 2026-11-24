@@ -7,6 +7,8 @@ from sqlalchemy import func, select
 
 from app.models import ArtistProfile, RawEmail, SavedMatch
 from app.services.ingestion import ingest
+from ingestion_core.adapters.backstage import BackstageAdapter
+from ingestion_core.adapters.registry import AdapterRegistry
 
 FIXTURES = Path(__file__).resolve().parents[3] / "packages/ingestion_core/tests/fixtures"
 
@@ -84,10 +86,14 @@ def test_profile_put_rematches_immediately(client, seeded):
 
 def test_casting_calls_newest_first_with_roles(client, seeded):
     calls = client.get("/casting-calls", params={"limit": 200}).json()
-    assert len(calls) == 10
-    posted = [c["posted_at"] for c in calls]
+    assert len(calls) == 10 + 22
+    # Casting Networks emails give no posting age, so those calls sort after Backstage's.
+    backstage, casting_networks = calls[:10], calls[10:]
+    assert all(c["source_key"] == "backstage" for c in backstage)
+    posted = [c["posted_at"] for c in backstage]
     assert posted == sorted(posted, reverse=True)
-    assert all(c["source_key"] == "backstage" for c in calls)
+    assert all(c["source_key"] == "casting_networks" for c in casting_networks)
+    assert all(c["posted_at"] is None and c["submission_deadline"] for c in casting_networks)
     sparrow = next(r for c in calls for r in c["roles"] if r["role_name"] == "Sparrow Huang")
     assert sparrow["genders"] == ["female", "trans female"]
 
@@ -109,10 +115,14 @@ def match_id(client, seeded):
 
 
 def test_match_includes_role_and_casting_call(client, match_id):
-    match = client.get("/matches").json()[0]
+    matches = client.get("/matches", params={"limit": 200}).json()
+    match = matches[0]
     assert match["match_reasons"] == {"age": True, "gender": True, "location": True}
     assert match["role"]["apply_url"].startswith("https://")
-    assert match["casting_call"]["source_key"] == "backstage"
+    assert {m["casting_call"]["source_key"] for m in matches} == {"backstage", "casting_networks"}
+    # Casting Networks' "Woman" matches the profile's "female".
+    women = next(m for m in matches if m["role"]["role_name"] == "WOMEN 20s")
+    assert women["role"]["genders"] == ["female"]
 
 
 def test_apply_then_undo(client, match_id):
@@ -142,12 +152,22 @@ def test_match_404(client):
 # --- admin ---
 
 
-def test_needs_attention_lists_failures(client, seeded):
+def test_needs_attention_lists_failures(client, db, seeded):
+    raw = (FIXTURES / "casting_networks_single_role.eml").read_bytes()
+    unrouted = RawEmail(
+        s3_bucket="local",
+        s3_key="unrouted.eml",
+        received_at=seeded["casting_networks_sample.eml"].received_at,
+    )
+    db.add(unrouted)
+    ingest(db, unrouted, raw, registry=AdapterRegistry([BackstageAdapter()]))
+    db.flush()
+
     rows = client.get("/admin/raw-emails", params={"needs_attention": True}).json()
-    assert [r["s3_key"] for r in rows] == ["casting_networks_sample.eml"]
+    assert [r["s3_key"] for r in rows] == ["unrouted.eml"]
     assert rows[0]["parse_error"].startswith("no adapter for sender")
     ok = client.get("/admin/raw-emails", params={"status": "success"}).json()
-    assert len(ok) == 2
+    assert len(ok) == 3
 
 
 def test_unknown_status_filter(client):

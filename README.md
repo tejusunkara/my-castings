@@ -14,7 +14,7 @@ source, and infrastructure as code.
 |---|---|---|
 | 0 | Prove a sender's DKIM survives the Gmail-forward → SES hop | ✅ Done: 32/32 forwarded digests passed |
 | 1a | Local skeleton: parsers, schema, matching, API, seed (no AWS) | ✅ Done |
-| 1e | Casting Networks parser | ⏳ Next (two real sample emails already captured) |
+| 1e | Casting Networks parser | ✅ Done |
 | 1b | AWS infrastructure (CDK) + deploy the API | ⏳ Planned |
 | 1c | React frontend, media uploads (presigned S3) | ⏳ Planned |
 | 1d | Wire the live email pipeline (S3 → Lambda → RDS) | ⏳ Planned |
@@ -22,7 +22,9 @@ source, and infrastructure as code.
 ### Implemented so far
 
 - **Email parsing (`packages/ingestion_core`)**
-  - Backstage digest parser, built and tested against real forwarded emails.
+  - Backstage and Casting Networks digest parsers, built and tested against real
+    forwarded emails. Casting Networks sends one card per role; the parser groups them
+    back into one posting per project and reads each role's submission deadline.
   - Sender verification from SES's `Authentication-Results` header. Only the topmost,
     SES-written header is trusted, and a sender counts as verified only on an aligned
     DKIM or SPF pass.
@@ -44,7 +46,7 @@ source, and infrastructure as code.
   - Single-password login: scrypt hash, JWT session cookie, rate-limited.
   - Endpoints for profile, casting calls, matches, and admin (needs-attention list and
     reprocess).
-- **Tests:** 206 tests covering parsers, verification, migrations, reconciliation,
+- **Tests:** 236 tests covering parsers, verification, migrations, reconciliation,
   matching, sweeps, auth, and every endpoint.
 
 **Not built yet:** media upload endpoints, the S3-backed raw-email reader, the
@@ -128,6 +130,7 @@ my-castings/
 │   │   ├── adapters/
 │   │   │   ├── base.py         CastingSourceAdapter interface: one class per source
 │   │   │   ├── backstage.py    Backstage digest parser
+│   │   │   ├── casting_networks.py  Casting Networks digest parser
 │   │   │   └── registry.py     sender -> adapter (none / one / ambiguous)
 │   │   └── parsing/            MIME helpers, "Posted 2 days ago" parsing, text/gender/
 │   │                           age/location normalization

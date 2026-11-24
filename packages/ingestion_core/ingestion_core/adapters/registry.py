@@ -9,6 +9,7 @@ from collections.abc import Mapping, Sequence
 
 from ingestion_core.adapters.backstage import BackstageAdapter
 from ingestion_core.adapters.base import CastingSourceAdapter
+from ingestion_core.adapters.casting_networks import CastingNetworksAdapter
 
 
 class AmbiguousAdapterMatchError(Exception):
@@ -32,7 +33,7 @@ class AdapterRegistry:
         return claimed[0] if claimed else None
 
 
-default_registry = AdapterRegistry([BackstageAdapter()])
+default_registry = AdapterRegistry([BackstageAdapter(), CastingNetworksAdapter()])
 
 
 def get_adapter_for(from_address: str, headers: Mapping[str, str]) -> CastingSourceAdapter | None:

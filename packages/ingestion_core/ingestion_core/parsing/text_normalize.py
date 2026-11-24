@@ -2,7 +2,17 @@
 
 import re
 
-OPEN_GENDER_LABELS = {"all genders", "any gender", "any"}
+# "Multiple Genders" is how Casting Networks shows a role open to more than one gender
+# without naming them; treated as open so a possible fit isn't hidden.
+OPEN_GENDER_LABELS = {"all genders", "any gender", "any", "multiple genders"}
+
+# Different sources' words for the same label (Casting Networks: "Woman"; Backstage:
+# "Female"), keyed by the spelling that is kept.
+GENDER_SYNONYMS = {
+    "female": {"woman", "women"},
+    "male": {"man", "men"},
+}
+_CANONICAL_GENDER = {alias: key for key, aliases in GENDER_SYNONYMS.items() for alias in aliases}
 
 _AGE_RANGE_RE = re.compile(r"^(\d{1,3})\s*-\s*(\d{1,3})$")
 _AGE_MIN_RE = re.compile(r"^(\d{1,3})\s*\+$")
@@ -28,11 +38,13 @@ def normalize_union_status(tag: str | None) -> str | None:
 
 
 def gender_key(label: str) -> str:
-    """Comparable form of a gender label: 'Femme-Presenting' -> 'femme presenting'.
+    """Comparable form of a gender label: 'Femme-Presenting' -> 'femme presenting',
+    'Woman' -> 'female'.
 
     Applied to both role labels and the profile's labels, so spelling variants match.
     """
-    return clean_text(re.sub(r"[-_]", " ", label)).lower()
+    key = clean_text(re.sub(r"[-_]", " ", label)).lower()
+    return _CANONICAL_GENDER.get(key, key)
 
 
 def is_open_gender(label: str) -> bool:

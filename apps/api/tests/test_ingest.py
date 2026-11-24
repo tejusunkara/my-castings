@@ -64,8 +64,20 @@ def test_header_not_from_ses_is_quarantined(db, raw_email):
     assert "not SES" in raw_email.parse_error
 
 
+def test_verified_casting_networks_digest_is_stored(db, raw_email):
+    result = ingest(db, raw_email, (FIXTURES / "casting_networks_sample.eml").read_bytes())
+    assert raw_email.parse_status == "success"
+    assert raw_email.sender_verified and raw_email.source_key == "casting_networks"
+    assert result.created_roles == 48
+    calls = db.scalars(select(CastingCall)).all()
+    assert len(calls) == 22
+    assert all(c.external_ref and c.submission_deadline for c in calls)
+
+
 def test_verified_sender_without_adapter(db, raw_email):
-    ingest(db, raw_email, (FIXTURES / "casting_networks_sample.eml").read_bytes())
+    registry = AdapterRegistry([BackstageAdapter()])
+    raw = (FIXTURES / "casting_networks_sample.eml").read_bytes()
+    ingest(db, raw_email, raw, registry=registry)
     assert raw_email.sender_verified
     assert raw_email.parse_status == "failed"
     assert raw_email.parse_error == "no adapter for sender 'notifications@castingnetworks.com'"
