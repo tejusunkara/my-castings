@@ -5,7 +5,8 @@ from datetime import timedelta
 
 from ingestion_core.parsing.text_normalize import clean_text
 
-_UNIT_RE = re.compile(r"(\d+)\s*(minute|hour|day|week)s?\b", re.IGNORECASE)
+# "an hour ago" / "a day ago" use a word instead of 1.
+_UNIT_RE = re.compile(r"\b(\d+|an?)\s*(minute|hour|day|week)s?\b", re.IGNORECASE)
 
 
 def parse_relative_age(text: str) -> timedelta | None:
@@ -15,5 +16,6 @@ def parse_relative_age(text: str) -> timedelta | None:
         return None
     total = timedelta()
     for amount, unit in parts:
-        total += timedelta(**{unit.lower() + "s": int(amount)})
+        count = int(amount) if amount.isdigit() else 1
+        total += timedelta(**{unit.lower() + "s": count})
     return total

@@ -20,6 +20,8 @@ from ingestion_core.parsing.text_normalize import (
         ("Posted 1 week ago", timedelta(weeks=1)),
         ("Posted 45 minutes ago", timedelta(minutes=45)),
         ("Posted\xa02 days ago", timedelta(days=2)),
+        ("Posted an hour ago", timedelta(hours=1)),
+        ("Posted a day, 2 hours ago", timedelta(days=1, hours=2)),
         ("Posted just now", None),
     ],
 )
@@ -29,7 +31,7 @@ def test_parse_relative_age(text, expected):
 
 @pytest.mark.parametrize(
     "token, expected",
-    [("18-24", (18, 24)), ("18 - 24", (18, 24)), ("18+", (18, None))],
+    [("18-24", (18, 24)), ("18 - 24", (18, 24)), ("18+", (18, None)), ("21", (21, 21))],
 )
 def test_parse_age_range(token, expected):
     assert parse_age_range(token) == expected

@@ -6,6 +6,7 @@ OPEN_GENDER_LABELS = {"all genders", "any gender", "any"}
 
 _AGE_RANGE_RE = re.compile(r"^(\d{1,3})\s*-\s*(\d{1,3})$")
 _AGE_MIN_RE = re.compile(r"^(\d{1,3})\s*\+$")
+_AGE_EXACT_RE = re.compile(r"^(\d{1,3})$")
 
 
 def clean_text(text: str) -> str:
@@ -48,7 +49,8 @@ def normalize_genders(tokens: list[str]) -> list[str]:
 
 
 def parse_age_range(token: str) -> tuple[int, int | None]:
-    """'18-24' -> (18, 24); '18+' -> (18, None). Raises ValueError otherwise."""
+    """'18-24' -> (18, 24); '18+' -> (18, None); '21' -> (21, 21). Raises ValueError
+    otherwise."""
     value = clean_text(token)
     if m := _AGE_RANGE_RE.match(value):
         low, high = int(m.group(1)), int(m.group(2))
@@ -57,6 +59,8 @@ def parse_age_range(token: str) -> tuple[int, int | None]:
         return low, high
     if m := _AGE_MIN_RE.match(value):
         return int(m.group(1)), None
+    if m := _AGE_EXACT_RE.match(value):
+        return int(m.group(1)), int(m.group(1))
     raise ValueError(f"unparseable age range: {token!r}")
 
 
