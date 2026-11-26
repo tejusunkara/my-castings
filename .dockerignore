@@ -1,0 +1,13 @@
+**/.venv
+**/node_modules
+**/__pycache__
+**/.pytest_cache
+**/.ruff_cache
+**/.env
+**/dist
+**/cdk.out
+.git
+apps/web
+infra/cdk.out
+packages/ingestion_core/tests
+apps/api/tests

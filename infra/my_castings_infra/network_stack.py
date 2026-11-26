@@ -24,6 +24,9 @@ from constructs import Construct
 AVAILABILITY_ZONES = ["us-east-1a", "us-east-1b"]
 VPC_CIDR = "10.20.0.0/16"  # avoids 10.0.0.0/16, already used by another VPC in the account
 API_PORT = 8000
+# AWS-managed list of CloudFront's origin-facing addresses (com.amazonaws.global.cloudfront.
+# origin-facing) in us-east-1. Fixed per region; counts as ~55 rules in a security group.
+CLOUDFRONT_PREFIX_LIST = "pl-3b927c52"
 POSTGRES_PORT = 5432
 
 
@@ -68,9 +71,12 @@ class NetworkStack(cdk.Stack):
             traffic_type=ec2.FlowLogTrafficType.REJECT,
         )
 
-        self.alb_sg = self._security_group("AlbSg", "Public load balancer", outbound=True)
-        self.alb_sg.add_ingress_rule(ec2.Peer.any_ipv4(), ec2.Port.tcp(443), "HTTPS")
-        self.alb_sg.add_ingress_rule(ec2.Peer.any_ipv4(), ec2.Port.tcp(80), "HTTP -> HTTPS")
+        # Only CloudFront reaches the load balancer, and only over HTTPS. (The listener also
+        # requires a secret header CloudFront adds, so other distributions can't get in.)
+        self.alb_sg = self._security_group("AlbSg", "Load balancer, CloudFront only", outbound=True)
+        self.alb_sg.add_ingress_rule(
+            ec2.Peer.prefix_list(CLOUDFRONT_PREFIX_LIST), ec2.Port.tcp(443), "HTTPS from CloudFront"
+        )
 
         # API tasks and the daily sweep task (same image, same access).
         self.api_sg = self._security_group("ApiSg", "API and sweep tasks", outbound=True)
@@ -81,16 +87,16 @@ class NetworkStack(cdk.Stack):
         )
 
         # Nothing outbound: the database never initiates connections.
+        cdk.Validations.of(self.vpc).acknowledge(
+            cdk.Acknowledgment(
+                id="CloudFormation-Validate::W3010",
+                reason="AZs are named on purpose: it keeps synth free of account lookups.",
+            )
+        )
+
         self.db_sg = self._security_group("DbSg", "Postgres", outbound=False)
         for source, name in ((self.api_sg, "API/sweep"), (self.ingestion_sg, "ingestion")):
             self.db_sg.add_ingress_rule(source, ec2.Port.tcp(POSTGRES_PORT), f"From {name}")
-
-        cdk.Validations.of(self.alb_sg).acknowledge(
-            cdk.Acknowledgment(
-                id="AwsSolutions-EC23",
-                reason="Internet-facing load balancer: 80/443 from anywhere is its job.",
-            )
-        )
 
     @property
     def availability_zones(self) -> list[str]:

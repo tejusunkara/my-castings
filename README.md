@@ -16,7 +16,7 @@ source, and infrastructure as code.
 | 1a | Local skeleton: parsers, schema, matching, API, seed (no AWS) | ✅ Done |
 | 1e | Casting Networks parser | ✅ Done |
 | — | Actors Access parser | 🟡 Provisional: built from a manual forward, awaiting an auto-forwarded email |
-| 1b | AWS infrastructure (CDK) + deploy the API | 🟡 In progress: budget deployed; network stack written, not deployed |
+| 1b | AWS infrastructure (CDK) + deploy the API | 🟡 All stacks written and tested; only `Guardrails` deployed |
 | 1c | React frontend, media uploads (presigned S3) | ✅ Done locally (media on a local S3 stand-in); hosting comes with 1b |
 | 1d | Wire the live email pipeline (S3 → Lambda → RDS) | ⏳ Planned |
 
@@ -144,10 +144,11 @@ my-castings/
 ├── docker/postgres-init.sql    creates the test database
 ├── infra/                      AWS CDK app (Python): every AWS resource as code
 │   ├── app.py                  entry point; stacks pinned to us-east-1, cdk-nag checks
-│   ├── my_castings_infra/      one module per stack (guardrails_stack.py: cost budget;
-│   │                           network_stack.py: VPC, subnets, NAT, security groups)
-│   ├── tests/                  CDK assertion tests
+│   ├── my_castings_infra/      one module per stack: guardrails, network, data, app, web
+│   ├── tests/                  CDK assertion tests (and the CloudFront functions, run in Node)
 │   └── package.json            pins the CDK CLI (`npx cdk ...`)
+├── scripts/aws/                create_app_secrets, run_migration, deploy_web
+├── Dockerfile                  the API image (also runs migrations and the daily sweep)
 │
 ├── packages/ingestion_core/    pure-Python parsing, no DB or AWS; shared by API and Lambda
 │   ├── ingestion_core/
@@ -284,7 +285,13 @@ alert address in your user-level CDK settings (both kept out of the repo):
 
 ```json
 // ~/.cdk.json
-{ "context": { "aws_account_id": "123456789012", "budget_alert_email": "you@example.com" } }
+{
+  "context": {
+    "aws_account_id": "123456789012",
+    "budget_alert_email": "you@example.com",
+    "origin_verify_secret": "<random: python3 -c 'import secrets; print(secrets.token_urlsafe(32))'>"
+  }
+}
 ```
 
 Stacks avoid CDK context lookups (availability zones are named in code), so there is no
@@ -299,6 +306,43 @@ Stacks avoid CDK context lookups (availability zones are named in code), so ther
 
 Deployed so far: `Guardrails` (a $100/month cost budget emailing at 50/80/100% of actual
 spend and 100% forecast; termination protection on).
+
+#### The stacks
+
+| Stack | What | About per month |
+|---|---|---|
+| `Guardrails` | cost budget and alerts | free |
+| `Network` | VPC across 2 AZs, 1 NAT gateway, S3 gateway endpoint, security groups | ~$37 |
+| `Data` | Postgres 16 (t4g.micro, single-AZ, 7-day backups, deletion protection), raw-email and media buckets; termination-protected, everything retained | ~$15 |
+| `App` | the API on Fargate (ARM, 0.25 vCPU) behind a load balancer that accepts only CloudFront; migrate and daily-sweep tasks | ~$25 |
+| `Web` | CloudFront at the domain: the frontend from a private bucket, `/api/*` to the load balancer | ~$1 |
+
+The browser only ever talks to `https://allcastings.fyi`; CloudFront sends `/api/*` to
+the load balancer (`origin.allcastings.fyi`) with a secret header, and the load balancer
+answers 403 to anything without it.
+
+#### First deploy (and the order for a rebuild)
+
+Needs Docker running (the API image is built for ARM during `cdk deploy App`).
+
+```bash
+uv run python scripts/aws/create_app_secrets.py   # login password (hidden) + session key
+cd infra
+npx cdk deploy Network Data                       # the database takes ~10 minutes
+npx cdk deploy App                                # builds and pushes the API image
+cd ..
+uv run python scripts/aws/run_migration.py        # create the schema
+cd infra && npx cdk deploy Web && cd ..           # CloudFront takes ~5-10 minutes
+uv run python scripts/aws/deploy_web.py           # build and publish the frontend
+```
+
+#### Releasing changes
+
+| Changed | Do |
+|---|---|
+| API code | `npx cdk deploy App` (new image, rolling restart); then `run_migration.py` if there's a new migration |
+| Frontend | `uv run python scripts/aws/deploy_web.py` |
+| Login password | `uv run python scripts/aws/create_app_secrets.py --replace`, then redeploy `App` |
 
 ## Design notes
 

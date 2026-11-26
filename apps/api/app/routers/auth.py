@@ -21,8 +21,7 @@ def login(body: LoginRequest, request: Request, response: Response, settings: Ap
         raise HTTPException(status.HTTP_503_SERVICE_UNAVAILABLE, "login is not configured")
 
     limiter = request.app.state.login_limiter
-    # Behind the ALB, uvicorn must run with --proxy-headers so this is the real client.
-    client_ip = request.client.host if request.client else "unknown"
+    client_ip = client_address(request, settings.client_ip_header)
     if limiter.is_blocked(client_ip):
         raise HTTPException(status.HTTP_429_TOO_MANY_REQUESTS, "too many attempts, try later")
     if not verify_password(body.password, password_hash):
@@ -53,3 +52,11 @@ def logout(response: Response, settings: AppSettings):
 )
 def check_session():
     """204 when logged in, 401 otherwise; lets the SPA decide whether to show login."""
+
+
+def client_address(request: Request, header: str | None) -> str:
+    """The caller's IP. From `header` when configured (CloudFront-Viewer-Address is
+    "ip:port", the port after the last colon, IPv6 included); otherwise the connection's."""
+    if header and (value := request.headers.get(header)):
+        return value.rsplit(":", 1)[0]
+    return request.client.host if request.client else "unknown"

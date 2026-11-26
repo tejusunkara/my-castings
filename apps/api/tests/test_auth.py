@@ -121,3 +121,52 @@ def test_login_unconfigured_is_unavailable_not_open(app, anon_client, settings):
     unconfigured = settings.model_copy(update={"auth_password_hash": SecretStr("")})
     app.dependency_overrides[get_settings] = lambda: unconfigured
     assert anon_client.post("/auth/login", json={"password": ""}).status_code == 503
+
+
+def test_database_url_built_from_rds_secret_parts():
+    from app.config import Settings
+
+    settings = Settings(
+        db_host="db.example.internal",
+        db_name="my_castings",
+        db_user="admin",
+        db_password="p@ss/w:rd",
+        _env_file=None,
+    )
+    assert settings.database_url == (
+        "postgresql+psycopg://admin:p%40ss%2Fw%3Ard@db.example.internal:5432/my_castings"
+        "?sslmode=require"
+    )
+
+
+def test_partial_database_parts_are_rejected():
+    import pytest
+    from pydantic import ValidationError
+
+    from app.config import Settings
+
+    with pytest.raises(ValidationError, match="db_host needs"):
+        Settings(db_host="db.example.internal", _env_file=None)
+
+
+def test_client_address_from_cloudfront_header():
+    from starlette.requests import Request
+
+    from app.routers.auth import client_address
+
+    def request(headers):
+        scope = {
+            "type": "http",
+            "headers": [(k.lower().encode(), v.encode()) for k, v in headers.items()],
+            "client": ("10.20.1.5", 443),
+        }
+        return Request(scope)
+
+    header = "cloudfront-viewer-address"
+    assert client_address(request({header: "203.0.113.7:51544"}), header) == "203.0.113.7"
+    assert client_address(request({header: "2001:db8::1:51544"}), header) == "2001:db8::1"
+    # A forged X-Forwarded-For changes nothing.
+    forged = request({header: "203.0.113.7:1", "x-forwarded-for": "1.2.3.4"})
+    assert client_address(forged, header) == "203.0.113.7"
+    # Not configured (local): the connection's address.
+    assert client_address(request({header: "203.0.113.7:1"}), None) == "10.20.1.5"

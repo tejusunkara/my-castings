@@ -5,7 +5,13 @@ import aws_cdk as cdk
 import pytest
 from aws_cdk.assertions import Match, Template
 
-from my_castings_infra.network_stack import API_PORT, POSTGRES_PORT, VPC_CIDR, NetworkStack
+from my_castings_infra.network_stack import (
+    API_PORT,
+    CLOUDFRONT_PREFIX_LIST,
+    POSTGRES_PORT,
+    VPC_CIDR,
+    NetworkStack,
+)
 
 ENV = cdk.Environment(account="123456789012", region="us-east-1")
 
@@ -53,16 +59,32 @@ def test_rejected_traffic_flow_log(template):
     template.has_resource_properties("AWS::EC2::FlowLog", {"TrafficType": "REJECT"})
 
 
-def test_only_the_alb_is_open_to_the_internet(stack_and_template):
+def test_nothing_is_open_to_the_internet(template):
+    for sg in template.find_resources("AWS::EC2::SecurityGroup").values():
+        for rule in sg["Properties"].get("SecurityGroupIngress", []):
+            assert rule.get("CidrIp") != "0.0.0.0/0" and rule.get("CidrIpv6") != "::/0"
+
+
+def test_alb_takes_https_from_cloudfront_only(stack_and_template):
     stack, template = stack_and_template
-    open_groups = [
-        lid
-        for lid, sg in template.find_resources("AWS::EC2::SecurityGroup").items()
-        if any(
-            r.get("CidrIp") == "0.0.0.0/0" for r in sg["Properties"].get("SecurityGroupIngress", [])
-        )
+    alb_id = sg_logical_id(stack, stack.alb_sg)
+    alb = template.find_resources("AWS::EC2::SecurityGroup")[alb_id]
+    assert "SecurityGroupIngress" not in alb["Properties"]  # no inline (open) rules
+    rules = [
+        r["Properties"]
+        for r in template.find_resources("AWS::EC2::SecurityGroupIngress").values()
+        if r["Properties"]["GroupId"] == {"Fn::GetAtt": [alb_id, "GroupId"]}
     ]
-    assert open_groups == [sg_logical_id(stack, stack.alb_sg)]
+    assert rules == [
+        {
+            "Description": "HTTPS from CloudFront",
+            "FromPort": 443,
+            "GroupId": {"Fn::GetAtt": [alb_id, "GroupId"]},
+            "IpProtocol": "tcp",
+            "SourcePrefixListId": CLOUDFRONT_PREFIX_LIST,
+            "ToPort": 443,
+        }
+    ]
 
 
 @pytest.mark.parametrize(
