@@ -157,3 +157,43 @@ def test_garbage_bytes_do_not_raise():
 )
 def test_matches_sender(address, expected):
     assert adapter.matches_sender(address, {}) is expected
+
+
+# --- pay ---
+
+
+def test_pay_from_estimated_pay_line(fixture_bytes):
+    digest, _, _ = parse_fixture(fixture_bytes, "backstage_sample.eml")
+    pays = [r.pay for p in digest.postings for r in p.roles]
+    assert pays[:3] == [
+        "$850 for 9 hours of work",
+        "$400 for 1 days of work",
+        "$100 for 3 hours of work",
+    ]
+    assert all(pays)
+
+
+def test_role_without_pay_line(fixture_bytes):
+    digest, _, _ = parse_fixture(fixture_bytes, "backstage_badges.eml")
+    roles = {r.role_name: r for p in digest.postings for r in p.roles}
+    assert roles["Eleanor"].pay is None
+
+
+def pay_card(pay_line: str) -> str:
+    return CARD.replace(
+        "<li>Lead, Female, 20-30</li>", f"<li>Lead, Female, 20-30</li><li>{pay_line}</li>"
+    )
+
+
+@pytest.mark.parametrize(
+    "pay_line, expected",
+    [
+        ("Estimated pay amount: $250 for None days of work", "$250"),
+        ("Estimated pay amount:  $1500 for 8 hours of work ", "$1500 for 8 hours of work"),
+        ("Estimated pay amount:", None),
+    ],
+)
+def test_pay_text_cleanup(make_email, pay_line, expected):
+    raw = make_email(html=f"<html><body>{pay_card(pay_line)}</body></html>").as_bytes()
+    digest = adapter.parse(raw, datetime(2026, 10, 29, tzinfo=UTC))
+    assert digest.postings[0].roles[0].pay == expected

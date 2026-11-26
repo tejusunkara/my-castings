@@ -208,3 +208,126 @@ def test_reprocess_rejects_path_escape(client, db):
     db.add(raw_email)
     db.flush()
     assert client.post(f"/admin/raw-emails/{raw_email.id}/reprocess").status_code == 409
+
+
+# --- match filters, sorting and summary ---
+
+
+@pytest.fixture
+def matched(client, seeded):
+    client.put("/profile", json=PROFILE)
+    return client.get("/matches", params={"limit": 200}).json()
+
+
+def ids(response):
+    return [m["id"] for m in response.json()]
+
+
+def test_role_pay_in_match(client, matched):
+    model = next(
+        m
+        for m in matched
+        if m["role"]["role_name"] == "Model" and m["casting_call"]["source_key"] == "backstage"
+    )
+    assert model["role"]["pay"] == "$850 for 9 hours of work"
+
+
+def test_filter_by_several_statuses(client, matched):
+    first, second = matched[0]["id"], matched[1]["id"]
+    client.patch(f"/matches/{first}", json={"status": "saved"})
+    client.patch(f"/matches/{second}", json={"status": "dismissed"})
+    both = client.get("/matches", params=[("status", "saved"), ("status", "dismissed")])
+    assert sorted(ids(both)) == sorted([first, second])
+    not_dismissed = client.get(
+        "/matches", params=[("status", s) for s in ("new", "saved", "applied")] + [("limit", 200)]
+    )
+    assert second not in ids(not_dismissed) and len(ids(not_dismissed)) == len(matched) - 1
+
+
+def test_filter_by_source_and_project_type(client, matched):
+    backstage = client.get("/matches", params={"source": "backstage", "limit": 200}).json()
+    assert backstage and all(m["casting_call"]["source_key"] == "backstage" for m in backstage)
+    project_type = backstage[0]["casting_call"]["project_type"]
+    typed = client.get("/matches", params={"project_type": project_type, "limit": 200}).json()
+    assert typed and all(m["casting_call"]["project_type"] == project_type for m in typed)
+
+
+def test_search_title_role_and_location(client, matched):
+    by_role = client.get("/matches", params={"q": "women 20"}).json()
+    assert [m["role"]["role_name"] for m in by_role] == ["WOMEN 20s"]
+    title = matched[0]["casting_call"]["title"]
+    assert matched[0]["id"] in ids(client.get("/matches", params={"q": title.lower()}))
+    located = client.get("/matches", params={"q": "brooklyn", "limit": 200}).json()
+    assert all(
+        any("brooklyn" in loc.lower() for loc in m["casting_call"]["seeking_locations"])
+        or "brooklyn" in (m["casting_call"]["title"] + m["role"]["role_name"]).lower()
+        for m in located
+    )
+
+
+def test_search_treats_wildcards_literally(client, matched):
+    assert client.get("/matches", params={"q": "%"}).json() == []
+
+
+def test_sort_by_deadline_puts_open_first_then_none_then_closed(client, db, matched):
+    from datetime import UTC, datetime, timedelta
+
+    from app.models import CastingCall
+
+    calls = {c.id: c for c in db.scalars(select(CastingCall)).all()}
+    now = datetime.now(UTC)
+    by_call = {}
+    for m in matched:
+        by_call.setdefault(m["casting_call"]["id"], m["id"])
+    call_ids = list(by_call)
+    for call_id in call_ids:
+        calls[call_id].submission_deadline = None
+    soon, later, closed = call_ids[:3]
+    calls[soon].submission_deadline = now + timedelta(days=1)
+    calls[later].submission_deadline = now + timedelta(days=5)
+    calls[closed].submission_deadline = now - timedelta(days=1)
+    db.flush()
+
+    order = [
+        m["casting_call"]["id"]
+        for m in client.get("/matches", params={"sort": "deadline", "limit": 200}).json()
+    ]
+    assert order[0] == soon
+    assert order.index(later) < min(order.index(c) for c in call_ids[3:])
+    assert order[-1] == closed
+
+
+def test_sort_by_posted(client, matched):
+    posted = [
+        m["casting_call"]["posted_at"]
+        for m in client.get("/matches", params={"sort": "posted", "limit": 200}).json()
+    ]
+    known = [p for p in posted if p is not None]
+    assert known == sorted(known, reverse=True)
+    assert posted[: len(known)] == known  # unknown posting dates last
+
+
+def test_unknown_sort_is_rejected(client, matched):
+    assert client.get("/matches", params={"sort": "random"}).status_code == 422
+
+
+def test_summary_counts_respect_filters_but_not_status(client, matched):
+    client.patch(f"/matches/{matched[0]['id']}", json={"status": "applied"})
+    summary = client.get("/matches/summary").json()
+    assert summary["status_counts"] == {
+        "new": len(matched) - 1,
+        "saved": 0,
+        "applied": 1,
+        "dismissed": 0,
+    }
+    cn = client.get("/matches/summary", params={"source": "casting_networks"}).json()
+    cn_total = len(
+        client.get("/matches", params={"source": "casting_networks", "limit": 200}).json()
+    )
+    assert sum(cn["status_counts"].values()) == cn_total
+    assert summary["project_types"] == sorted(summary["project_types"], key=str.casefold)
+    assert {s["key"] for s in summary["sources"]} == {
+        "actors_access",
+        "backstage",
+        "casting_networks",
+    }

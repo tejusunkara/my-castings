@@ -81,6 +81,7 @@ class Role(Base):
     age_min: Mapped[int | None]
     age_max: Mapped[int | None]
     is_featured: Mapped[bool] = mapped_column(server_default=false())  # role-level badge
+    pay: Mapped[str | None] = mapped_column(Text)  # free text as the source prints it
     # Personalized/tokenized link; stored exactly as received, never shared.
     apply_url: Mapped[str | None] = mapped_column(Text)
     created_at: Mapped[datetime] = created_at_column()

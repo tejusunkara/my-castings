@@ -10,7 +10,7 @@ Shape of one card (td.roleColumn):
     <b>Role name</b>
     <b>Submissions Due</b> September 29, 2026, 8:00pm
     <b>Billing</b> / 18 - 90 / Any Gender
-    <div>pay line</div>
+    <div>pay line</div>                                             (optional)
     <div style="font-style: italic">role description (truncated with "...")</div>
     <a href=".../talent/project/<project id>/role/<role id>?...">View Role</a>
 
@@ -44,6 +44,7 @@ DEADLINE_LABEL = "submissions due"
 _DEADLINE_FORMAT = "%B %d, %Y, %I:%M%p"
 
 _ROLE_URL_RE = re.compile(r"/project/(\d+)/role/(\d+)")
+_ITALIC_RE = re.compile(r"font-style:\s*italic")
 
 # Project-level union tags. "Other" (and anything unrecognized) leaves it to role text.
 _NONUNION_TAGS = {"non union", "no union affiliation"}
@@ -134,7 +135,7 @@ class CastingNetworksAdapter(CastingSourceAdapter):
             else:
                 project.deadlines.append(deadline)
 
-        description = card.find("div", style=re.compile(r"font-style:\s*italic"))
+        description = card.find("div", style=_ITALIC_RE)
         if description is not None and project.description is None:
             project.description = clean_text(description.get_text()) or None
         project.roles.append(role)
@@ -155,6 +156,12 @@ class CastingNetworksAdapter(CastingSourceAdapter):
             else:
                 genders.extend(g for g in (clean_text(x) for x in token.split(",")) if g)
         role.genders = normalize_genders(genders)
+
+        # The pay line, when there is one, follows the billing line. Without one, the next
+        # line is the italic description, which must not be taken for pay.
+        pay = billing.parent.find_next_sibling("div")
+        if pay is not None and not _ITALIC_RE.search(pay.get("style", "")):
+            role.pay = clean_text(pay.get_text()) or None
 
 
 class _Project:

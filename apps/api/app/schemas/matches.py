@@ -26,3 +26,18 @@ class MatchPatch(BaseModel):
 
     status: MatchStatus | None = None
     user_note: str | None = None
+
+
+class SourceOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    key: str
+    display_name: str
+
+
+class MatchSummary(BaseModel):
+    # Every status is present, zero included.
+    status_counts: dict[MatchStatus, int]
+    # Project types that occur among matches, for the filter dropdown.
+    project_types: list[str]
+    sources: list[SourceOut]

@@ -18,6 +18,7 @@ Shape of one job card (div.section_job-card):
         <a class="primary-cta">Apply</a>
 """
 
+import re
 from collections.abc import Mapping
 from datetime import datetime
 
@@ -36,6 +37,9 @@ from ingestion_core.parsing.text_normalize import (
 from ingestion_core.types import ParsedDigest, ParsedPosting, ParsedRole
 
 BADGE_TEXT = "stand out!"
+PAY_LABEL = "estimated pay amount:"
+# Backstage's template prints "$250 for None days of work" when the duration is unset.
+_UNSET_DURATION_RE = re.compile(r"\s+for None \w+ of work$")
 LOCATIONS_LABEL = "seeking talent from"
 
 
@@ -143,6 +147,12 @@ class BackstageAdapter(CastingSourceAdapter):
             role.genders = normalize_genders(tokens)
 
         if box is not None:
+            for item in box.find_all("li"):
+                text = clean_text(item.get_text())
+                if text.lower().startswith(PAY_LABEL):
+                    pay = _UNSET_DURATION_RE.sub("", text[len(PAY_LABEL) :].strip())
+                    role.pay = pay or None
+                    break
             role.is_featured = any(
                 clean_text(s.get_text()).lower().startswith(BADGE_TEXT)
                 for s in box.find_all("strong")

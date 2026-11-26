@@ -232,3 +232,26 @@ def test_no_html_part_is_failed(make_email):
     msg = make_email(from_addr="notifications@castingnetworks.com")
     digest = adapter.parse(msg.as_bytes(), datetime(2026, 10, 30, tzinfo=UTC))
     assert digest.error == "email has no text/html part"
+
+
+# --- pay ---
+
+
+def test_pay_line_kept_whole(fixture_bytes):
+    digest, _ = parse_fixture(fixture_bytes, "casting_networks_single_role.eml")
+    assert digest.postings[0].roles[0].pay == "187/10"
+    sample, _ = parse_fixture(fixture_bytes, "casting_networks_sample.eml")
+    first = sample.postings[0].roles[0]
+    # Rate, then " / " and the rate details; stored as printed (whitespace collapsed).
+    assert first.pay.startswith("$1000 (+20% agency fee if agent involved) / Compensation: $1,000")
+
+
+def test_card_without_pay_line_does_not_take_the_description(fixture_bytes):
+    digest, _ = parse_fixture(fixture_bytes, "casting_networks_sample.eml")
+    role = roles_by_name(digest)["Silenced Younger Adults"]
+    assert role.pay is None
+
+
+def test_synthetic_pay(make_email):
+    digest = parse_html(make_email, card())
+    assert digest.postings[0].roles[0].pay == "$100"

@@ -13,6 +13,7 @@ class RoleOut(BaseModel):
     age_min: int | None
     age_max: int | None
     is_featured: bool
+    pay: str | None
     # Personalized to the artist's account: open it, never share it.
     apply_url: str | None
 

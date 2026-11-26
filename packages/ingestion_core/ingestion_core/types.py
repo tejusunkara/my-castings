@@ -17,6 +17,8 @@ class ParsedRole:
     age_min: int | None = None
     age_max: int | None = None
     is_featured: bool = False  # role-level badge, independent of the posting's
+    # Free text as the source prints it ("$850 for 9 hours of work", "SAG AFTRA scale").
+    pay: str | None = None
     apply_url: str | None = None  # personalized/tokenized; stored exactly as received
 
 
