@@ -45,3 +45,20 @@ export function formatDeadline(iso: string | null, now: Date = new Date()): Dead
   const closed = deadline.getTime() < now.getTime();
   return { text: closed ? `Closed ${day}` : day, full, closed };
 }
+
+const UNION_LABELS: Record<string, string> = {
+  union: "Union",
+  nonunion: "Non-union",
+  union_and_nonunion: "Union and non-union",
+};
+
+export function formatUnion(value: string | null): string | null {
+  return value ? (UNION_LABELS[value] ?? value) : null;
+}
+
+/** ["female", "trans female"] -> "Female, trans female"; [] means open to any gender. */
+export function formatGenders(genders: string[]): string {
+  if (genders.length === 0) return "Any gender";
+  const text = genders.join(", ");
+  return text.charAt(0).toUpperCase() + text.slice(1);
+}

@@ -17,7 +17,7 @@ source, and infrastructure as code.
 | 1e | Casting Networks parser | ✅ Done |
 | — | Actors Access parser | 🟡 Provisional: built from a manual forward, awaiting an auto-forwarded email |
 | 1b | AWS infrastructure (CDK) + deploy the API | 🟡 In progress: budget deployed; network stack written, not deployed |
-| 1c | React frontend, media uploads (presigned S3) | 🟡 In progress: login and matches dashboard run locally |
+| 1c | React frontend, media uploads (presigned S3) | 🟡 In progress: all pages but media run locally |
 | 1d | Wire the live email pipeline (S3 → Lambda → RDS) | ⏳ Planned |
 
 ### Implemented so far
@@ -58,11 +58,13 @@ source, and infrastructure as code.
     control per card.
   - Status tiles with counts (click to show or hide a status), source and project-type
     filters, search, and sorting. Filters live in the URL, so a refresh keeps the view.
+  - Casting-call page: description, every role with its apply link, status and a note.
+  - Profile page (saving re-runs matching) and a "Needs attention" page listing failed,
+    partial and unverified emails, with reprocessing.
 - **Tests:** about 300 tests covering parsers, verification, migrations, reconciliation,
   matching, sweeps, auth, every endpoint, and the dashboard (Vitest).
 
-**Not built yet:** the casting-call detail, profile, media and admin pages, media upload
-endpoints, the S3-backed raw-email reader, the ingestion Lambda, most AWS
+**Not built yet:** the media page and media upload endpoints, the S3-backed raw-email reader, the ingestion Lambda, most AWS
 infrastructure, and CI/CD.
 
 ## Architecture
@@ -162,7 +164,9 @@ my-castings/
     │   └── src/
     │       ├── api/            fetch client + one module per resource, types mirroring schemas
     │       ├── components/     layout/ (header, protected route), matches/ (card, filters, tiles)
-    │       ├── pages/          LoginPage, DashboardPage
+    │       ├── pages/          Login, Dashboard, CastingCall, Profile, Admin
+    │       ├── hooks/          useUpdateMatch (optimistic status/note changes)
+    │       ├── test/           fake API, render helper, fixtures
     │       └── lib/            URL filter state, formatting, source colors
     ├── api/                    FastAPI backend
     │   ├── alembic/versions/   schema migrations (source of truth for the DB)
@@ -253,7 +257,7 @@ Run from the repository root unless noted.
 | Task | Command |
 |---|---|
 | Run all tests | `uv run pytest`, plus `cd apps/web && npm test` for the frontend |
-| Frontend checks | `cd apps/web && npm run typecheck && npm run lint && npm run build` |
+| Frontend checks | `cd apps/web && npm run typecheck && npm run lint && npm run format:check && npm run build` |
 | Lint / format | `uv run ruff check .` and `uv run ruff format .` |
 | New migration after editing models | `cd apps/api && uv run alembic revision --autogenerate -m "..."`, then review the file. Autogenerate misses CHECK constraints and data moves. |
 | Check models match migrations | `cd apps/api && uv run alembic check` |

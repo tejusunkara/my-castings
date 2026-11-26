@@ -5,7 +5,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import selectinload
 
 from app.deps import DB
-from app.models import CastingCall
+from app.models import CastingCall, Role
 from app.schemas.casting import CastingCallOut
 
 router = APIRouter(prefix="/casting-calls", tags=["casting calls"])
@@ -19,7 +19,10 @@ def list_casting_calls(
 ):
     return db.scalars(
         select(CastingCall)
-        .options(selectinload(CastingCall.roles), selectinload(CastingCall.source))
+        .options(
+            selectinload(CastingCall.roles).selectinload(Role.saved_match),
+            selectinload(CastingCall.source),
+        )
         .order_by(CastingCall.posted_at.desc().nulls_last(), CastingCall.id.desc())
         .limit(limit)
         .offset(offset)

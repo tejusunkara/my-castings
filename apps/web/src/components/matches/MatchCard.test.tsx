@@ -1,9 +1,13 @@
-import { render, screen } from "@testing-library/react";
+import { render as rtlRender, screen } from "@testing-library/react";
+import type { ReactElement } from "react";
+import { MemoryRouter } from "react-router";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
 import { makeMatch } from "../../test/fixtures";
 import { MatchCard } from "./MatchCard";
+
+const render = (ui: ReactElement) => rtlRender(<MemoryRouter>{ui}</MemoryRouter>);
 
 describe("MatchCard", () => {
   it("shows the role's details", () => {
@@ -17,9 +21,17 @@ describe("MatchCard", () => {
     expect(screen.getByRole("radio", { name: "New" })).toHaveAttribute("aria-checked", "true");
   });
 
+  it("links the title to the detail page", () => {
+    render(<MatchCard match={makeMatch({ id: 1 })} onStatusChange={() => {}} />);
+    expect(screen.getByRole("link", { name: "Bright Side Soda" })).toHaveAttribute(
+      "href",
+      "/casting-calls/100",
+    );
+  });
+
   it("opens the personal apply link without a referrer", () => {
     render(<MatchCard match={makeMatch({ id: 1 })} onStatusChange={() => {}} />);
-    const link = screen.getByRole("link", { name: /Bright Side Soda/ });
+    const link = screen.getByRole("link", { name: "Open on Backstage" });
     expect(link).toHaveAttribute("href", "https://example.com/apply?token=secret");
     expect(link).toHaveAttribute("target", "_blank");
     expect(link.getAttribute("rel")).toContain("noreferrer");

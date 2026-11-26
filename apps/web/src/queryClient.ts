@@ -1,7 +1,7 @@
 import { MutationCache, QueryCache, QueryClient } from "@tanstack/react-query";
 
 import { SESSION_QUERY_KEY } from "./api/auth";
-import { isUnauthorized } from "./api/client";
+import { ApiError, isUnauthorized } from "./api/client";
 
 /** A 401 from any request means the session expired: flip the session flag, and
  * ProtectedRoute sends the user to /login. */
@@ -11,7 +11,9 @@ export function createQueryClient(): QueryClient {
     mutationCache: new MutationCache({ onError: onUnauthorized }),
     defaultOptions: {
       queries: {
-        retry: (failures, error) => !isUnauthorized(error) && failures < 2,
+        // Retry network and server errors; a 4xx answer won't change on a retry.
+        retry: (failures, error) =>
+          !(error instanceof ApiError && error.status < 500) && failures < 2,
         refetchOnWindowFocus: true,
       },
     },

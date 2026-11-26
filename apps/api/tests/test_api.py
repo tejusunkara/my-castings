@@ -331,3 +331,22 @@ def test_summary_counts_respect_filters_but_not_status(client, matched):
         "backstage",
         "casting_networks",
     }
+
+
+def test_casting_call_detail_shows_each_roles_match(client, matched):
+    match = matched[0]
+    client.patch(f"/matches/{match['id']}", json={"status": "saved", "user_note": "tape Fri"})
+    detail = client.get(f"/casting-calls/{match['casting_call']['id']}").json()
+    role = next(r for r in detail["roles"] if r["id"] == match["role"]["id"])
+    assert role["saved_match"]["id"] == match["id"]
+    assert (role["saved_match"]["status"], role["saved_match"]["user_note"]) == (
+        "saved",
+        "tape Fri",
+    )
+    assert "description" in detail and role["pay"] == match["role"]["pay"]
+
+
+def test_unmatched_role_has_no_match(client, seeded):
+    calls = client.get("/casting-calls", params={"limit": 200}).json()
+    # No profile yet, so nothing has matched.
+    assert all(r["saved_match"] is None for c in calls for r in c["roles"])

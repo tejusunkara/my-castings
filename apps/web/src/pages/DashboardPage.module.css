@@ -16,6 +16,10 @@
   top: 24px;
 }
 
+.filtersToggle {
+  display: none;
+}
+
 .results {
   min-width: 0;
 }
@@ -88,5 +92,19 @@
 
   .sidebar {
     position: static;
+    gap: 16px;
+  }
+
+  .filtersToggle {
+    display: block;
+    padding: 12px;
+    border: 0;
+    border-radius: var(--radius-md);
+    background: var(--panel);
+    font-weight: 600;
+  }
+
+  .filters[data-open="false"] {
+    display: none;
   }
 }

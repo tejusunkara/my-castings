@@ -28,9 +28,7 @@ export function readState(params: URLSearchParams): DashboardState {
   return {
     filters: {
       statuses:
-        statuses === null
-          ? DEFAULT_STATUSES
-          : MATCH_STATUSES.filter((s) => statuses.includes(s)),
+        statuses === null ? DEFAULT_STATUSES : MATCH_STATUSES.filter((s) => statuses.includes(s)),
       sources: list(params, "sources"),
       projectType: params.get("type") ?? "",
       q: params.get("q") ?? "",

@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import Literal
 
 from pydantic import BaseModel, ConfigDict
 
@@ -34,6 +35,22 @@ class CastingCallSummary(BaseModel):
     view_all_jobs_url: str | None
 
 
+class RoleMatchOut(BaseModel):
+    """The match state of a role, for views that start from the casting call."""
+
+    model_config = ConfigDict(from_attributes=True)
+
+    id: int
+    status: Literal["new", "saved", "applied", "dismissed"]
+    user_note: str | None
+    applied_at: datetime | None
+
+
+class RoleDetailOut(RoleOut):
+    # None when the role didn't match the profile.
+    saved_match: RoleMatchOut | None
+
+
 class CastingCallOut(CastingCallSummary):
     description: str | None
-    roles: list[RoleOut]
+    roles: list[RoleDetailOut]

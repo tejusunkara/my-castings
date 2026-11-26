@@ -18,7 +18,9 @@ export function StatusTiles({ counts, selected, onToggle }: Props) {
           type="button"
           className={styles.tile}
           aria-pressed={selected.includes(status)}
-          aria-label={counts ? `${STATUS_LABELS[status]} (${counts[status]})` : STATUS_LABELS[status]}
+          aria-label={
+            counts ? `${STATUS_LABELS[status]} (${counts[status]})` : STATUS_LABELS[status]
+          }
           onClick={() => onToggle(status)}
         >
           <span className={styles.count}>{counts ? counts[status] : "–"}</span>

@@ -6,7 +6,11 @@ import { hasSession, SESSION_QUERY_KEY } from "../../api/auth";
 
 /** Renders children when logged in; sends everyone else to /login. */
 export function ProtectedRoute({ children }: { children: ReactNode }) {
-  const session = useQuery({ queryKey: SESSION_QUERY_KEY, queryFn: hasSession, staleTime: Infinity });
+  const session = useQuery({
+    queryKey: SESSION_QUERY_KEY,
+    queryFn: hasSession,
+    staleTime: Infinity,
+  });
 
   if (session.isPending) return null;
   if (session.isError) {

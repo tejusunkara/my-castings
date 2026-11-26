@@ -1,3 +1,5 @@
+import { Link } from "react-router";
+
 import type { Match, MatchStatus } from "../../api/types";
 import { formatAges, formatDeadline, formatLocations } from "../../lib/format";
 import { sourceColor, sourceName } from "../../lib/sources";
@@ -33,22 +35,8 @@ export function MatchCard({ match, onStatusChange, updating }: Props) {
       </div>
 
       <h2 className={styles.title} id={`match-${match.id}-title`}>
-        {role.apply_url ? (
-          // The link carries a token tied to the artist's account: no referrer, new tab.
-          <a
-            href={role.apply_url}
-            target="_blank"
-            rel="noopener noreferrer"
-            title={`Open on ${source} (link is personal to your account)`}
-          >
-            {call.title}
-            <span aria-hidden="true" className={styles.external}>
-              ↗
-            </span>
-          </a>
-        ) : (
-          call.title
-        )}
+        <Link to={`/casting-calls/${call.id}`}>{call.title}</Link>
+        {role.apply_url && <ApplyLink href={role.apply_url} source={source} compact />}
       </h2>
       <p className={styles.role}>
         {role.role_name}
@@ -63,7 +51,10 @@ export function MatchCard({ match, onStatusChange, updating }: Props) {
           {role.pay ?? "Not listed"}
         </dd>
         <dt>Deadline</dt>
-        <dd title={deadline.full ?? undefined} className={deadline.closed ? styles.closed : undefined}>
+        <dd
+          title={deadline.full ?? undefined}
+          className={deadline.closed ? styles.closed : undefined}
+        >
           {deadline.text}
         </dd>
       </dl>
@@ -75,5 +66,30 @@ export function MatchCard({ match, onStatusChange, updating }: Props) {
         label={`Status for ${role.role_name} in ${call.title}`}
       />
     </article>
+  );
+}
+
+/** Link to the role on the source site. The URL carries a token tied to the artist's
+ * account, so it opens in a new tab and sends no referrer. */
+export function ApplyLink({
+  href,
+  source,
+  compact = false,
+}: {
+  href: string;
+  source: string;
+  compact?: boolean;
+}) {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={compact ? styles.external : styles.applyButton}
+      aria-label={compact ? `Open on ${source}` : undefined}
+      title={`Open on ${source} (the link is personal to your account)`}
+    >
+      {compact ? "↗" : `Open on ${source} ↗`}
+    </a>
   );
 }

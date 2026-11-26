@@ -19,7 +19,11 @@ export function LoginPage() {
   const [password, setPassword] = useState("");
   const queryClient = useQueryClient();
   const navigate = useNavigate();
-  const session = useQuery({ queryKey: SESSION_QUERY_KEY, queryFn: hasSession, staleTime: Infinity });
+  const session = useQuery({
+    queryKey: SESSION_QUERY_KEY,
+    queryFn: hasSession,
+    staleTime: Infinity,
+  });
   const signIn = useMutation({
     mutationFn: login,
     onSuccess: () => {

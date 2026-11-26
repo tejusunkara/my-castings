@@ -54,3 +54,63 @@ export interface MatchSummary {
   project_types: string[];
   sources: Source[];
 }
+
+export interface RoleMatch {
+  id: number;
+  status: MatchStatus;
+  user_note: string | null;
+  applied_at: string | null;
+}
+
+export interface RoleDetail extends Role {
+  saved_match: RoleMatch | null; // null when the role didn't match the profile
+}
+
+export interface CastingCall extends CastingCallSummary {
+  description: string | null;
+  roles: RoleDetail[];
+}
+
+export interface Profile {
+  id: number;
+  updated_at: string;
+  display_name: string | null;
+  date_of_birth: string | null; // YYYY-MM-DD
+  playing_age_min: number | null;
+  playing_age_max: number | null;
+  genders: string[];
+  location_city: string | null;
+  location_state: string | null;
+  union_status: string | null;
+  bio: string | null;
+  willing_to_travel: boolean;
+}
+
+export type ProfileInput = Omit<Profile, "id" | "updated_at">;
+
+export const PARSE_STATUSES = ["pending", "success", "partial", "failed"] as const;
+export type ParseStatus = (typeof PARSE_STATUSES)[number];
+
+export interface RawEmail {
+  id: number;
+  s3_bucket: string;
+  s3_key: string;
+  received_at: string;
+  subject: string | null;
+  from_address: string | null;
+  source_key: string | null;
+  sender_verified: boolean;
+  verdict_details: Record<string, unknown> | null;
+  parse_status: ParseStatus;
+  parse_error: string | null;
+  parsed_at: string | null;
+}
+
+export interface ReprocessResult {
+  raw_email: RawEmail;
+  created_roles: number;
+  updated_roles: number;
+  deleted_roles: number;
+  kept_role_ids: number[];
+  new_matches: number;
+}

@@ -8,6 +8,43 @@
   border-bottom: 1px solid var(--line);
 }
 
+.left {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.home {
+  text-decoration: none;
+}
+
+.nav {
+  display: flex;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.nav a {
+  display: block;
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  color: var(--text-muted);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.nav a:hover {
+  color: var(--text);
+}
+
+.nav a.active {
+  background: var(--panel);
+  color: var(--text);
+}
+
 .logo {
   font-family: var(--font-display);
   font-size: 2.3rem;
@@ -63,5 +100,13 @@
 
   .legend {
     display: none;
+  }
+
+  .left {
+    gap: 12px;
+  }
+
+  .nav a {
+    padding: 6px 10px;
   }
 }

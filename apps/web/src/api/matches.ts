@@ -33,5 +33,10 @@ export const listMatches = (filters: MatchFilters, sort: MatchSort, offset: numb
 export const getMatchSummary = (filters: Omit<MatchFilters, "statuses">) =>
   request<MatchSummary>("GET", "/matches/summary", { query: filterQuery(filters) });
 
-export const updateMatchStatus = (id: number, status: MatchStatus) =>
-  request<Match>("PATCH", `/matches/${id}`, { body: { status } });
+export interface MatchPatch {
+  status?: MatchStatus;
+  user_note?: string | null;
+}
+
+export const updateMatch = (id: number, patch: MatchPatch) =>
+  request<Match>("PATCH", `/matches/${id}`, { body: patch });

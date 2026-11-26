@@ -2,7 +2,8 @@ import { ApiError, request } from "./client";
 
 export const SESSION_QUERY_KEY = ["session"] as const;
 
-export const login = (password: string) => request<void>("POST", "/auth/login", { body: { password } });
+export const login = (password: string) =>
+  request<void>("POST", "/auth/login", { body: { password } });
 
 export const logout = () => request<void>("POST", "/auth/logout");
 

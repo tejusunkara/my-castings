@@ -1,11 +1,16 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useNavigate } from "react-router";
+import { NavLink, useNavigate } from "react-router";
 
 import { logout } from "../../api/auth";
 import { sourceColor, sourceName } from "../../lib/sources";
 import styles from "./AppHeader.module.css";
 
 const LEGEND = ["casting_networks", "backstage", "actors_access"];
+const NAV = [
+  ["/", "Matches"],
+  ["/profile", "Profile"],
+  ["/admin", "Needs attention"],
+] as const;
 
 export function Logo() {
   return (
@@ -28,7 +33,26 @@ export function AppHeader() {
 
   return (
     <header className={styles.header}>
-      <Logo />
+      <div className={styles.left}>
+        <NavLink to="/" className={styles.home} aria-label="All Castings: matches">
+          <Logo />
+        </NavLink>
+        <nav aria-label="Main">
+          <ul className={styles.nav}>
+            {NAV.map(([to, label]) => (
+              <li key={to}>
+                <NavLink
+                  to={to}
+                  end
+                  className={({ isActive }) => (isActive ? styles.active : undefined)}
+                >
+                  {label}
+                </NavLink>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </div>
       <div className={styles.right}>
         <ul className={styles.legend} aria-label="Sources">
           {LEGEND.map((key) => (
