@@ -6,6 +6,7 @@ import { AdminPage } from "./pages/AdminPage";
 import { CastingCallPage } from "./pages/CastingCallPage";
 import { DashboardPage } from "./pages/DashboardPage";
 import { LoginPage } from "./pages/LoginPage";
+import { MediaPage } from "./pages/MediaPage";
 import { ProfilePage } from "./pages/ProfilePage";
 
 export function App() {
@@ -22,6 +23,7 @@ export function App() {
         <Route index element={<DashboardPage />} />
         <Route path="casting-calls/:id" element={<CastingCallPage />} />
         <Route path="profile" element={<ProfilePage />} />
+        <Route path="media" element={<MediaPage />} />
         <Route path="admin" element={<AdminPage />} />
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />

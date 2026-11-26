@@ -11,17 +11,20 @@ media_assets.upload_status state machine:
 
 Any other HEAD failure (timeout, throttling) leaves the row pending for the next sweep:
 never delete on an ambiguous error, or a transient blip loses a real upload.
+
+A media asset is either a stored file (s3_key set) or a link (external_url set), never
+both. is_current marks what the artist uses today; the rest is the archive.
 """
 
 from datetime import date, datetime
 
-from sqlalchemy import BigInteger, CheckConstraint, ForeignKey, Text, false, func
+from sqlalchemy import BigInteger, CheckConstraint, ForeignKey, Text, false, func, true
 from sqlalchemy.dialects.postgresql import ARRAY
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.base import Base, created_at_column, in_check
 
-ASSET_TYPES = ("headshot", "self_tape", "voice_reel", "social_link")
+ASSET_TYPES = ("headshot", "digital", "acting_reel", "self_tape", "resume", "social_link")
 UPLOAD_STATUSES = ("pending", "completed")
 
 
@@ -73,6 +76,7 @@ class MediaAsset(Base):
     __table_args__ = (
         CheckConstraint(in_check("asset_type", ASSET_TYPES), name="asset_type"),
         CheckConstraint(in_check("upload_status", UPLOAD_STATUSES), name="upload_status"),
+        CheckConstraint("(s3_key IS NULL) <> (external_url IS NULL)", name="file_or_link"),
     )
 
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -84,9 +88,12 @@ class MediaAsset(Base):
     s3_key: Mapped[str | None] = mapped_column(Text)
     content_type: Mapped[str | None] = mapped_column(Text)
     file_size_bytes: Mapped[int | None] = mapped_column(BigInteger)
-    external_url: Mapped[str | None] = mapped_column(Text)  # social_link rows
-    label: Mapped[str | None] = mapped_column(Text)
+    original_filename: Mapped[str | None] = mapped_column(Text)
+    external_url: Mapped[str | None] = mapped_column(Text)  # links: social, hosted reels
+    label: Mapped[str | None] = mapped_column(Text)  # e.g. "Commercial", "Theatrical"
+    is_current: Mapped[bool] = mapped_column(server_default=true())
     upload_status: Mapped[str] = mapped_column(Text, server_default="pending")
     created_at: Mapped[datetime] = created_at_column()
+    completed_at: Mapped[datetime | None]
 
     profile: Mapped[ArtistProfile] = relationship(back_populates="media_assets")

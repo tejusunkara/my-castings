@@ -9,6 +9,7 @@ const LEGEND = ["casting_networks", "backstage", "actors_access"];
 const NAV = [
   ["/", "Matches"],
   ["/profile", "Profile"],
+  ["/media", "Media"],
   ["/admin", "Needs attention"],
 ] as const;
 

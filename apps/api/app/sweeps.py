@@ -7,7 +7,8 @@ import argparse
 import logging
 
 from app.db.session import SessionLocal
-from app.services.sweeps import run_match_sweep
+from app.services.media_store import get_media_store
+from app.services.sweeps import run_match_sweep, run_media_sweep
 
 log = logging.getLogger("app.sweeps")
 
@@ -16,6 +17,9 @@ def run_once() -> None:
     with SessionLocal.begin() as db:
         result = run_match_sweep(db)
     log.info("match sweep: %s", result)
+    with SessionLocal.begin() as db:
+        media = run_media_sweep(db, get_media_store())
+    log.info("media sweep: %s", media)
 
 
 def main() -> None:

@@ -1,0 +1,281 @@
+.page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px 34px 64px;
+}
+
+.heading {
+  font-family: var(--font-display);
+  font-size: 2.3rem;
+}
+
+.intro {
+  margin: 8px 0 28px;
+  color: var(--text-muted);
+  max-width: 62ch;
+}
+
+.notice {
+  padding: 28px;
+  border-radius: var(--radius-lg);
+  background: var(--panel);
+  color: var(--text-muted);
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 24px;
+  padding: 24px 26px;
+  border-radius: var(--radius-lg);
+  background: var(--panel);
+}
+
+.sectionTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.sectionTitle {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+}
+
+.hint {
+  margin: 2px 0 0;
+  color: var(--text-faint);
+  font-size: 0.92rem;
+}
+
+.uploadButton {
+  flex: none;
+  padding: 9px 18px;
+  border-radius: var(--radius-pill);
+  background: var(--accent);
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.uploadButton:hover {
+  background: var(--accent-strong);
+}
+
+input:focus-visible + .uploadButton {
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+}
+
+.linkForm {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.linkForm input,
+.rename input {
+  flex: 1 1 240px;
+  padding: 9px 14px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  background: var(--well);
+}
+
+.linkForm .labelInput {
+  flex: 0 1 200px;
+}
+
+.linkForm input::placeholder,
+.rename input::placeholder {
+  color: var(--text-faint);
+}
+
+.linkForm input:focus,
+.rename input:focus {
+  border-color: rgba(255, 255, 255, 0.35);
+  outline: none;
+}
+
+.linkForm button,
+.rename button {
+  padding: 9px 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: transparent;
+}
+
+.linkForm button:disabled {
+  opacity: 0.5;
+}
+
+.uploads {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.uploads li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.uploadName {
+  color: var(--text-muted);
+  overflow-wrap: anywhere;
+}
+
+.uploads progress {
+  flex: 1 1 200px;
+  accent-color: var(--accent);
+}
+
+.empty {
+  margin: 0;
+  color: var(--text-faint);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  background: var(--well);
+}
+
+.item[data-current="false"] {
+  opacity: 0.8;
+}
+
+.preview {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  background: rgba(255, 255, 255, 0.05);
+  object-fit: cover;
+}
+
+video.preview {
+  aspect-ratio: 16 / 9;
+  background: #000;
+}
+
+.preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.linkPreview {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 16 / 9;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.linkPreview:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.itemBody {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 14px 14px;
+}
+
+.itemName {
+  margin: 0;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.itemDetails {
+  margin: 0;
+  color: var(--text-faint);
+  font-size: 0.85rem;
+  overflow-wrap: anywhere;
+}
+
+.rename {
+  display: flex;
+  gap: 6px;
+}
+
+.rename input {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 6px 10px;
+}
+
+.rename button {
+  padding: 6px 10px;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+
+.textButton {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.textButton:hover {
+  color: var(--text);
+}
+
+.danger:hover {
+  color: var(--danger);
+}
+
+.archive summary {
+  cursor: pointer;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+
+.error {
+  margin: 0;
+  color: var(--danger);
+  font-size: 0.92rem;
+}
+
+@media (max-width: 700px) {
+  .page {
+    padding: 20px 16px 48px;
+  }
+
+  .section {
+    padding: 20px 18px;
+  }
+
+  .sectionTop {
+    flex-direction: column;
+  }
+}

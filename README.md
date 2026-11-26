@@ -17,7 +17,7 @@ source, and infrastructure as code.
 | 1e | Casting Networks parser | ✅ Done |
 | — | Actors Access parser | 🟡 Provisional: built from a manual forward, awaiting an auto-forwarded email |
 | 1b | AWS infrastructure (CDK) + deploy the API | 🟡 In progress: budget deployed; network stack written, not deployed |
-| 1c | React frontend, media uploads (presigned S3) | 🟡 In progress: all pages but media run locally |
+| 1c | React frontend, media uploads (presigned S3) | ✅ Done locally (media on a local S3 stand-in); hosting comes with 1b |
 | 1d | Wire the live email pipeline (S3 → Lambda → RDS) | ⏳ Planned |
 
 ### Implemented so far
@@ -61,10 +61,15 @@ source, and infrastructure as code.
   - Casting-call page: description, every role with its apply link, status and a note.
   - Profile page (saving re-runs matching) and a "Needs attention" page listing failed,
     partial and unverified emails, with reprocessing.
-- **Tests:** about 300 tests covering parsers, verification, migrations, reconciliation,
-  matching, sweeps, auth, every endpoint, and the dashboard (Vitest).
+  - Media library: headshots, modeling digitals, acting reels, self-tapes, resume PDF and
+    social links. Files upload straight from the browser to S3 through signed forms
+    that pin type and size; reels and self-tapes can also be links. Items are marked
+    current or archived, and a sweep cleans up uploads that never finished.
+- **Tests:** about 350 tests covering parsers, verification, migrations, reconciliation,
+  matching, sweeps, auth, every endpoint (media against an in-memory S3), and every
+  page (Vitest).
 
-**Not built yet:** the media page and media upload endpoints, the S3-backed raw-email reader, the ingestion Lambda, most AWS
+**Not built yet:** the S3-backed raw-email reader, the ingestion Lambda, most AWS
 infrastructure, and CI/CD.
 
 ## Architecture
@@ -125,7 +130,7 @@ to a scratch bucket). Dashed parts are planned AWS resources. Their application 
 | Email parsing | stdlib `email`, BeautifulSoup + lxml |
 | Auth | scrypt (stdlib `hashlib`), PyJWT session cookie |
 | Testing / lint | pytest, FastAPI TestClient, ruff |
-| Local infra | Docker Compose (Postgres) |
+| Local infra | Docker Compose: Postgres, and RustFS as an S3-compatible stand-in for media |
 | AWS (planned) | SES, S3, Lambda, RDS, ECS Fargate + ALB, CloudFront, EventBridge, SSM, Route 53, all defined in CDK (Python) |
 | Frontend | React 19 + TypeScript, Vite, React Router, TanStack Query, CSS modules; Vitest + Testing Library |
 | CI/CD (planned) | GitHub Actions with OIDC deploy role |
@@ -135,7 +140,7 @@ to a scratch bucket). Dashed parts are planned AWS resources. Their application 
 ```
 my-castings/
 ├── pyproject.toml              uv workspace root: members, shared dev tools, pytest/ruff config
-├── docker-compose.yml          local Postgres (dev db + my_castings_test)
+├── docker-compose.yml          local Postgres (dev db + my_castings_test) and RustFS (media)
 ├── docker/postgres-init.sql    creates the test database
 ├── infra/                      AWS CDK app (Python): every AWS resource as code
 │   ├── app.py                  entry point; stacks pinned to us-east-1, cdk-nag checks
@@ -164,7 +169,7 @@ my-castings/
     │   └── src/
     │       ├── api/            fetch client + one module per resource, types mirroring schemas
     │       ├── components/     layout/ (header, protected route), matches/ (card, filters, tiles)
-    │       ├── pages/          Login, Dashboard, CastingCall, Profile, Admin
+    │       ├── pages/          Login, Dashboard, CastingCall, Profile, Media, Admin
     │       ├── hooks/          useUpdateMatch (optimistic status/note changes)
     │       ├── test/           fake API, render helper, fixtures
     │       └── lib/            URL filter state, formatting, source colors
@@ -176,11 +181,13 @@ my-castings/
     │   │   ├── deps.py         DB session + session-cookie auth dependencies
     │   │   ├── models/         SQLAlchemy tables (status state machines documented inline)
     │   │   ├── schemas/        Pydantic request/response models
-    │   │   ├── routers/        auth, profile, casting_calls, matches, admin
+    │   │   ├── routers/        auth, profile, casting_calls, matches, media, admin
     │   │   ├── services/
     │   │   │   ├── ingestion.py        ingest() + store_digest() (in-place reconciliation)
     │   │   │   ├── matching.py         age / gender / location criteria
-    │   │   │   ├── sweeps.py           match sweep
+    │   │   │   ├── sweeps.py           match sweep and media (stale upload) sweep
+    │   │   │   ├── media.py            what each media type accepts
+    │   │   │   ├── media_store.py      S3: signed upload forms and view links
     │   │   │   ├── profile.py          single-row profile get/upsert
     │   │   │   ├── auth.py             password hashing, JWT, login rate limiter
     │   │   │   └── raw_email_store.py  fetch original email (local dir now, S3 later)
@@ -213,7 +220,7 @@ Docker Desktop. uv installs Python 3.12 itself.
 # 1. Install dependencies (creates .venv)
 uv sync
 
-# 2. Start Postgres (also creates the my_castings_test database)
+# 2. Start Postgres (also creates the my_castings_test database) and local S3 storage
 docker compose up -d --wait
 
 # 3. Configure the API
@@ -229,6 +236,9 @@ uv run alembic upgrade head
 
 # 5. Load sample data: parses the fixture emails, creates the profile, computes matches
 uv run python -m app.seed
+
+# 5b. Create the local media bucket and allow uploads from the dev frontend
+uv run python -m app.media_setup
 
 # 6. Run the API
 uv run uvicorn app.main:app --reload

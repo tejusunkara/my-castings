@@ -17,5 +17,23 @@ services:
       timeout: 3s
       retries: 15
 
+  # S3-compatible storage for media uploads in local development (stands in for the
+  # media bucket on AWS). API on :9000. The keys are local-only, like the Postgres password.
+  storage:
+    image: rustfs/rustfs:latest
+    environment:
+      RUSTFS_ACCESS_KEY: my_castings
+      RUSTFS_SECRET_KEY: my_castings_local_storage
+    ports:
+      - "9000:9000"
+    volumes:
+      - storagedata:/data
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fs http://localhost:9000/health || wget -qO- http://localhost:9000/health || exit 1"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
 volumes:
   pgdata:
+  storagedata:

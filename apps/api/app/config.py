@@ -22,6 +22,17 @@ class Settings(BaseSettings):
     login_max_attempts: int = 5
     login_window_seconds: int = 15 * 60
 
+    # Media files (headshots, reels, ...). On AWS the bucket is real S3 and credentials come
+    # from the task role; locally s3_endpoint_url points at the RustFS container from
+    # docker-compose.yml, with its keys below.
+    media_bucket: str = "my-castings-media"
+    s3_region: str = "us-east-1"
+    s3_endpoint_url: str | None = None
+    s3_access_key_id: SecretStr | None = None
+    s3_secret_access_key: SecretStr | None = None
+    # Origins allowed to upload to and read from the media bucket (bucket CORS).
+    media_cors_origins: list[str] = ["http://localhost:5173"]
+
     # Raw emails whose s3_bucket is "local" are read from this directory instead of S3
     # (local development and the seed script).
     raw_email_local_dir: Path = REPO_ROOT / "packages/ingestion_core/tests/fixtures"

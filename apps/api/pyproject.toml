@@ -12,6 +12,7 @@ dependencies = [
     "pydantic-settings>=2.4",
     "pyjwt>=2.9",
     "ingestion-core",
+    "boto3>=1.44.12",
 ]
 
 [tool.uv.sources]

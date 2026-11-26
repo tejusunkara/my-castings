@@ -114,3 +114,33 @@ export interface ReprocessResult {
   kept_role_ids: number[];
   new_matches: number;
 }
+
+export const ASSET_TYPES = [
+  "headshot",
+  "digital",
+  "acting_reel",
+  "self_tape",
+  "resume",
+  "social_link",
+] as const;
+export type AssetType = (typeof ASSET_TYPES)[number];
+
+export interface MediaAsset {
+  id: number;
+  asset_type: AssetType;
+  label: string | null;
+  is_current: boolean;
+  upload_status: "pending" | "completed";
+  content_type: string | null;
+  file_size_bytes: number | null;
+  original_filename: string | null;
+  external_url: string | null;
+  created_at: string;
+  completed_at: string | null;
+  view_url: string | null; // signed, valid for an hour
+}
+
+export interface UploadStarted {
+  asset: MediaAsset;
+  upload: { url: string; fields: Record<string, string> };
+}

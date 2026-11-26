@@ -1,4 +1,7 @@
-"""Periodic match sweep: keeps saved_matches in step with roles and the profile.
+"""Periodic sweeps. The match sweep keeps saved_matches in step with roles and the
+profile; the media sweep settles uploads that were started but never confirmed.
+
+Match sweep:
 
 Idempotent and safe to run any time (daily at 9am in production, after profile edits,
 by the seed script):
@@ -10,15 +13,23 @@ by the seed script):
   has acted on (saved/applied/dismissed) are never touched.
 """
 
+import logging
 from dataclasses import dataclass
+from datetime import UTC, datetime, timedelta
+from typing import TYPE_CHECKING
 
 from sqlalchemy import exists, select
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.orm import Session, selectinload
 
-from app.models import Role, SavedMatch
+from app.models import MediaAsset, Role, SavedMatch
 from app.services.matching import evaluate_role
 from app.services.profile import get_profile
+
+if TYPE_CHECKING:
+    from app.services.media_store import MediaStore
+
+log = logging.getLogger(__name__)
 
 
 @dataclass
@@ -68,5 +79,51 @@ def run_match_sweep(db: Session) -> MatchSweepResult:
         elif saved.match_reasons != match.reasons:
             saved.match_reasons = match.reasons
 
+    db.flush()
+    return result
+
+
+# A pending upload younger than this may still be in flight.
+PENDING_UPLOAD_GRACE = timedelta(minutes=30)
+
+
+@dataclass
+class MediaSweepResult:
+    completed: int = 0  # the file had arrived; the browser just never confirmed
+    removed: int = 0  # S3 says the file doesn't exist: the upload was abandoned
+    unresolved: int = 0  # S3 couldn't say (timeout, throttling): try again next run
+
+
+def run_media_sweep(
+    db: Session, store: "MediaStore", now: datetime | None = None
+) -> MediaSweepResult:
+    """Settles pending uploads older than the grace period (see app/models/profile.py).
+
+    Only an explicit "not found" from S3 deletes a row. Any other error leaves it pending,
+    so a transient failure never loses an upload that actually landed.
+    """
+    now = now or datetime.now(UTC)
+    result = MediaSweepResult()
+    stale = db.scalars(
+        select(MediaAsset).where(
+            MediaAsset.upload_status == "pending",
+            MediaAsset.created_at < now - PENDING_UPLOAD_GRACE,
+        )
+    ).all()
+    for asset in stale:
+        try:
+            size = store.object_size(asset.s3_key)
+        except Exception:
+            log.warning("media sweep: couldn't check %s; leaving it pending", asset.s3_key)
+            result.unresolved += 1
+            continue
+        if size is None:
+            db.delete(asset)
+            result.removed += 1
+        else:
+            asset.file_size_bytes = size
+            asset.upload_status = "completed"
+            asset.completed_at = now
+            result.completed += 1
     db.flush()
     return result
