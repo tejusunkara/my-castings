@@ -15,8 +15,9 @@ source, and infrastructure as code.
 | 0 | Prove a sender's DKIM survives the Gmail-forward → SES hop | ✅ Done: 32/32 forwarded digests passed |
 | 1a | Local skeleton: parsers, schema, matching, API, seed (no AWS) | ✅ Done |
 | 1e | Casting Networks parser | ✅ Done |
-| 1b | AWS infrastructure (CDK) + deploy the API | ⏳ Planned |
-| 1c | React frontend, media uploads (presigned S3) | ⏳ Planned |
+| — | Actors Access parser | 🟡 Provisional: built from a manual forward, awaiting an auto-forwarded email |
+| 1b | AWS infrastructure (CDK) + deploy the API | 🟡 In progress: budget deployed; network stack written, not deployed |
+| 1c | React frontend, media uploads (presigned S3) | 🟡 In progress: login and matches dashboard run locally |
 | 1d | Wire the live email pipeline (S3 → Lambda → RDS) | ⏳ Planned |
 
 ### Implemented so far
@@ -25,6 +26,9 @@ source, and infrastructure as code.
   - Backstage and Casting Networks digest parsers, built and tested against real
     forwarded emails. Casting Networks sends one card per role; the parser groups them
     back into one posting per project and reads each role's submission deadline.
+  - Actors Access parser (provisional): one posting per breakdown, with type, union
+    status, location, gender and age.
+  - Pay, as the source prints it, for Backstage and Casting Networks roles.
   - Sender verification from SES's `Authentication-Results` header. Only the topmost,
     SES-written header is trusted, and a sender counts as verified only on an aligned
     DKIM or SPF pass.
@@ -45,12 +49,21 @@ source, and infrastructure as code.
 - **API (FastAPI)**
   - Single-password login: scrypt hash, JWT session cookie, rate-limited.
   - Endpoints for profile, casting calls, matches, and admin (needs-attention list and
-    reprocess).
-- **Tests:** 236 tests covering parsers, verification, migrations, reconciliation,
-  matching, sweeps, auth, and every endpoint.
+    reprocess). Matches can be filtered by status, source, project type and a text
+    search, sorted by deadline, match date or posting date, and summarized as counts
+    per status.
+- **Frontend (`apps/web`, React)**
+  - Login page and a matches dashboard: one card per matched role with source, project
+    type, ages, location, pay and deadline, and a New / Saved / Applied / Dismissed
+    control per card.
+  - Status tiles with counts (click to show or hide a status), source and project-type
+    filters, search, and sorting. Filters live in the URL, so a refresh keeps the view.
+- **Tests:** about 300 tests covering parsers, verification, migrations, reconciliation,
+  matching, sweeps, auth, every endpoint, and the dashboard (Vitest).
 
-**Not built yet:** media upload endpoints, the S3-backed raw-email reader, the
-ingestion Lambda, AWS infrastructure, CI/CD, and the frontend.
+**Not built yet:** the casting-call detail, profile, media and admin pages, media upload
+endpoints, the S3-backed raw-email reader, the ingestion Lambda, most AWS
+infrastructure, and CI/CD.
 
 ## Architecture
 
@@ -112,7 +125,7 @@ to a scratch bucket). Dashed parts are planned AWS resources. Their application 
 | Testing / lint | pytest, FastAPI TestClient, ruff |
 | Local infra | Docker Compose (Postgres) |
 | AWS (planned) | SES, S3, Lambda, RDS, ECS Fargate + ALB, CloudFront, EventBridge, SSM, Route 53, all defined in CDK (Python) |
-| Frontend (planned) | React + Vite |
+| Frontend | React 19 + TypeScript, Vite, React Router, TanStack Query, CSS modules; Vitest + Testing Library |
 | CI/CD (planned) | GitHub Actions with OIDC deploy role |
 
 ## Repository layout
@@ -124,7 +137,8 @@ my-castings/
 ├── docker/postgres-init.sql    creates the test database
 ├── infra/                      AWS CDK app (Python): every AWS resource as code
 │   ├── app.py                  entry point; stacks pinned to us-east-1, cdk-nag checks
-│   ├── my_castings_infra/      one module per stack (guardrails_stack.py: cost budget)
+│   ├── my_castings_infra/      one module per stack (guardrails_stack.py: cost budget;
+│   │                           network_stack.py: VPC, subnets, NAT, security groups)
 │   ├── tests/                  CDK assertion tests
 │   └── package.json            pins the CDK CLI (`npx cdk ...`)
 │
@@ -136,6 +150,7 @@ my-castings/
 │   │   │   ├── base.py         CastingSourceAdapter interface: one class per source
 │   │   │   ├── backstage.py    Backstage digest parser
 │   │   │   ├── casting_networks.py  Casting Networks digest parser
+│   │   │   ├── actors_access.py     Actors Access notification parser (provisional)
 │   │   │   └── registry.py     sender -> adapter (none / one / ambiguous)
 │   │   └── parsing/            MIME helpers, "Posted 2 days ago" parsing, text/gender/
 │   │                           age/location normalization
@@ -143,6 +158,12 @@ my-castings/
 │       └── fixtures/           real post-forward .eml captures (Backstage, Casting Networks)
 │
 └── apps/
+    ├── web/                    React frontend (Vite); /api is proxied to the API in dev
+    │   └── src/
+    │       ├── api/            fetch client + one module per resource, types mirroring schemas
+    │       ├── components/     layout/ (header, protected route), matches/ (card, filters, tiles)
+    │       ├── pages/          LoginPage, DashboardPage
+    │       └── lib/            URL filter state, formatting, source colors
     ├── api/                    FastAPI backend
     │   ├── alembic/versions/   schema migrations (source of truth for the DB)
     │   ├── app/
@@ -207,7 +228,14 @@ uv run python -m app.seed
 
 # 6. Run the API
 uv run uvicorn app.main:app --reload
+
+# 7. In another terminal, run the frontend (Node 24: `nvm use` reads apps/web/.nvmrc)
+cd apps/web
+npm install
+npm run dev
 ```
+
+The app is at <http://localhost:5173>; log in with the password from step 3.
 
 The API is now at <http://localhost:8000>, with interactive docs at
 <http://localhost:8000/docs>. To try it from the terminal:
@@ -224,7 +252,8 @@ Run from the repository root unless noted.
 
 | Task | Command |
 |---|---|
-| Run all tests | `uv run pytest` |
+| Run all tests | `uv run pytest`, plus `cd apps/web && npm test` for the frontend |
+| Frontend checks | `cd apps/web && npm run typecheck && npm run lint && npm run build` |
 | Lint / format | `uv run ruff check .` and `uv run ruff format .` |
 | New migration after editing models | `cd apps/api && uv run alembic revision --autogenerate -m "..."`, then review the file. Autogenerate misses CHECK constraints and data moves. |
 | Check models match migrations | `cd apps/api && uv run alembic check` |

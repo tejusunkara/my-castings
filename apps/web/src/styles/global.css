@@ -1,0 +1,91 @@
+:root {
+  --page: #8a5aad;
+  --panel: #44135f;
+  --panel-raised: #4f1a6d;
+  --well: #2e0b43;
+  --line: rgba(255, 255, 255, 0.14);
+  --text: #ffffff;
+  --text-muted: #d6c3e4;
+  --text-faint: #b79ccb;
+  --accent: #b5178f;
+  --accent-strong: #d6249f;
+  --danger: #ffb4c8;
+
+  --source-casting-networks: #f07a2b;
+  --source-backstage: #e2286f;
+  --source-actors-access: #3237d8;
+  --source-other: #7d7d9c;
+
+  --radius-lg: 18px;
+  --radius-md: 12px;
+  --radius-pill: 999px;
+  --shadow: 0 10px 30px rgba(35, 4, 52, 0.35);
+
+  --font-body: "DM Sans Variable", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "DM Serif Display", Georgia, "Times New Roman", serif;
+
+  color-scheme: dark;
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.45;
+  color: var(--text);
+  background: var(--page);
+  -webkit-font-smoothing: antialiased;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  font-weight: 400;
+}
+
+button,
+input,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
