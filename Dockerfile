@@ -1,5 +1,7 @@
-# The API image: also runs migrations (alembic) and the daily sweeps (python -m app.sweeps).
-# Build from the repository root: docker build -t my-castings-api .
+# Two images from one build. Build from the repository root:
+#   docker build -t my-castings-api .                    the API; also runs migrations
+#                                                        (alembic) and the daily sweep
+#   docker build --target lambda -t my-castings-ingest .  the email-ingestion Lambda
 
 FROM ghcr.io/astral-sh/uv:python3.12-bookworm-slim AS build
 # Same path as the final stage: venv scripts hard-code their interpreter path.
@@ -18,7 +20,14 @@ COPY packages/ingestion_core packages/ingestion_core
 COPY apps/api apps/api
 RUN uv sync --frozen --no-dev --package my-castings-api --no-editable
 
-FROM python:3.12-slim-bookworm
+# The email-ingestion Lambda: the same packages on AWS's Lambda Python base image.
+# Built with --target lambda (CDK does this for the Ingestion stack).
+FROM public.ecr.aws/lambda/python:3.12 AS lambda
+COPY --from=build /app/.venv/lib/python3.12/site-packages ${LAMBDA_TASK_ROOT}
+CMD ["app.ingest_lambda.handler"]
+
+# The API (the default, last stage).
+FROM python:3.12-slim-bookworm AS api
 RUN useradd --system --uid 10001 --no-create-home app
 WORKDIR /app
 COPY --from=build /app/.venv /app/.venv

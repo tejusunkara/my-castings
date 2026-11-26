@@ -33,15 +33,7 @@ class MediaStore:
     def __init__(self, settings: Settings, client: Any | None = None):
         self.bucket = settings.media_bucket
         self.cors_origins = settings.media_cors_origins
-        self.client = client or boto3.client(
-            "s3",
-            region_name=settings.s3_region,
-            endpoint_url=settings.s3_endpoint_url,
-            aws_access_key_id=_secret(settings.s3_access_key_id),
-            aws_secret_access_key=_secret(settings.s3_secret_access_key),
-            # Path-style keeps local endpoints (http://localhost:9000/bucket/key) working.
-            config=Config(signature_version="s3v4", s3={"addressing_style": "path"}),
-        )
+        self.client = client or s3_client(settings)
 
     def upload_form(self, key: str, content_type: str, max_bytes: int) -> UploadForm:
         post = self.client.generate_presigned_post(
@@ -96,6 +88,19 @@ class MediaStore:
                 ]
             },
         )
+
+
+def s3_client(settings: Settings):
+    """An S3 client for AWS, or for the local stand-in when s3_endpoint_url is set."""
+    return boto3.client(
+        "s3",
+        region_name=settings.s3_region,
+        endpoint_url=settings.s3_endpoint_url,
+        aws_access_key_id=_secret(settings.s3_access_key_id),
+        aws_secret_access_key=_secret(settings.s3_secret_access_key),
+        # Path-style keeps local endpoints (http://localhost:9000/bucket/key) working.
+        config=Config(signature_version="s3v4", s3={"addressing_style": "path"}),
+    )
 
 
 def _secret(value) -> str | None:

@@ -8,6 +8,7 @@ from my_castings_infra.data_stack import (
     media_bucket_name,
     raw_email_bucket_name,
 )
+from my_castings_infra.ingestion_stack import IngestionStack, ses_rule_arn
 from my_castings_infra.network_stack import NetworkStack
 from my_castings_infra.web_stack import WebStack
 
@@ -38,6 +39,7 @@ def stacks():
         vpc=network.vpc,
         db_security_group=network.db_sg,
         site_origin=f"https://{DOMAIN}",
+        ses_rule_arn=ses_rule_arn(ACCOUNT, "us-east-1", "allcastings-inbound"),
         env=ENV,
         termination_protection=True,
     )
@@ -67,4 +69,23 @@ def stacks():
         origin_verify_secret=SECRET,
         env=ENV,
     )
-    return {"app": app, "network": network, "data": data, "app_stack": app_stack, "web": web}
+    ingestion = IngestionStack(
+        app,
+        "Ingestion",
+        vpc=network.vpc,
+        ingestion_security_group=network.ingestion_sg,
+        database_secret=data.database_secret,
+        raw_email_bucket_name=raw_email_bucket_name(ACCOUNT),
+        ses_rule_set="allcastings-inbound",
+        inbound_address="jobs@mail.allcastings.fyi",
+        alert_email="alerts@example.com",
+        env=ENV,
+    )
+    return {
+        "app": app,
+        "network": network,
+        "data": data,
+        "app_stack": app_stack,
+        "web": web,
+        "ingestion": ingestion,
+    }

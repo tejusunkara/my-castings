@@ -18,7 +18,7 @@ source, and infrastructure as code.
 | — | Actors Access parser | 🟡 Provisional: built from a manual forward, awaiting an auto-forwarded email |
 | 1b | AWS infrastructure (CDK) + deploy the API | 🟡 All stacks written and tested; only `Guardrails` deployed |
 | 1c | React frontend, media uploads (presigned S3) | ✅ Done locally (media on a local S3 stand-in); hosting comes with 1b |
-| 1d | Wire the live email pipeline (S3 → Lambda → RDS) | ⏳ Planned |
+| 1d | Wire the live email pipeline (S3 → Lambda → RDS) | 🟡 Written and tested locally (real Lambda image); not deployed |
 
 ### Implemented so far
 
@@ -69,8 +69,8 @@ source, and infrastructure as code.
   matching, sweeps, auth, every endpoint (media against an in-memory S3), and every
   page (Vitest).
 
-**Not built yet:** the S3-backed raw-email reader, the ingestion Lambda, most AWS
-infrastructure, and CI/CD.
+**Not built yet:** CI/CD. Everything else is written; on AWS only the cost budget is
+deployed so far.
 
 ## Architecture
 
@@ -147,7 +147,7 @@ my-castings/
 │   ├── my_castings_infra/      one module per stack: guardrails, network, data, app, web
 │   ├── tests/                  CDK assertion tests (and the CloudFront functions, run in Node)
 │   └── package.json            pins the CDK CLI (`npx cdk ...`)
-├── scripts/aws/                create_app_secrets, run_migration, deploy_web
+├── scripts/aws/                create_app_secrets, run_migration, deploy_web, backfill_emails
 ├── Dockerfile                  the API image (also runs migrations and the daily sweep)
 │
 ├── packages/ingestion_core/    pure-Python parsing, no DB or AWS; shared by API and Lambda
@@ -196,8 +196,8 @@ my-castings/
     │   │   └── sweeps.py       scheduled-task CLI: python -m app.sweeps run_once
     │   ├── tests/              DB-backed tests (run against my_castings_test)
     │   └── .env.example        local settings template
-    ├── ingestion_lambda/       (planned) thin S3-event handler around ingest()
-    └── web/                    (planned) React SPA
+    │                           (the ingestion Lambda is apps/api/app/ingest_lambda.py, built
+    │                           from the same Dockerfile with --target lambda)
 ```
 
 **Where information lives**
@@ -316,6 +316,7 @@ spend and 100% forecast; termination protection on).
 | `Data` | Postgres 16 (t4g.micro, single-AZ, 7-day backups, deletion protection), raw-email and media buckets; termination-protected, everything retained | ~$15 |
 | `App` | the API on Fargate (ARM, 0.25 vCPU) behind a load balancer that accepts only CloudFront; migrate and daily-sweep tasks | ~$25 |
 | `Web` | CloudFront at the domain: the frontend from a private bucket, `/api/*` to the load balancer | ~$1 |
+| `Ingestion` | SES rule to the raw-email bucket, EventBridge, the parsing Lambda, a dead-letter queue that emails an alert | ~free |
 
 The browser only ever talks to `https://allcastings.fyi`; CloudFront sends `/api/*` to
 the load balancer (`origin.allcastings.fyi`) with a secret header, and the load balancer
@@ -331,16 +332,20 @@ cd infra
 npx cdk deploy Network Data                       # the database takes ~10 minutes
 npx cdk deploy App                                # builds and pushes the API image
 cd ..
-uv run python scripts/aws/run_migration.py        # create the schema
-cd infra && npx cdk deploy Web && cd ..           # CloudFront takes ~5-10 minutes
+uv run python scripts/aws/run_migration.py        # create the schema (before Ingestion!)
+cd infra && npx cdk deploy Ingestion Web && cd .. # CloudFront takes ~5-10 minutes
 uv run python scripts/aws/deploy_web.py           # build and publish the frontend
+uv run python scripts/aws/backfill_emails.py      # import past emails from the scratch bucket
 ```
+
+Then log in at https://allcastings.fyi, fill in your profile (matches are computed when
+you save it), and confirm the alert subscription email AWS sends to your budget address.
 
 #### Releasing changes
 
 | Changed | Do |
 |---|---|
-| API code | `npx cdk deploy App` (new image, rolling restart); then `run_migration.py` if there's a new migration |
+| API code | `run_migration.py` first if there's a new migration, then `npx cdk deploy App Ingestion` (both run the same code) |
 | Frontend | `uv run python scripts/aws/deploy_web.py` |
 | Login password | `uv run python scripts/aws/create_app_secrets.py --replace`, then redeploy `App` |
 

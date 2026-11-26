@@ -1,6 +1,6 @@
 """Every inbound email, kept regardless of parse outcome.
 
-parse_status state machine (mirrored in apps/ingestion_lambda/handler.py):
+parse_status state machine (the ingestion Lambda, app/ingest_lambda.py, runs the same ingest()):
 
                     ┌─────────┐
                     │ pending │  (row created on S3 ObjectCreated, before parse attempt)

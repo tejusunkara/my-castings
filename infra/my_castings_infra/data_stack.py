@@ -10,6 +10,7 @@ until it recovers or a restore, which is the accepted trade for half the cost of
 
 import aws_cdk as cdk
 from aws_cdk import aws_ec2 as ec2
+from aws_cdk import aws_iam as iam
 from aws_cdk import aws_logs as logs
 from aws_cdk import aws_rds as rds
 from aws_cdk import aws_s3 as s3
@@ -39,6 +40,7 @@ class DataStack(cdk.Stack):
         vpc: ec2.IVpc,
         db_security_group: ec2.ISecurityGroup,
         site_origin: str,
+        ses_rule_arn: str,
         **kwargs,
     ) -> None:
         super().__init__(scope, construct_id, **kwargs)
@@ -91,6 +93,27 @@ class DataStack(cdk.Stack):
             versioned=True,
             object_ownership=s3.ObjectOwnership.BUCKET_OWNER_ENFORCED,
             removal_policy=cdk.RemovalPolicy.RETAIN,
+        )
+
+        # SES writes incoming mail under inbound/, and only the one receipt rule may. S3 then
+        # tells EventBridge, which starts the ingestion Lambda (Ingestion stack). The
+        # EventBridge switch is set on the bucket directly: CDK's notification helper would
+        # add a Lambda to this stack.
+        self.raw_email_bucket.add_to_resource_policy(
+            iam.PolicyStatement(
+                sid="SesWritesInbound",
+                principals=[iam.ServicePrincipal("ses.amazonaws.com")],
+                actions=["s3:PutObject"],
+                resources=[self.raw_email_bucket.arn_for_objects("inbound/*")],
+                conditions={
+                    "StringEquals": {"aws:SourceAccount": self.account},
+                    "ArnLike": {"aws:SourceArn": ses_rule_arn},
+                },
+            )
+        )
+        raw_cfn = self.raw_email_bucket.node.default_child
+        raw_cfn.add_property_override(
+            "NotificationConfiguration.EventBridgeConfiguration.EventBridgeEnabled", True
         )
 
         # Headshots, reels, resume. Browsers upload with signed forms and view with signed

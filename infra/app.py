@@ -15,6 +15,7 @@ Stacks, in deploy order:
     Data        Postgres, raw-email and media buckets (termination-protected)
     App         API on Fargate behind a load balancer; migration and sweep tasks
     Web         CloudFront at the domain: the frontend, with /api/* sent to the App
+    Ingestion   SES rule, EventBridge and the Lambda that parses each forwarded email
 """
 
 import aws_cdk as cdk
@@ -28,6 +29,7 @@ from my_castings_infra.data_stack import (
     raw_email_bucket_name,
 )
 from my_castings_infra.guardrails_stack import GuardrailsStack
+from my_castings_infra.ingestion_stack import IngestionStack, ses_rule_arn
 from my_castings_infra.network_stack import NetworkStack
 from my_castings_infra.web_stack import WebStack
 
@@ -66,6 +68,7 @@ data = DataStack(
     vpc=network.vpc,
     db_security_group=network.db_sg,
     site_origin=SITE_ORIGIN,
+    ses_rule_arn=ses_rule_arn(ENV.account, ENV.region, required("ses_rule_set")),
     env=ENV,
     termination_protection=True,
 )
@@ -98,6 +101,19 @@ WebStack(
     domain=DOMAIN,
     origin_domain=ORIGIN_DOMAIN,
     origin_verify_secret=required("origin_verify_secret"),
+    env=ENV,
+)
+
+IngestionStack(
+    app,
+    "Ingestion",
+    vpc=network.vpc,
+    ingestion_security_group=network.ingestion_sg,
+    database_secret=data.database_secret,
+    raw_email_bucket_name=raw_email_bucket_name(ENV.account),
+    ses_rule_set=required("ses_rule_set"),
+    inbound_address=required("inbound_address"),
+    alert_email=app.node.try_get_context("budget_alert_email"),
     env=ENV,
 )
 

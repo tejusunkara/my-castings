@@ -77,3 +77,34 @@ def test_media_cors_allows_only_the_site(template, account):
 
 def test_no_helper_lambdas(template):
     template.resource_count_is("AWS::Lambda::Function", 0)
+
+
+def test_raw_emails_notify_eventbridge_without_a_helper(template, account):
+    template.has_resource_properties(
+        "AWS::S3::Bucket",
+        {
+            "BucketName": f"my-castings-raw-emails-{account}",
+            "NotificationConfiguration": {"EventBridgeConfiguration": {"EventBridgeEnabled": True}},
+        },
+    )
+
+
+def test_only_the_ses_rule_may_write_inbound(template, account):
+    policies = template.find_resources("AWS::S3::BucketPolicy")
+    statements = [
+        s
+        for p in policies.values()
+        for s in p["Properties"]["PolicyDocument"]["Statement"]
+        if s.get("Sid") == "SesWritesInbound"
+    ]
+    assert len(statements) == 1
+    [statement] = statements
+    assert statement["Principal"] == {"Service": "ses.amazonaws.com"}
+    assert statement["Action"] == "s3:PutObject"
+    assert statement["Condition"] == {
+        "StringEquals": {"aws:SourceAccount": account},
+        "ArnLike": {
+            "aws:SourceArn": f"arn:aws:ses:us-east-1:{account}:receipt-rule-set/"
+            "allcastings-inbound:receipt-rule/jobs-to-raw-emails"
+        },
+    }
