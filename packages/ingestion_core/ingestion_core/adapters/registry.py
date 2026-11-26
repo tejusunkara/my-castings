@@ -7,6 +7,7 @@
 
 from collections.abc import Mapping, Sequence
 
+from ingestion_core.adapters.actors_access import ActorsAccessAdapter
 from ingestion_core.adapters.backstage import BackstageAdapter
 from ingestion_core.adapters.base import CastingSourceAdapter
 from ingestion_core.adapters.casting_networks import CastingNetworksAdapter
@@ -33,7 +34,9 @@ class AdapterRegistry:
         return claimed[0] if claimed else None
 
 
-default_registry = AdapterRegistry([BackstageAdapter(), CastingNetworksAdapter()])
+default_registry = AdapterRegistry(
+    [BackstageAdapter(), CastingNetworksAdapter(), ActorsAccessAdapter()]
+)
 
 
 def get_adapter_for(from_address: str, headers: Mapping[str, str]) -> CastingSourceAdapter | None:

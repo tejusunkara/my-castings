@@ -13,7 +13,7 @@ from ingestion_core.types import ParsedDigest
 
 
 class CastingSourceAdapter(ABC):
-    source_key: str  # "backstage", "casting_networks", later "actors_access"
+    source_key: str  # "backstage", "casting_networks", "actors_access"
 
     @abstractmethod
     def matches_sender(self, from_address: str, headers: Mapping[str, str]) -> bool: ...

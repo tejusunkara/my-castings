@@ -10,6 +10,7 @@ from app.models import CastingCall, CastingSource, RawEmail, Role
 from app.services.ingestion import ingest
 from ingestion_core.adapters.backstage import BackstageAdapter
 from ingestion_core.adapters.registry import AdapterRegistry
+from ingestion_core.parsing.mime import html_body, load_message
 
 FIXTURES = Path(__file__).resolve().parents[3] / "packages/ingestion_core/tests/fixtures"
 RECEIVED = datetime(2026, 10, 29, 18, 13, 43, tzinfo=UTC)
@@ -124,3 +125,46 @@ def test_failed_reingest_keeps_rows_from_earlier_success(db, raw_email):
 def test_garbage_bytes_fail_without_raising(db, raw_email):
     ingest(db, raw_email, b"\x00\xff not an email")
     assert raw_email.parse_status == "failed"
+
+
+def actors_access_as_auto_forwarded() -> bytes:
+    """The manually forwarded Actors Access HTML, re-sent as an auto-forward would arrive:
+    From Actors Access, with SES reporting an aligned DKIM pass.
+
+    Stand-in until a real auto-forwarded capture exists; the DKIM result is assumed.
+    """
+    forwarded = load_message((FIXTURES / "actors_access_manual_forward.eml").read_bytes())
+    msg = EmailMessage()
+    msg["Authentication-Results"] = (
+        "amazonses.com; spf=pass envelope-from=redacted+caf_=jobs@gmail.com; "
+        "dkim=pass header.i=@actorsaccess.com; dmarc=pass header.from=actorsaccess.com;"
+    )
+    msg["From"] = "actors access <notifications@actorsaccess.com>"
+    msg["Subject"] = "Projects match your profile - 11/25/26 3:00 PM Pacific"
+    msg.set_content("text")
+    msg.add_alternative(html_body(forwarded), subtype="html")
+    return msg.as_bytes()
+
+
+def test_verified_actors_access_digest_is_stored(db, raw_email):
+    result = ingest(db, raw_email, actors_access_as_auto_forwarded())
+    assert raw_email.parse_status == "success"
+    assert raw_email.sender_verified and raw_email.source_key == "actors_access"
+    assert result.created_roles == 5
+    calls = db.scalars(select(CastingCall)).all()
+    assert sorted(c.external_ref for c in calls) == [
+        "913144",
+        "913192",
+        "913193",
+        "913207",
+        "913212",
+    ]
+
+
+def test_manually_forwarded_actors_access_email_is_not_stored(db, raw_email):
+    # A manual forward comes from the Gmail account itself: DKIM passes for gmail.com,
+    # but no adapter claims gmail.com, so nothing is stored.
+    ingest(db, raw_email, (FIXTURES / "actors_access_manual_forward.eml").read_bytes())
+    assert raw_email.sender_verified
+    assert raw_email.parse_error == "no adapter for sender 'redacted@gmail.com'"
+    assert db.scalars(select(Role)).all() == []

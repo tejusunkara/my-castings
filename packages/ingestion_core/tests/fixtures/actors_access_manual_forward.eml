@@ -1,0 +1,411 @@
+Return-Path: <redacted@gmail.com>
+Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com
+ [209.85.214.171]) by inbound-smtp.us-east-1.amazonaws.com with SMTP id
+ 4h6ae3j61nih5pll9vlu4ke2nlec4muljg59h9g1 for jobs@mail.allcastings.fyi; Thu,
+ 26 Nov 2026 05:12:53 +0000 (UTC)
+X-SES-Spam-Verdict: PASS
+X-SES-Virus-Verdict: PASS
+Received-SPF: pass (spfCheck: domain of _spf.google.com designates
+ 209.85.214.171 as permitted sender) client-ip=209.85.214.171;
+ envelope-from=redacted@gmail.com; helo=mail-pl1-f171.google.com;
+Authentication-Results: amazonses.com; spf=pass (spfCheck: domain of
+ _spf.google.com designates 209.85.214.171 as permitted sender)
+ client-ip=209.85.214.171; envelope-from=redacted@gmail.com;
+ helo=mail-pl1-f171.google.com; dkim=pass header.i=@gmail.com; dmarc=pass
+ header.from=gmail.com;
+X-SES-RECEIPT: =?utf-8?q?AEFBQUFBQUFBQUFGNTVPQW1OMFVxKzJvM1dsVEtwTXR2OHNETC9?=
+ =?utf-8?q?IanlxKzhMdWs4QzN4aUVhcGdNTVJRdzE3RGtHdXlLdlMyR1lHbDhyMndMWDFzQ0ln?=
+ =?utf-8?q?aXdkODZKckIyOXUyRHRDK2ZhT1M2R0NSQzBZUi9HQ3FJVUhnZFU1T0FaZHdUVG5tM?=
+ =?utf-8?q?kVJTU5WZmZ0L0RPOHJOYlpQU3FjaDJKa0pld1ZlTklkRlZTWUJ3b3FzRUdiYVpmYl?=
+ =?utf-8?q?FmUnNYTFYvSDhZVXdmY1BqOVI5ZHB5ejRmQzhjZmtuOVg1SWF0ZkNxd1d5djhCVHp?=
+ =?utf-8?q?zS1ZlQjNtYlZBR0hwTWVTQUZJcTFmZmtkZUtsdnYrS0hIa3dPOG9XN0cvSFBEd1JE?=
+ =?utf-8?q?Q2JaV2ZhZ0tyK01EWC9ZRWVIV0liQWtMem9EV3c9PQ=3D=3D?=
+X-SES-DKIM-SIGNATURE: a=rsa-sha256; q=dns/txt; =?utf-8?q?b=3DI+J0GfXHL5vntCa?=
+ =?utf-8?q?7FZjCt6+KZnnI4ou7tI4OtoQulMLPV0ATuSnwBSifYP0ltI3Kf8cwkq4jqh96neo7?=
+ =?utf-8?q?egAR6wNPBHsy6DlB1K9r/BVHtBvdWilzrRKH2cVdMgxqpPZPtfY5+mH14QgIfrdUc?=
+ =?utf-8?q?mnk1tJUNfX/lv8fSR3Hu+ywaRE=3D=3B?= c=relaxed/simple;
+ s=224i4yxa5dv7c2xz3womw6peuasteono; d=amazonses.com; t=1795669973; v=1;
+ bh=a6garECa+swKMlKJKkwCxlW5OzqJT9tCf3V0Zvj2un8=; =?utf-8?q?h=3DFrom=3ATo=3A?=
+ =?utf-8?q?Cc=3ABcc=3ASubject=3ADate=3AMessage-ID=3AMIME-Version=3AContent-T?=
+ =?utf-8?q?ype=3AX-SES-RECEIPT=3B?=
+Received: by mail-pl1-f171.google.com with SMTP id
+ d9443c01a7336-2f0a0d1a1e5so20478005ad.0        for
+ <jobs@mail.allcastings.fyi>; Wed, 25 Nov 2026 21:12:53 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795669972; cv=none;
+        d=google.com; s=arc-20260327;
+        b=nR/AKwXVvDsb1EtFrm72n5G9lJq33UokzFhFbJKftlwg1yYE1ZtDEY8DDoPbmDLr3Y
+         A3wugbejXa01/tjv+XSzc599vxICqjaQqhdKPV68a1RhGuEarX4UumdwJF5jXsDrSJud
+         yYr4fJ4DXytk9Bk6K2HSXpQZlncnXwOYw4rOvrKFSyr0DAkV+z+4k10DYcWFQWoISi3B
+         FSzUFvHsz7IOZnS3jJRXTAe1XiDF1oWRwJov9DMylNAqRMPhVgEyJoLBwivJIDY1r/Xc
+         JVnzB1h9j+hJtGVvCQuJthLlWyZHtD0j9p8L2sHMEYtjPlgmR+wQN6C2k43vZlmuYzv4
+         N6pQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327;       
+ h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :dkim-signature;       
+ bh=aPkovQ65v3UnlPDXgNrB+nVHJOXY2wUjPyvfQpnXpxc=;       
+ fh=rQq++CuSEVqCmRiHyLJN/c6FkVacOmJCQ+Nqd/DFBEU=;       
+ b=rQKCytAPq8bdU/h8OLt5wVpejOA5E6flFqWsDB5SmswcLNpgvZ0e7DHlrAZDCS26I6        
+ e884FZfuWaWxGltFAfy/VTMtErT1/3VJfwQqS9HkgX0WJnEV1W91VtXtLAwYB6uxdT2i        
+ DY9UznWs/gJ1o/I7nABo5ZxGmriS+rgTmIkYNqJ2E2bz9EgiM6jQTioeWJKl6hlOhXfT        
+ +DjC0p6YE6hPSEuKND73Z+fyykYdevFnYaSc+8odSSSBUI9J1EY99m6pI9zjcoWsS8KE        
+ HWbatEmRlMyp/5tZgPsossCTzFRMZPuj7bIiEORak6ygOOKVSreV9J9j34XB+ENCt6yZ        
+ k9uA==;        darn=mail.allcastings.fyi
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;        d=gmail.com;
+ s=20260707; t=1795669972; x=1796274772; darn=mail.allcastings.fyi;       
+ h=content-type:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to        
+ :content-type;        bh=aPkovQ65v3UnlPDXgNrB+nVHJOXY2wUjPyvfQpnXpxc=;
+        b=NYilRqxuSmPsjidFQkLZz0zRXv2L/67dtV6VVKX3dyGILZJBIRQ9wnM2B81prBCLxn
+         PlCxxjwpZkvRt2ullADk22QzdO7cSVQdKiJu+HgMggr7O3cMra+H9UA/4FJmE17eUIfC
+         518tst7j/4skSIXXYc0C/RPYT/cMuNihz0CIrdS/3zuUzLcC4pv1nnU4+jdy9TZW95P0
+         8qgF1clJ1WPVofSbbd0HIbMHJagNS7dY2RKNopalFv6z2OL++B/WiZRQmYzTGE848FV7
+         A4lCuU2us+l63j5BItNArpAyXD306wFWdOzNuZtFVUWWsTEWvdDnrrzy8yhcLZqZuDVx
+         fliA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795669972; x=1796274772;
+        h=content-type:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=aPkovQ65v3UnlPDXgNrB+nVHJOXY2wUjPyvfQpnXpxc=;
+        b=0PSMvEF0nJk8VbHH7V0KvrXUjmPqlfxUuuJUJvAAP+h83MEXZAmm1SMG6InJr7+fri
+         d93GJ6qwBPKDqQESClVLS0oIzf31CgI1MMFi2v+x7Z7k9M40yqBmeq3+MSbpOlzKPmgT
+         2yg9t/eg29F2d3H2sfbCixJ3pbjFhc2IUQ1V0lidK5ewB6o0E/Rx3Fa2+PgDMqtLEBbQ
+         ogHb8QoaAPByutGhXQ5mjvX6dxswT8Jz3dtIlCZOxWSeYMpgZRAQsJXpbJxYfuFNEJeK
+         D30N2kTU8V1xHalbG2ROf171DyL73VouILBIFXwUOhcUC2LGq842BJoD6ZoUZu5Ohszr
+         o8yA==
+X-Gm-Message-State: APuU4Z+ub3/qFtB60m2c8LPOFFqzXMdDTDImkTuPol95CDpgjbBBWFT9
+	/nB6MhR4LWhVeMyKKmgueHfyowlmtaaok/vMw01Oo2sciKLTIX3Eu78gwF5H+uSHGwwlzoO2FwC
+	ED2VShEeg379bRI1554+AtXEiFJ1Ih5ivEQ==
+X-Gm-Gg: AZFdTZe+6t5qC7fpcwiEDTjldbjQQf7UclwcnnWq5qn59UyD94vM0fNW8KWK7A27qHn
+	4ETOA9CxDCINlCWjXYeioyiCd77yHkMEAlE8zq2gm4E3kbcf1p/CQLjM7zQch5vZ+CEILOqAP2C
+	tAZQOc3cE6EwbYeV7Yi3pueRJNcT2ovOcnPKlCiHcpYefNy6wWrojH2pvXUpi09ABcitj1/XtYD
+	brlGN4hc0Fqr0VgoUvd9ElGr9LfMzRCaHjPPIAULuGL3nS6oxT8Vj3CdojqySzN+Lu+iCkk6tJX
+	kUFsGSLqjrMJiOJjsAEPmoKAhr/n5n78f7EL9Al9YDCfizJNb5WkH5sEoW+wU2ZsWNexod2bGAn
+	poaCoTRfbPL4rY+GdbHM5RwNPRoWxHObZZw==
+X-Received: by 2002:a17:902:ecc4:b0:2f0:3c38:9133 with SMTP id
+ d9443c01a7336-2f0c5f91aa0mr77641775ad.43.1795669972098; Wed, 25 Nov 2026
+ 21:12:52 -0800 (PST)
+MIME-Version: 1.0
+References: <338159114.1277591.1795648287119@232task.cf.nonfatmedia.net>
+In-Reply-To: <338159114.1277591.1795648287119@232task.cf.nonfatmedia.net>
+From: Test Actor <redacted@gmail.com>
+Date: Thu, 26 Nov 2026 00:12:41 -0500
+X-Gm-Features: Aa3M54qqyBHr6ZeFpUKVVXmRqELnQQ9zMSscMmQ8ZBiVkQIwV3QEXd21P7U_Xfc
+Message-ID: 
+ <CAFsHXh_w68osepp3Tso8RvOWvkejXtYSDrEfzL+HG2Qbg6XWLQ@mail.gmail.com>
+Subject: Fwd: Projects match your profile - 11/25/26 3:00 PM Pacific
+To: jobs@mail.allcastings.fyi
+Content-Type: multipart/alternative; boundary="000000000000d222f0066126fefb"
+
+--000000000000d222f0066126fefb
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+---------- Forwarded message ---------
+From: actors access <notifications@actorsaccess.com>
+Date: Wed, Nov 25, 2026 at 6:13=E2=80=AFPM
+Subject: Projects match your profile - 11/25/26 3:00 PM Pacific
+To: Test Actor <redacted@gmail.com>
+
+
+<https://securepubads.g.doubleclick.net/gampad/adx?iu=3D/6111129/Actor_Notifi=
+cations&url=3Dwww.actorsaccess.com&sz=3D468x60&title=3D1&c=3D7869758>
+[image: Breakdown Services]
+5 New Roles Match Your Profile [image: Test Actor]
+9/12 (FDNY VETERANS - NON-SAG-AFTRA COVERED BACKGROUND)
+<https://actorsaccess.com/projects/?view=3Dbreakdowns&breakdown=3D913212&utm_=
+source=3DProjects%20match%20your%20profile%20%2D%2011%2F25%2F26%203%3A00%20PM=
+%20Pacific&utm_medium=3Demail&utm_content=3Dhtml_title&utm_campaign=3DAA%20Ro=
+le%20Notifications>
+Episodic NON-UNION Melville, NY
+FDNY VETERANS (NON-SAG-AFTRA COVERED)
+<https://actorsaccess.com/projects/?view=3Dbreakdowns&breakdown=3D913212&utm_=
+source=3DProjects%20match%20your%20profile%20%2D%2011%2F25%2F26%203%3A00%20PM=
+%20Pacific&utm_medium=3Demail&utm_content=3Dhtml_role&utm_campaign=3DAA%20Rol=
+e%20Notifications>
+Any gender; 30 to 85 years old; all ethnicities. Grant Wilfley Casting is
+seeking people for paid ba...Read more.
+<https://actorsaccess.com/projects/?view=3Dbreakdowns&breakdown=3D913212&utm_=
+source=3DProjects%20match%20your%20profile%20%2D%2011%2F25%2F26%203%3A00%20PM=
+%20Pacific&utm_medium=3Demail&utm_content=3Dhtml_url&utm_campaign=3DAA%20Role=
+%20Notifications>
+HAIR COMMERCIAL (VO ARTIST)
+<https://actorsaccess.com/projects/?view=3Dbreakdowns&breakdown=3D913207&utm_=
+source=3DProjects%20match%20your%20profile%20%2D%2011%2F25%2F26%203%3A00%20PM=
+%20Pacific&utm_medium=3Demail&utm_content=3Dhtml_title&utm_campaign=3DAA%20Ro=
+le%20Notifications>
+Commercial SAG-AFTRA Remote, USA
+EXPERIENCED VO ARTIST
+<https://actorsaccess.com/projects/?view=3Dbreakdowns&breakdown=3D913207&utm_=
+source=3DProjects%20match%20your%20profile%20%2D%2011%2F25%2F26%203%3A00%20PM=
+%20Pacific&utm_medium=3Demail&utm_content=3Dhtml_role&utm_campaign=3DAA%20Rol=
+e%20Notifications>
+Woman; 25 to 40 years old; all ethnicities. Looking for an experienced
+female VO artist. Must have a...Read more.
+<https://actorsaccess.com/projects/?view=3Dbreakdowns&breakdown=3D913207&utm_=
+source=3DProjects%20match%20your%20profile%20%2D%2011%2F25%2F26%203%3A00%20PM=
+%20Pacific&utm_medium=3Demail&utm_content=3Dhtml_url&utm_campaign=3DAA%20Role=
+%20Notifications>
+WHAT HAPPENED LAST NIGHT - SOCIAL MEDIA SKETCH COMEDY: BAR COMEDY SKETCH
+(BACKGROUND)
+<https://actorsaccess.com/projects/?view=3Dbreakdowns&breakdown=3D913193&utm_=
+source=3DProjects%20match%20your%20profile%20%2D%2011%2F25%2F26%203%3A00%20PM=
+%20Pacific&utm_medium=3Demail&utm_content=3Dhtml_title&utm_campaign=3DAA%20Ro=
+le%20Notifications>
+Web Series NON-UNION Queens, NY, United States
+BACKGROUND BARGOER
+<https://actorsaccess.com/projects/?view=3Dbreakdowns&breakdown=3D913193&utm_=
+source=3DProjects%20match%20your%20profile%20%2D%2011%2F25%2F26%203%3A00%20PM=
+%20Pacific&utm_medium=3Demail&utm_content=3Dhtml_role&utm_campaign=3DAA%20Rol=
+e%20Notifications>
+Any gender; 21 to 40 years old; all ethnicities. Background
+WHAT HAPPENED LAST NIGHT - SOCIAL MEDIA SKETCH COMEDY: BAR COMEDY SKETCH
+<https://actorsaccess.com/projects/?view=3Dbreakdowns&breakdown=3D913192&utm_=
+source=3DProjects%20match%20your%20profile%20%2D%2011%2F25%2F26%203%3A00%20PM=
+%20Pacific&utm_medium=3Demail&utm_content=3Dhtml_title&utm_campaign=3DAA%20Ro=
+le%20Notifications>
+Web Series NON-UNION Queens, NY, United States
+LEAD GIRL
+<https://actorsaccess.com/projects/?view=3Dbreakdowns&breakdown=3D913192&utm_=
+source=3DProjects%20match%20your%20profile%20%2D%2011%2F25%2F26%203%3A00%20PM=
+%20Pacific&utm_medium=3Demail&utm_content=3Dhtml_role&utm_campaign=3DAA%20Rol=
+e%20Notifications>
+Woman; 21 to 29 years old; all ethnicities. Confident, funny. Lead
+GOOGLE ANTI GRAVITY (BACKGROUND)
+<https://actorsaccess.com/projects/?view=3Dbreakdowns&breakdown=3D913144&utm_=
+source=3DProjects%20match%20your%20profile%20%2D%2011%2F25%2F26%203%3A00%20PM=
+%20Pacific&utm_medium=3Demail&utm_content=3Dhtml_title&utm_campaign=3DAA%20Ro=
+le%20Notifications>
+Print Not Applicable New York, NY, USA
+TALENT 2: WOMAN, ASIAN, LATE 30=E2=80=99S.
+<https://actorsaccess.com/projects/?view=3Dbreakdowns&breakdown=3D913144&utm_=
+source=3DProjects%20match%20your%20profile%20%2D%2011%2F25%2F26%203%3A00%20PM=
+%20Pacific&utm_medium=3Demail&utm_content=3Dhtml_role&utm_campaign=3DAA%20Rol=
+e%20Notifications>
+Woman; 34 to 40 years old; East Asian, South Asian. Unrecognizable, will be
+seated at a desk or in a...Read more.
+<https://actorsaccess.com/projects/?view=3Dbreakdowns&breakdown=3D913144&utm_=
+source=3DProjects%20match%20your%20profile%20%2D%2011%2F25%2F26%203%3A00%20PM=
+%20Pacific&utm_medium=3Demail&utm_content=3Dhtml_url&utm_campaign=3DAA%20Role=
+%20Notifications>
+VIEW ALL BREAKDOWNS <https://actorsaccess.com/projects/>
+<https://securepubads.g.doubleclick.net/gampad/adx?iu=3D/6111129/Actor_Notifi=
+cations&url=3Dwww.actorsaccess.com&sz=3D468x60&title=3D2&c=3D7869758>
+CONNECT WITH US
+<https://www.facebook.com/actorsaccess> <https://twitter.com/actorsaccess>
+<https://www.instagram.com/actorsaccess>
+GET THE APP
+<https://apps.apple.com/us/app/actors-access/id1210208241>
+You have received this email because you have chosen *Advance Roles
+Notification*
+as an optional feature of your Actors Access account. If you no longer wish
+to receive
+this email click here to unsubscribe.
+<https://actorsaccess.com/unsub/?a=3D0000000&v=3DREDACTED>
+Contact us at
+support@actorsaccess.com
+
+--000000000000d222f0066126fefb
+MIME-Version: 1.0
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br><br><div class=3D"gmail_quote"><div dir=
+=3D"ltr" class=3D"gmail_attr">---------- Forwarded message ---------<br>From:=
+ <strong class=3D"gmail_sendername" dir=3D"auto">actors access</strong> <span=
+ dir=3D"auto">&lt;<a href=3D"mailto:notifications@actorsaccess.com" target=3D=
+"_blank">notifications@actorsaccess.com</a>&gt;</span><br>Date: Wed, Nov 25, =
+2026 at 6:13=E2=80=AFPM<br>Subject: Projects match your profile - 11/25/26 3:=
+00 PM Pacific<br>To: Test Actor &lt;<a href=3D"mailto:redacted@gmail.com" tar=
+get=3D"_blank">redacted@gmail.com</a>&gt;<br></div><br><br><u></u><div><div s=
+tyle=3D"margin:10px;color:#000;font-family:&#39;Avenir Next&#39;,Helvetica,Ar=
+ial,sans-serif"><div style=3D"height:62px;text-align:center;margin:15px 15px =
+12px 15px"><a href=3D"https://securepubads.g.doubleclick.net/gampad/adx?iu=3D=
+/6111129/Actor_Notifications&amp;url=3Dwww.actorsaccess.com&amp;sz=3D468x60&a=
+mp;title=3D1&amp;c=3D7869758" target=3D"_blank"><img src=3D"https://securepub=
+ads.g.doubleclick.net/gampad/ad?iu=3D/6111129/Actor_Notifications&amp;sz=3D46=
+8x60&amp;url=3Dwww.actorsaccess.com&amp;title=3D1&amp;c=3D7869758" width=3D"4=
+68" height=3D"60" border=3D"0" alt=3D"" align=3D"center"></a></div><div style=
+=3D"border-top:5px solid #c0392c;border-right:1px solid #dee0e4;border-bottom=
+:5px solid #c0392c;border-left:1px solid #dee0e4;background-color:#ffffff;wid=
+th:546px;margin:0 auto;font-size:14px;line-height:normal;padding-bottom:35px"=
+><div style=3D"height:70px;padding:20px;text-align:center"><img src=3D"https:=
+//actorsaccess.com/global/assets/images/logos/logo_breakdown_services_eco_cas=
+t_breakdown_express_actors_access.png" alt=3D"Breakdown Services" title=3D"Br=
+eakdown Services" border=3D"0" style=3D"height:100%" width=3D"468" height=3D"=
+60"></div><table width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D=
+"0" style=3D"font-weight:500;background-image:url(&#39;https://actorsaccess.c=
+om/global/assets/images/Top_Image.png&#39;);background-repeat:no-repeat;width=
+:100%"><tbody><tr><td style=3D"width:70px;text-align:right;vertical-align:top=
+;padding-top:40px;border-left:none;background-color:transparent;font-size:60p=
+x;color:#c0392b;padding-left:10px;line-height:normal">5</td><td style=3D"widt=
+h:160px;background-color:transparent;border-left:none;vertical-align:top;font=
+-size:25px;line-height:30px;padding-top:50px;padding-left:15px">New Roles Mat=
+ch Your Profile</td><td style=3D"text-align:right;background-color:transparen=
+t;border-left:none"><img src=3D"https://breakdownservices.s3.amazonaws.com/me=
+dia/photos/REDACTED.jpg" width=3D"160" height=3D"180" style=3D"margin:10px" a=
+lt=3D"Test Actor"></td></tr></tbody></table><div style=3D"background-color:#4=
+96ec2;border-top:10px solid #fff;color:#fff;padding:10px 25px;font-size:15px"=
+><a href=3D"https://actorsaccess.com/projects/?view=3Dbreakdowns&amp;breakdow=
+n=3D913212&amp;utm_source=3DProjects%20match%20your%20profile%20%2D%2011%2F25=
+%2F26%203%3A00%20PM%20Pacific&amp;utm_medium=3Demail&amp;utm_content=3Dhtml_t=
+itle&amp;utm_campaign=3DAA%20Role%20Notifications" style=3D"color:#fff;text-d=
+ecoration:none" target=3D"_blank">9/12 (FDNY VETERANS - NON-SAG-AFTRA COVERED=
+ BACKGROUND)</a></div><div style=3D"padding:6px 25px;border-bottom:1px solid =
+#dee0e4;font-size:12px;margin-bottom:9px">Episodic<span style=3D"background-c=
+olor:#cccccc;width:1px;display:inline-block;margin:0 10px">=C2=A0</span>NON-U=
+NION<span style=3D"background-color:#cccccc;width:1px;display:inline-block;ma=
+rgin:0 10px">=C2=A0</span>Melville, NY</div><div style=3D"padding:0 25px 5px =
+25px;border-bottom:1px solid #dee0e4"><div style=3D"padding-top:6px"><a href=
+=3D"https://actorsaccess.com/projects/?view=3Dbreakdowns&amp;breakdown=3D9132=
+12&amp;utm_source=3DProjects%20match%20your%20profile%20%2D%2011%2F25%2F26%20=
+3%3A00%20PM%20Pacific&amp;utm_medium=3Demail&amp;utm_content=3Dhtml_role&amp;=
+utm_campaign=3DAA%20Role%20Notifications" style=3D"color:#c0392b;font-weight:=
+600;text-decoration:none;font-size:15px;line-height:20px" target=3D"_blank">F=
+DNY VETERANS (NON-SAG-AFTRA COVERED)</a></div><div style=3D"padding:10px 0 14=
+px 0;font-size:13px;line-height:18px">Any gender; 30 to 85 years old; all eth=
+nicities. Grant Wilfley Casting is seeking people for paid ba...<a href=3D"ht=
+tps://actorsaccess.com/projects/?view=3Dbreakdowns&amp;breakdown=3D913212&amp=
+;utm_source=3DProjects%20match%20your%20profile%20%2D%2011%2F25%2F26%203%3A00=
+%20PM%20Pacific&amp;utm_medium=3Demail&amp;utm_content=3Dhtml_url&amp;utm_cam=
+paign=3DAA%20Role%20Notifications" style=3D"margin:0;text-decoration:none;col=
+or:#c0392b;text-decoration:none" target=3D"_blank">Read more.</a></div></div>=
+<div style=3D"background-color:#496ec2;border-top:10px solid #fff;color:#fff;=
+padding:10px 25px;font-size:15px"><a href=3D"https://actorsaccess.com/project=
+s/?view=3Dbreakdowns&amp;breakdown=3D913207&amp;utm_source=3DProjects%20match=
+%20your%20profile%20%2D%2011%2F25%2F26%203%3A00%20PM%20Pacific&amp;utm_medium=
+=3Demail&amp;utm_content=3Dhtml_title&amp;utm_campaign=3DAA%20Role%20Notifica=
+tions" style=3D"color:#fff;text-decoration:none" target=3D"_blank">HAIR COMME=
+RCIAL (VO ARTIST)</a></div><div style=3D"padding:6px 25px;border-bottom:1px s=
+olid #dee0e4;font-size:12px;margin-bottom:9px">Commercial<span style=3D"backg=
+round-color:#cccccc;width:1px;display:inline-block;margin:0 10px">=C2=A0</spa=
+n>SAG-AFTRA<span style=3D"background-color:#cccccc;width:1px;display:inline-b=
+lock;margin:0 10px">=C2=A0</span>Remote, USA</div><div style=3D"padding:0 25p=
+x 5px 25px;border-bottom:1px solid #dee0e4"><div style=3D"padding-top:6px"><a=
+ href=3D"https://actorsaccess.com/projects/?view=3Dbreakdowns&amp;breakdown=
+=3D913207&amp;utm_source=3DProjects%20match%20your%20profile%20%2D%2011%2F25%=
+2F26%203%3A00%20PM%20Pacific&amp;utm_medium=3Demail&amp;utm_content=3Dhtml_ro=
+le&amp;utm_campaign=3DAA%20Role%20Notifications" style=3D"color:#c0392b;font-=
+weight:600;text-decoration:none;font-size:15px;line-height:20px" target=3D"_b=
+lank">EXPERIENCED VO ARTIST</a></div><div style=3D"padding:10px 0 14px 0;font=
+-size:13px;line-height:18px">Woman; 25 to 40 years old; all ethnicities. Look=
+ing for an experienced female VO artist. Must have a...<a href=3D"https://act=
+orsaccess.com/projects/?view=3Dbreakdowns&amp;breakdown=3D913207&amp;utm_sour=
+ce=3DProjects%20match%20your%20profile%20%2D%2011%2F25%2F26%203%3A00%20PM%20P=
+acific&amp;utm_medium=3Demail&amp;utm_content=3Dhtml_url&amp;utm_campaign=3DA=
+A%20Role%20Notifications" style=3D"margin:0;text-decoration:none;color:#c0392=
+b;text-decoration:none" target=3D"_blank">Read more.</a></div></div><div styl=
+e=3D"background-color:#496ec2;border-top:10px solid #fff;color:#fff;padding:1=
+0px 25px;font-size:15px"><a href=3D"https://actorsaccess.com/projects/?view=
+=3Dbreakdowns&amp;breakdown=3D913193&amp;utm_source=3DProjects%20match%20your=
+%20profile%20%2D%2011%2F25%2F26%203%3A00%20PM%20Pacific&amp;utm_medium=3Demai=
+l&amp;utm_content=3Dhtml_title&amp;utm_campaign=3DAA%20Role%20Notifications" =
+style=3D"color:#fff;text-decoration:none" target=3D"_blank">WHAT HAPPENED LAS=
+T NIGHT - SOCIAL MEDIA SKETCH COMEDY: BAR COMEDY SKETCH (BACKGROUND)</a></div=
+><div style=3D"padding:6px 25px;border-bottom:1px solid #dee0e4;font-size:12p=
+x;margin-bottom:9px">Web Series<span style=3D"background-color:#cccccc;width:=
+1px;display:inline-block;margin:0 10px">=C2=A0</span>NON-UNION<span style=3D"=
+background-color:#cccccc;width:1px;display:inline-block;margin:0 10px">=C2=A0=
+</span>Queens, NY, United States</div><div style=3D"padding:0 25px 5px 25px;b=
+order-bottom:1px solid #dee0e4"><div style=3D"padding-top:6px"><a href=3D"htt=
+ps://actorsaccess.com/projects/?view=3Dbreakdowns&amp;breakdown=3D913193&amp;=
+utm_source=3DProjects%20match%20your%20profile%20%2D%2011%2F25%2F26%203%3A00%=
+20PM%20Pacific&amp;utm_medium=3Demail&amp;utm_content=3Dhtml_role&amp;utm_cam=
+paign=3DAA%20Role%20Notifications" style=3D"color:#c0392b;font-weight:600;tex=
+t-decoration:none;font-size:15px;line-height:20px" target=3D"_blank">BACKGROU=
+ND BARGOER</a></div><div style=3D"padding:10px 0 14px 0;font-size:13px;line-h=
+eight:18px">Any gender; 21 to 40 years old; all ethnicities. Background</div>=
+</div><div style=3D"background-color:#496ec2;border-top:10px solid #fff;color=
+:#fff;padding:10px 25px;font-size:15px"><a href=3D"https://actorsaccess.com/p=
+rojects/?view=3Dbreakdowns&amp;breakdown=3D913192&amp;utm_source=3DProjects%2=
+0match%20your%20profile%20%2D%2011%2F25%2F26%203%3A00%20PM%20Pacific&amp;utm_=
+medium=3Demail&amp;utm_content=3Dhtml_title&amp;utm_campaign=3DAA%20Role%20No=
+tifications" style=3D"color:#fff;text-decoration:none" target=3D"_blank">WHAT=
+ HAPPENED LAST NIGHT - SOCIAL MEDIA SKETCH COMEDY: BAR COMEDY SKETCH</a></div=
+><div style=3D"padding:6px 25px;border-bottom:1px solid #dee0e4;font-size:12p=
+x;margin-bottom:9px">Web Series<span style=3D"background-color:#cccccc;width:=
+1px;display:inline-block;margin:0 10px">=C2=A0</span>NON-UNION<span style=3D"=
+background-color:#cccccc;width:1px;display:inline-block;margin:0 10px">=C2=A0=
+</span>Queens, NY, United States</div><div style=3D"padding:0 25px 5px 25px;b=
+order-bottom:1px solid #dee0e4"><div style=3D"padding-top:6px"><a href=3D"htt=
+ps://actorsaccess.com/projects/?view=3Dbreakdowns&amp;breakdown=3D913192&amp;=
+utm_source=3DProjects%20match%20your%20profile%20%2D%2011%2F25%2F26%203%3A00%=
+20PM%20Pacific&amp;utm_medium=3Demail&amp;utm_content=3Dhtml_role&amp;utm_cam=
+paign=3DAA%20Role%20Notifications" style=3D"color:#c0392b;font-weight:600;tex=
+t-decoration:none;font-size:15px;line-height:20px" target=3D"_blank">LEAD GIR=
+L</a></div><div style=3D"padding:10px 0 14px 0;font-size:13px;line-height:18p=
+x">Woman; 21 to 29 years old; all ethnicities. Confident, funny. Lead</div></=
+div><div style=3D"background-color:#496ec2;border-top:10px solid #fff;color:#=
+fff;padding:10px 25px;font-size:15px"><a href=3D"https://actorsaccess.com/pro=
+jects/?view=3Dbreakdowns&amp;breakdown=3D913144&amp;utm_source=3DProjects%20m=
+atch%20your%20profile%20%2D%2011%2F25%2F26%203%3A00%20PM%20Pacific&amp;utm_me=
+dium=3Demail&amp;utm_content=3Dhtml_title&amp;utm_campaign=3DAA%20Role%20Noti=
+fications" style=3D"color:#fff;text-decoration:none" target=3D"_blank">GOOGLE=
+ ANTI GRAVITY (BACKGROUND)</a></div><div style=3D"padding:6px 25px;border-bot=
+tom:1px solid #dee0e4;font-size:12px;margin-bottom:9px">Print<span style=3D"b=
+ackground-color:#cccccc;width:1px;display:inline-block;margin:0 10px">=C2=A0<=
+/span>Not Applicable<span style=3D"background-color:#cccccc;width:1px;display=
+:inline-block;margin:0 10px">=C2=A0</span>New York, NY, USA</div><div style=
+=3D"padding:0 25px 5px 25px;border-bottom:1px solid #dee0e4"><div style=3D"pa=
+dding-top:6px"><a href=3D"https://actorsaccess.com/projects/?view=3Dbreakdown=
+s&amp;breakdown=3D913144&amp;utm_source=3DProjects%20match%20your%20profile%2=
+0%2D%2011%2F25%2F26%203%3A00%20PM%20Pacific&amp;utm_medium=3Demail&amp;utm_co=
+ntent=3Dhtml_role&amp;utm_campaign=3DAA%20Role%20Notifications" style=3D"colo=
+r:#c0392b;font-weight:600;text-decoration:none;font-size:15px;line-height:20p=
+x" target=3D"_blank">TALENT 2: WOMAN, ASIAN, LATE 30=E2=80=99S.</a></div><div=
+ style=3D"padding:10px 0 14px 0;font-size:13px;line-height:18px">Woman; 34 to=
+ 40 years old; East Asian, South Asian. Unrecognizable, will be seated at a d=
+esk or in a...<a href=3D"https://actorsaccess.com/projects/?view=3Dbreakdowns=
+&amp;breakdown=3D913144&amp;utm_source=3DProjects%20match%20your%20profile%20=
+%2D%2011%2F25%2F26%203%3A00%20PM%20Pacific&amp;utm_medium=3Demail&amp;utm_con=
+tent=3Dhtml_url&amp;utm_campaign=3DAA%20Role%20Notifications" style=3D"margin=
+:0;text-decoration:none;color:#c0392b;text-decoration:none" target=3D"_blank"=
+>Read more.</a></div></div><div style=3D"padding:50px 0px;text-align:center">=
+<a href=3D"https://actorsaccess.com/projects/" style=3D"text-decoration:none;=
+line-height:53px;font-size:15px;font-weight:400;color:#ffffff;display:inline-=
+block;height:52px;width:250px;background-color:#c0392b;border-radius:8px" tar=
+get=3D"_blank">VIEW ALL BREAKDOWNS</a></div><div style=3D"text-align:center;p=
+adding-bottom:35px"><a href=3D"https://securepubads.g.doubleclick.net/gampad/=
+adx?iu=3D/6111129/Actor_Notifications&amp;url=3Dwww.actorsaccess.com&amp;sz=
+=3D468x60&amp;title=3D2&amp;c=3D7869758" target=3D"_blank"><img src=3D"https:=
+//securepubads.g.doubleclick.net/gampad/ad?iu=3D/6111129/Actor_Notifications&=
+amp;url=3Dwww.actorsaccess.com&amp;sz=3D468x60&amp;title=3D2&amp;c=3D7869758"=
+ width=3D"468" height=3D"60" border=3D"0" alt=3D"" align=3D"middle" style=3D"=
+height:60px"></a></div><table border=3D"0" cellpadding=3D"0" cellspacing=3D"1=
+0" style=3D"font-weight:500;background-color:#fff;text-align:center" width=3D=
+"100%"><tbody><tr><td width=3D"50%" style=3D"text-align:center;background-col=
+or:#fff;border-left:none;font-weight:600"><div>CONNECT WITH US</div><a href=
+=3D"https://www.facebook.com/actorsaccess" style=3D"background-color:#fff;dis=
+play:inline-block;border-radius:50%;box-sizing:border-box;margin:5px;padding-=
+top:5px" target=3D"_blank"><img src=3D"https://breakdownexpress.com/global/as=
+sets/images/icons/FB.png" style=3D"height:35px;width:35px;border:none;vertica=
+l-align:middle"></a><a href=3D"https://twitter.com/actorsaccess" style=3D"bac=
+kground-color:#fff;display:inline-block;border-radius:50%;box-sizing:border-b=
+ox;margin:5px" target=3D"_blank"><img src=3D"https://breakdownexpress.com/glo=
+bal/assets/images/icons/X.png" style=3D"border:none;vertical-align:middle;hei=
+ght:35px;width:35px"></a><a href=3D"https://www.instagram.com/actorsaccess" s=
+tyle=3D"background-color:#fff;display:inline-block;border-radius:50%;box-sizi=
+ng:border-box;margin:5px" target=3D"_blank"><img src=3D"https://breakdownexpr=
+ess.com/global/assets/images/icons/Instagram.png" style=3D"border:none;vertic=
+al-align:middle;height:35px;width:35px"></a></td><td width=3D"50%" style=3D"t=
+ext-align:center;background-color:#fff;border-left:none;font-weight:600"><div=
+>GET THE APP</div><a href=3D"https://apps.apple.com/us/app/actors-access/id12=
+10208241" style=3D"width:120px;display:inline-block;margin:5px" target=3D"_bl=
+ank"><img src=3D"https://breakdownexpress.com/global/assets/images/icons/app-=
+store-badge.png" style=3D"width:120px;border:none;vertical-align:middle"></a>=
+</td></tr></tbody></table></div><div style=3D"width:508px;margin:0 auto;font-=
+size:13px;padding:50px 20px;text-align:center;line-height:25px;background-col=
+or:#fff">You have received this email because you have chosen <strong>Advance=
+ Roles Notification</strong><br>as an optional feature of your Actors Access =
+account.  If you no longer wish to receive<br>this email click here to <a hre=
+f=3D"https://actorsaccess.com/unsub/?a=3D0000000&amp;v=3DREDACTED" style=3D"c=
+olor:#007aff;text-decoration:none" target=3D"_blank">unsubscribe.</a><div sty=
+le=3D"font-weight:600;padding-top:20px">Contact us at</div><a href=3D"mailto:=
+support@actorsaccess.com" style=3D"color:#007aff;text-decoration:none" target=
+=3D"_blank">support@actorsaccess.com</a></div></div></div></div></div>
+</div>
+
+--000000000000d222f0066126fefb--
