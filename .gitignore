@@ -8,3 +8,7 @@ node_modules/
 dist/
 .DS_Store
 cdk.out/
+
+# CDK lookup cache; keys include the AWS account id. Stacks avoid lookups (AZs are
+# named in code), so nothing should need it.
+infra/cdk.context.json

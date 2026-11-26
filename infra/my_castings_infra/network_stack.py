@@ -19,6 +19,9 @@ from aws_cdk import aws_ec2 as ec2
 from aws_cdk import aws_logs as logs
 from constructs import Construct
 
+# Named rather than looked up, so synth needs no AWS lookup (and cdk.context.json, which
+# would record the account id, stays empty).
+AVAILABILITY_ZONES = ["us-east-1a", "us-east-1b"]
 VPC_CIDR = "10.20.0.0/16"  # avoids 10.0.0.0/16, already used by another VPC in the account
 API_PORT = 8000
 POSTGRES_PORT = 5432
@@ -32,7 +35,7 @@ class NetworkStack(cdk.Stack):
             self,
             "Vpc",
             ip_addresses=ec2.IpAddresses.cidr(VPC_CIDR),
-            max_azs=2,
+            availability_zones=AVAILABILITY_ZONES,
             nat_gateways=1,
             subnet_configuration=[
                 ec2.SubnetConfiguration(
@@ -88,6 +91,11 @@ class NetworkStack(cdk.Stack):
                 reason="Internet-facing load balancer: 80/443 from anywhere is its job.",
             )
         )
+
+    @property
+    def availability_zones(self) -> list[str]:
+        # Overriding the stack's AZ list is what stops CDK from looking it up.
+        return AVAILABILITY_ZONES
 
     def _security_group(self, construct_id: str, description: str, *, outbound: bool):
         return ec2.SecurityGroup(

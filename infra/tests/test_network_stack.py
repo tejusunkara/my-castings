@@ -1,3 +1,6 @@
+import json
+from pathlib import Path
+
 import aws_cdk as cdk
 import pytest
 from aws_cdk.assertions import Match, Template
@@ -89,3 +92,13 @@ def test_database_has_no_outbound(stack_and_template):
     # CDK's "no outbound" form: one rule to an unroutable address.
     [egress] = db["Properties"]["SecurityGroupEgress"]
     assert egress["CidrIp"] == "255.255.255.255/32"
+
+
+def test_synth_needs_no_context_lookups():
+    # Lookups are cached in cdk.context.json under keys naming the AWS account, which is
+    # kept out of the repository. Naming the AZs in code means there is nothing to look up.
+    app = cdk.App()
+    stack = NetworkStack(app, "Network", env=ENV)
+    assert stack.availability_zones == ["us-east-1a", "us-east-1b"]
+    manifest = json.loads((Path(app.synth().directory) / "manifest.json").read_text())
+    assert not manifest.get("missing")  # context values a lookup would have to fetch

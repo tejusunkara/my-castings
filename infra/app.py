@@ -2,6 +2,9 @@
 
 Every stack is pinned to one account and region. SES receiving only exists in a few
 regions, and the Phase 0 email setup already lives in us-east-1.
+
+The account id is kept out of the repository: put it in your user-level CDK settings,
+~/.cdk.json -> {"context": {"aws_account_id": "123456789012", ...}}.
 """
 
 import aws_cdk as cdk
@@ -10,9 +13,15 @@ from cdk_nag import AwsSolutionsChecks
 from my_castings_infra.guardrails_stack import GuardrailsStack
 from my_castings_infra.network_stack import NetworkStack
 
-ENV = cdk.Environment(account="123456789012", region="us-east-1")
-
 app = cdk.App()
+
+account = app.node.try_get_context("aws_account_id")
+if not account:
+    raise SystemExit(
+        'Missing context "aws_account_id". Add it to ~/.cdk.json: '
+        '{"context": {"aws_account_id": "<12-digit account id>"}}'
+    )
+ENV = cdk.Environment(account=str(account), region="us-east-1")
 cdk.Tags.of(app).add("project", "my-castings")
 
 GuardrailsStack(

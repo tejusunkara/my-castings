@@ -269,13 +269,16 @@ never duplicates matches or overwrites a profile you've edited.
 
 ### AWS infrastructure (CDK)
 
-One-time setup: `cd infra && npm install`, and put the budget alert address in your
-user-level CDK settings (kept out of the repo):
+One-time setup: `cd infra && npm install`, and put your AWS account id and the budget
+alert address in your user-level CDK settings (both kept out of the repo):
 
 ```json
 // ~/.cdk.json
-{ "context": { "budget_alert_email": "you@example.com" } }
+{ "context": { "aws_account_id": "123456789012", "budget_alert_email": "you@example.com" } }
 ```
+
+Stacks avoid CDK context lookups (availability zones are named in code), so there is no
+`cdk.context.json`; it is git-ignored because its keys would include the account id.
 
 | Task | Command (from `infra/`) |
 |---|---|
