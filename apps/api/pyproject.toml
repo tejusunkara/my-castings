@@ -5,7 +5,7 @@ description = "FastAPI backend for the casting-call aggregator"
 requires-python = ">=3.12"
 dependencies = [
     "fastapi>=0.165.0",
-    "uvicorn[standard]>=0.30",
+    "uvicorn[standard]>=0.54.0",
     "sqlalchemy>=2.0.30",
     "alembic>=1.13",
     "psycopg[binary]>=3.3.9",
