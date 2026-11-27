@@ -2,7 +2,7 @@
 # updates (for known vulnerabilities) come separately and immediately; they're enabled in
 # repository settings and ignore the cooldown.
 #
-# cooldown: don't propose a release until it's a few days old. Most hijacked packages
+# cooldown: don't propose a release until it's a week old. Most hijacked packages
 # are caught and pulled within that window, and uv sometimes can't lock a brand-new one.
 version: 2
 updates:
@@ -12,7 +12,7 @@ updates:
       interval: weekly
       day: monday
     cooldown:
-      default-days: 5
+      default-days: 7
     groups:
       python:
         patterns: ["*"]
@@ -24,7 +24,7 @@ updates:
       interval: weekly
       day: monday
     cooldown:
-      default-days: 5
+      default-days: 7
     groups:
       frontend:
         patterns: ["*"]
@@ -36,13 +36,21 @@ updates:
       interval: weekly
       day: monday
     cooldown:
-      default-days: 5
+      default-days: 7
 
   - package-ecosystem: docker
     directory: /
     schedule:
       interval: weekly
       day: monday
+    cooldown:
+      default-days: 7
+    # Patch updates only: a Python minor upgrade (3.12 -> 3.13) changes the interpreter
+    # the packages were built for and has to be done deliberately, across uv, the API
+    # image and the Lambda image together.
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
 
   - package-ecosystem: github-actions
     directory: /
@@ -50,7 +58,7 @@ updates:
       interval: weekly
       day: monday
     cooldown:
-      default-days: 5
+      default-days: 7
     groups:
       actions:
         patterns: ["*"]

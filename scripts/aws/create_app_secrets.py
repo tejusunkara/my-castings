@@ -39,7 +39,7 @@ def put(ssm, name: str, value: str, description: str) -> None:
     ssm.put_parameter(
         Name=name, Value=value, Type="SecureString", Overwrite=True, Description=description
     )
-    print(f"stored {name}")
+    print(f"stored the {description}")
 
 
 def main() -> None:
@@ -56,12 +56,12 @@ def main() -> None:
             sys.exit("The passwords don't match.")
         put(ssm, PASSWORD_HASH, hash_password(password), "scrypt hash of the login password")
     else:
-        print(f"{PASSWORD_HASH} exists; kept (use --replace to change it)")
+        print("login password hash exists; kept (use --replace to change it)")
 
     if replace or not exists(ssm, JWT_SECRET):
         put(ssm, JWT_SECRET, secrets.token_urlsafe(48), "session-cookie signing key")
     else:
-        print(f"{JWT_SECRET} exists; kept")
+        print("session-cookie signing key exists; kept")
 
 
 if __name__ == "__main__":
