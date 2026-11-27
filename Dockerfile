@@ -22,7 +22,7 @@ RUN uv sync --frozen --no-dev --package my-castings-api --no-editable
 
 # The email-ingestion Lambda: the same packages on AWS's Lambda Python base image.
 # Built with --target lambda (CDK does this for the Ingestion stack).
-FROM public.ecr.aws/lambda/python:3.12 AS lambda
+FROM public.ecr.aws/lambda/python:3.15 AS lambda
 COPY --from=build /app/.venv/lib/python3.12/site-packages ${LAMBDA_TASK_ROOT}
 CMD ["app.ingest_lambda.handler"]
 
