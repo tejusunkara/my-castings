@@ -69,8 +69,8 @@ source, and infrastructure as code.
   matching, sweeps, auth, every endpoint (media against an in-memory S3), and every
   page (Vitest).
 
-**Not built yet:** CI/CD. Everything else is written; on AWS only the cost budget is
-deployed so far.
+**Deployed so far:** only the cost budget. Everything else, including CI/CD, is written
+and tested; see the deploy runbook below.
 
 ## Architecture
 
@@ -147,6 +147,7 @@ my-castings/
 │   ├── my_castings_infra/      one module per stack: guardrails, network, data, app, web
 │   ├── tests/                  CDK assertion tests (and the CloudFront functions, run in Node)
 │   └── package.json            pins the CDK CLI (`npx cdk ...`)
+├── .github/                    CI, security and deploy workflows; Dependabot config
 ├── scripts/aws/                create_app_secrets, run_migration, deploy_web, backfill_emails
 ├── Dockerfile                  the API image (also runs migrations and the daily sweep)
 │
@@ -348,6 +349,34 @@ you save it), and confirm the alert subscription email AWS sends to your budget 
 | API code | `run_migration.py` first if there's a new migration, then `npx cdk deploy App Ingestion` (both run the same code) |
 | Frontend | `uv run python scripts/aws/deploy_web.py` |
 | Login password | `uv run python scripts/aws/create_app_secrets.py --replace`, then redeploy `App` |
+
+## CI/CD and dependency security (GitHub)
+
+Everything here is free for a public repository.
+
+| Runs | What | Where |
+|---|---|---|
+| Every PR and push to `main` | Python: `uv lock --check`, ruff, pytest against Postgres (includes a check that test emails are scrubbed); frontend: types, lint, format, Vitest, build; `cdk synth --strict` with placeholder values; both Docker images built on an ARM runner | `.github/workflows/ci.yml` |
+| Every PR | Dependency review: fails if the PR adds a package with a known moderate+ vulnerability | `security.yml` |
+| Every PR, push, and Mondays | zizmor: security lint of the workflows themselves | `security.yml` |
+| Push to `main`, after CI passes | Deploy: App → migrations → Ingestion, Web → frontend; waits for approval in the `production` environment. Off until the `DEPLOY_ENABLED` repository variable is `true` | `deploy.yml` |
+| Weekly (Mondays) | Dependabot version updates for uv, npm, Docker base images and Actions, grouped, ignoring releases under 5 days old | `.github/dependabot.yml` |
+| As advisories appear | Dependabot alerts and security-update PRs; secret scanning with push protection; CodeQL code scanning (Python, TypeScript, Actions) | repository settings |
+
+Every third-party action is pinned to a full commit SHA (a tag can be moved to malicious
+code, as happened to `trivy-action` in March 2026); Dependabot updates the pins.
+
+**Turning on deploys** (after the first manual deploy):
+
+1. `cd infra && npx cdk deploy GitHubDeploy`: creates GitHub's OIDC identity provider and
+   the deploy role; copy its `DeployRoleArn` output.
+2. In the repository's `production` environment, add the secrets `AWS_DEPLOY_ROLE_ARN`,
+   `AWS_ACCOUNT_ID`, `ORIGIN_VERIFY_SECRET` and `BUDGET_ALERT_EMAIL` (the last three as in
+   `~/.cdk.json`).
+3. Set the repository variable `DEPLOY_ENABLED` to `true`.
+
+The role can only be assumed by jobs in that environment, which runs from `main` only and
+waits for the owner's approval. No AWS keys are stored in GitHub.
 
 ## Design notes
 

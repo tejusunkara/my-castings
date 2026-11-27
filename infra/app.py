@@ -16,6 +16,7 @@ Stacks, in deploy order:
     App         API on Fargate behind a load balancer; migration and sweep tasks
     Web         CloudFront at the domain: the frontend, with /api/* sent to the App
     Ingestion   SES rule, EventBridge and the Lambda that parses each forwarded email
+    GitHubDeploy  the role GitHub Actions assumes to release (OIDC; no stored keys)
 """
 
 import aws_cdk as cdk
@@ -28,6 +29,7 @@ from my_castings_infra.data_stack import (
     media_bucket_name,
     raw_email_bucket_name,
 )
+from my_castings_infra.github_deploy_stack import GitHubDeployStack
 from my_castings_infra.guardrails_stack import GuardrailsStack
 from my_castings_infra.ingestion_stack import IngestionStack, ses_rule_arn
 from my_castings_infra.network_stack import NetworkStack
@@ -116,6 +118,8 @@ IngestionStack(
     alert_email=app.node.try_get_context("budget_alert_email"),
     env=ENV,
 )
+
+GitHubDeployStack(app, "GitHubDeploy", repository=required("github_repository"), env=ENV)
 
 # Security/best-practice rules (cdk-nag) checked on every stack at synth time.
 cdk.Validations.of(app).add_plugins(AwsSolutionsChecks(app, verbose=True))

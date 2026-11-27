@@ -1,0 +1,143 @@
+# Checks every pull request and every push to main. Needs no AWS access and no secrets.
+#
+# Actions are pinned to full commit SHAs (tags can be rewritten: see the March 2026
+# trivy-action compromise); Dependabot keeps the SHAs current.
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  # Superseded PR checks are cancelled; runs on main never are (they may be deploying).
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+env:
+  UV_VERSION: "0.13.6"
+
+jobs:
+  python:
+    name: Python (lint, lockfile, tests)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: my_castings
+          POSTGRES_PASSWORD: my_castings
+          POSTGRES_DB: my_castings_test
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U my_castings"
+          --health-interval 2s --health-timeout 3s --health-retries 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@1db35dd8eee11c5894872e0b383ae6c406cf738d # v10.4.0
+        with:
+          version: ${{ env.UV_VERSION }}
+          enable-cache: true
+      # The CDK tests run jsii (Node) and the CloudFront functions in Node.
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: infra/.nvmrc
+      - name: Lockfile matches pyproject.toml
+        run: uv lock --check
+      - run: uv sync --frozen
+      - name: Lint and format
+        run: |
+          uv run ruff check .
+          uv run ruff format --check .
+      - name: Tests (parsers, API, migrations, infra; fixtures must be scrubbed)
+        run: uv run pytest -q
+        env:
+          MY_CASTINGS_TEST_DATABASE_URL: postgresql+psycopg://my_castings:my_castings@localhost:5432/my_castings_test
+
+  web:
+    name: Frontend (types, lint, format, tests, build)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: apps/web
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: apps/web/.nvmrc
+          cache: npm
+          cache-dependency-path: apps/web/package-lock.json
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npm run format:check
+      - run: npm test
+      - run: npm run build
+
+  infra:
+    name: CDK synth (strict, cdk-nag)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@1db35dd8eee11c5894872e0b383ae6c406cf738d # v10.4.0
+        with:
+          version: ${{ env.UV_VERSION }}
+          enable-cache: true
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: infra/.nvmrc
+          cache: npm
+          cache-dependency-path: infra/package-lock.json
+      - run: npm ci
+        working-directory: infra
+      # Placeholder values: logs on a public repository are public, so the real account
+      # id and origin secret are never used here.
+      - name: Synthesize every stack
+        working-directory: infra
+        run: >-
+          npx cdk synth --strict --quiet
+          -c aws_account_id=123456789012
+          -c origin_verify_secret=ci-placeholder
+          -c budget_alert_email=ci@example.com
+
+  images:
+    name: Docker images (API and Lambda, ARM)
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Build the API image
+        run: docker build --target api -t my-castings-api:ci .
+      - name: Build the Lambda image
+        run: docker build --target lambda -t my-castings-ingest:ci .
+      - name: Smoke test
+        run: |
+          docker run --rm my-castings-api:ci python -c "import app.main, ingestion_core"
+          docker run --rm --entrypoint python my-castings-ingest:ci -c \
+            "import os; os.chdir('/var/task'); import app.ingest_lambda"
+
+  deploy:
+    name: Deploy
+    needs: [python, web, infra, images]
+    # Off until the first manual deploy is done: set the DEPLOY_ENABLED repository variable
+    # to "true" to turn it on.
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && vars.DEPLOY_ENABLED == 'true'
+    permissions:
+      contents: read
+      id-token: write
+    # $/ = this repository at the commit being run (GitHub, July 2026), not the workspace.
+    uses: $/.github/workflows/deploy.yml

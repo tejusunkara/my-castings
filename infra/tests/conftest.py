@@ -8,6 +8,7 @@ from my_castings_infra.data_stack import (
     media_bucket_name,
     raw_email_bucket_name,
 )
+from my_castings_infra.github_deploy_stack import GitHubDeployStack
 from my_castings_infra.ingestion_stack import IngestionStack, ses_rule_arn
 from my_castings_infra.network_stack import NetworkStack
 from my_castings_infra.web_stack import WebStack
@@ -81,7 +82,9 @@ def stacks():
         alert_email="alerts@example.com",
         env=ENV,
     )
+    github = GitHubDeployStack(app, "GitHubDeploy", repository="owner/my-castings", env=ENV)
     return {
+        "github": github,
         "app": app,
         "network": network,
         "data": data,

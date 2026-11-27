@@ -1,0 +1,56 @@
+# Routine dependency upgrades, grouped so they arrive as a few weekly PRs. Security
+# updates (for known vulnerabilities) come separately and immediately; they're enabled in
+# repository settings and ignore the cooldown.
+#
+# cooldown: don't propose a release until it's a few days old. Most hijacked packages
+# are caught and pulled within that window, and uv sometimes can't lock a brand-new one.
+version: 2
+updates:
+  - package-ecosystem: uv
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    cooldown:
+      default-days: 5
+    groups:
+      python:
+        patterns: ["*"]
+        update-types: [minor, patch]
+
+  - package-ecosystem: npm
+    directory: /apps/web
+    schedule:
+      interval: weekly
+      day: monday
+    cooldown:
+      default-days: 5
+    groups:
+      frontend:
+        patterns: ["*"]
+        update-types: [minor, patch]
+
+  - package-ecosystem: npm
+    directory: /infra
+    schedule:
+      interval: weekly
+      day: monday
+    cooldown:
+      default-days: 5
+
+  - package-ecosystem: docker
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    cooldown:
+      default-days: 5
+    groups:
+      actions:
+        patterns: ["*"]
